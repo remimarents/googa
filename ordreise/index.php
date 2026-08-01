@@ -24,8 +24,9 @@ if (empty($context['authenticated']) || empty($context['access']['allowed'])) {
   </head>
   <body>
     <main id="app"></main>
-    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;</script>
+    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;</script>
     <script src="wordbank.js"></script>
+    <script src="word-lists.js"></script>
     <script src="levels.js"></script>
     <script src="app.js"></script>
   </body>

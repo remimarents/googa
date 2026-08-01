@@ -355,6 +355,165 @@ Historien kan være den narrative motoren som gir nye gåter, ord, lydoppgaver o
 
 Den anbefalte produksjonsmodellen er dermed **24 måneders idéplan, 12 måneders redaksjonell plan og seks måneders ferdig buffer**. Dette gir forutsigbarhet uten å låse produktet før Googa har lært hvilke historier og aktiviteter familiene faktisk bruker mest.
 
+## Kommersialisering av voksentesten «Mellom to hjem»
+
+Den anbefalte hovedmodellen er å gjøre selve testen gratis, uten innlogging og lett å dele. Testen skal være en tillitsbyggende inngang til Googa, ikke produktet det først og fremst tas betalt for. Inntekten bør komme fra den naturlige fortsettelsen etter at testen har skapt nysgjerrighet og samtale i familien.
+
+### Anbefalt hovedflyt
+
+```text
+Gratis test
+→ komplett og nyttig resultat
+→ delbart kulturkompass
+→ «Ta broen med hjem til familien»
+→ prøv Googa for kr 5
+→ kr 50 per måned
+```
+
+Resultatsiden kan ha tre tydelige handlinger:
+
+1. **Prøv Googa med familien – kr 5**
+2. **Gi Googa til en familie**
+3. **Del testen med noen du kjenner**
+
+Hele resultatet skal leveres før salgsbudskapet vises. Gratisresultatet må være selvstendig nyttig og ikke kunstig svekkes for å presse fram kjøp.
+
+### Mulige inntektsmodeller
+
+| Modell | Hvordan den kan fungere | Foreløpig vurdering |
+|---|---|---|
+| Familieabonnement | Testen leder til eksisterende Googa-abonnement med tre barneenheter | Beste hovedmodell |
+| Årsabonnement | Eksempelvis kr 499 per år i stedet for kr 600 samlet | Godt for kontantstrøm og lavere frafall |
+| Gaveabonnement | Kjøp tre, seks eller tolv måneder til en annen familie | Svært naturlig i diasporaen |
+| Betalt kulturpakke | Engangskjøp med familieoppgaver, samtalekort, historier og lyd | Godt alternativ for abonnementsvegrere |
+| Ambassadørprogram | Pedagoger, foreninger og relevante profiler får rabattkode og provisjon | God distribusjonsmodell |
+| Foreningslisens | Somaliske foreninger kjøper tilgang til familier eller arrangementer | Lovende B2B-spor |
+| Skole- og bibliotekpakke | Institusjonen finansierer familie- eller språkkvelder | Potensielt verdifullt, men lengre salgsløp |
+| Sponsede innholdsperioder | Organisasjoner finansierer nye historier eller temamåneder | Godt når sponsorprofilering holdes i voksenområdet |
+| Familieverksted | Betalte eller sponsede «Mellom to hjem»-kvelder med test og Googa-aktiviteter | Godt for synlighet og abonnementssalg |
+| Premiumrapport | Pen PDF med samtalestartere og en enkel familieplan | Mulig tillegg, men gratisresultatet må ikke skjules bak betaling |
+
+### Gaveabonnement
+
+Gaveabonnement passer særlig godt fordi potensielle kjøpere ikke bare er foreldre, men også besteforeldre, tanter, onkler og slektninger i andre land.
+
+Mulig budskap:
+
+> Gi barna i familien somaliske gåter, historier og lyd.
+
+Mulige priser som bør pilotprøves:
+
+- tre måneder: kr 149
+- seks måneder: kr 279
+- tolv måneder: kr 499
+
+Mottakeren får en enkel gavekode eller lenke. Produktet trenger ikke opprette et løpende abonnement.
+
+### Engangskjøpt familiepakke
+
+Et alternativ for familier som ikke ønsker abonnement kan være **«Mellom to hjem – familiepakken»** til omtrent kr 99–149.
+
+Pakken kan inneholde:
+
+- personlig kulturkompass
+- 20 samtalespørsmål til familien
+- oppgave om å intervjue en eldre slektning
+- mal for å bevare en familiehistorie med lyd
+- en liten norsk-somalisk ordsamling
+- én eksklusiv historie i Googa
+- sju eller fjorten dagers Googa-tilgang
+
+Beløpet kan trekkes fra dersom familien senere velger årsabonnement.
+
+### Ambassadører og rabattkoder
+
+Somaliske pedagoger, foreninger og relevante innholdsskapere kan få egne rabattkoder, for eksempel `AHAB20`, `OSLOFAMILIE` eller `SOMALILÆRER`.
+
+Mulige belønninger:
+
+- kr 50 per nytt årsabonnement
+- 15–20 prosent av første års betaling
+- gratis Googa til én familie for hver femte betalende familie
+
+Stripe støtter kampanje- og rabattkoder med utløpsdato, kundebegrensning og begrenset antall innløsninger. Modellen kan derfor innføres uten et stort eget forhandlersystem.
+
+- [Stripe: promotion codes](https://docs.stripe.com/billing/subscriptions/coupons)
+- [Stripe: promotions, optional items and upsells](https://docs.stripe.com/payment-links/promotions)
+
+### Foreninger og organisasjoner
+
+En somalisk organisasjon kan kjøpe en samlet kampanje i stedet for at hver familie betaler separat. En pakke kan bestå av:
+
+- tilgang til 25 familier i tre måneder
+- egen invitasjonskode
+- co-brandet landingsside
+- familiearrangement med voksentesten
+- anonym statistikk over deltakelse, men aldri individuelle kulturskårer
+
+Foreløpige priser som kan testes manuelt før et B2B-system bygges:
+
+- lokalpakke: kr 2 500
+- arrangementspakke: kr 5 000
+- årspakke for organisasjon: kr 10 000–20 000
+
+Bibliotek, kommuner, integreringsprosjekter, frivillige stiftelser og diasporaforeninger kan være mulige finansierende aktører.
+
+### Sponsing av månedlig innhold
+
+En organisasjon eller samfunnsaktør kan finansiere en ny historie, et familieoppdrag eller en temamåned. Krediteringen bør være nøktern:
+
+> Denne månedens historier er utviklet med støtte fra …
+
+Dette skal ikke bli reklame rettet mot barn. Sponsorlogoer, tilbud og kjøpsbudskap skal ligge i foreldreområdet eller andre voksenflater. Norsk markedsføring mot barn har særskilte krav:
+
+- [Forbrukertilsynets veiledning om markedsføring overfor barn og unge](https://www.forbrukertilsynet.no/wp-content/uploads/2022/11/forbrukertilsynets-veiledning-om-markedsforing-overfor-barn-og-unge.pdf)
+
+### Viral deling uten å undergrave personvernet
+
+Resultatet kan presenteres som et pent, frivillig delbart kort:
+
+> **Jeg er en aktiv brobygger 🌉**
+>
+> Kunnskap fra ett hjem kan hjelpe oss å forstå det andre.
+>
+> Hvor ligger ditt kulturkompass?
+
+Kortet bør ikke automatisk vise detaljerte prosentverdier. Brukeren skal aktivt velge om profilaksene skal tas med. Et delingskort skal heller aldri inneholde råsvar.
+
+Testen kan indirekte behandle opplysninger om etnisk opprinnelse. Slike opplysninger regnes som en særlig kategori personopplysninger. Derfor bør MVP-en fortsatt:
+
+- behandle råsvar og kulturprofil lokalt på enheten
+- ikke sende resultatnivå, delskårer eller enkeltsvar til Stripe
+- ikke sende slike opplysninger til annonserings-, sporings- eller vanlige analyseverktøy
+- ikke koble testprofilen skjult til en e-postadresse eller Googa-konto
+- kreve et aktivt valg før brukeren deler noe
+
+Relevante kilder:
+
+- [Datatilsynet: personopplysninger og særlige kategorier](https://www.datatilsynet.no/rettigheter-og-plikter/personopplysninger/)
+- [Datatilsynet: behandlingsgrunnlag for særlige kategorier](https://www.datatilsynet.no/rettigheter-og-plikter/virksomhetenes-plikter/om-behandlingsgrunnlag/spesielt-om-sarlige-kategorier-av-personopplysninger/)
+
+Produktmåling bør begrenses til ufølsomme hendelser som:
+
+- test startet
+- test fullført
+- delingsknapp brukt
+- Googa-tilbud åpnet
+- checkout startet
+- abonnement kjøpt
+
+### Anbefalt prioritering
+
+1. Hold testen helt gratis og uten innlogging.
+2. Lag et profesjonelt delingskort med brukerens aktive kontroll over innholdet.
+3. Legg inn én hovedhandling etter resultatet: **«Prøv Googa med familien for kr 5»**.
+4. Legg til gaveabonnement.
+5. Gi hver ambassadør en sporbar rabattkode.
+6. Tilby en enkel organisasjonspakke manuelt før et stort B2B-system bygges.
+7. Test årsabonnement til omtrent kr 499 som alternativ i Stripe-checkout.
+
+Det anbefales ikke å ta betalt for selve standardresultatet i første fase. Testens største økonomiske verdi er sannsynligvis rekkevidde, tillit, deling og nye familieabonnementer. En eventuell premiumrapport bør være et ærlig tilleggsprodukt, ikke en betalingsmur foran lovet verdi.
+
 ## Språklig, kulturell og juridisk kvalitetssikring
 
 - En somalisk pedagog eller språkredaktør bør godkjenne tekst, uttale, aldersnivå og norsk oversettelse.

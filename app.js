@@ -52,6 +52,7 @@ if (Array.isArray(window.GOOGA_BANK) && window.GOOGA_BANK.length) {
 }
 let language='so', group, index=0, score=0, locked=false;
 let activeAudio = null;
+const session = window.GOOGA_SESSION || {};
 const $=id=>document.getElementById(id);
 function text(so,no){ return language==='no'?no:so }
 function localize(){document.documentElement.lang=language;document.querySelectorAll('[data-so]').forEach(el=>el.textContent=text(el.dataset.so,el.dataset.no));$('languageToggle').title=language==='so'?'Vis tekst på norsk':'Tus tekst på somali';$('languageToggle').setAttribute('aria-label',$('languageToggle').title);if(group)renderRiddle();}
@@ -67,3 +68,4 @@ function playAudioFile(path,fallback,fallbackLang){stopAudio();const audio=new A
 function playPrompt(r,{auto=false}={}){if(language==='so'&&r.id){playAudioFile(`audio/${r.id}-q.mp3`,r.q,'so-SO');return;}if(auto&&group?.id!=='0')return;speak(language==='no'?r.no:r.q,language==='no'?'nb-NO':'so-SO');}
 function playAnswer(r){if(language==='so'&&r.id){playAudioFile(`audio/${r.id}-a.mp3`,r.a,'so-SO');return;}speak(language==='no'?r.an:r.a,language==='no'?'nb-NO':'so-SO');}
 $('languageToggle').onclick=()=>{language=language==='so'?'no':'so';renderGroups();localize();};$('homeButton').onclick=showWelcome;$('backButton').onclick=showWelcome;$('speakButton').onclick=()=>{const r=riddles[group.id][index];playPrompt(r)};renderGroups();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js');
+if(session.role==='owner'&&$('ownerLink'))$('ownerLink').classList.remove('hidden');

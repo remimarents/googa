@@ -1,3 +1,67 @@
 :root { --ink:#103654; --sky:#dff7ff; --teal:#10aab1; --gold:#ffc84b; --coral:#ff816c; --paper:#fffdf7; --muted:#5b7185; }
-* { box-sizing:border-box } body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 12% 5%,#fff0be 0 10%,transparent 32%),linear-gradient(150deg,#e5faff,#c9ecf4); font-family:Nunito,system-ui,sans-serif; }
-button { font:inherit; cursor:pointer } .app-shell { width:min(100%,900px); min-height:100vh; margin:auto; padding:18px 20px 38px; overflow:hidden } .topbar { display:flex; justify-content:space-between; align-items:center } .brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2'; padding:0 } .brand img { width:48px;height:48px;object-fit:contain } .top-actions { display:flex;gap:9px;align-items:center }.stars { background:#fff5cb;padding:7px 12px;border-radius:999px;font-weight:800;color:#8b5b0d }.language { border:2px solid #fff;background:#fff;border-radius:12px;padding:7px 9px;font-size:20px;box-shadow:0 3px 9px #10365420 }.welcome { position:relative; padding-top:38px }.welcome-copy { max-width:570px; position:relative;z-index:1 }.eyebrow { margin:0 0 7px;color:#087d8b;font-weight:800;letter-spacing:.05em;text-transform:uppercase }.welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2'; margin:0;letter-spacing:-.04em }.intro { font-size:18px;line-height:1.5;max-width:490px }.hero-mascot { position:absolute; right:-20px; top:-22px; width:245px; transform:rotate(6deg); pointer-events:none }.age-grid { position:relative;z-index:2; display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:42px }.age-card { min-height:146px; border:0;border-radius:24px;padding:18px;text-align:left;color:var(--ink);box-shadow:0 9px 0 #10365418;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden }.age-card:hover { transform:translateY(-4px);box-shadow:0 13px 0 #10365412 }.age-card .emoji {font-size:40px;display:block}.age-card strong { font:800 27px 'Baloo 2';display:block;margin-top:3px }.age-card small {font-weight:800;display:block;max-width:75%;line-height:1.2}.a0 {background:#ffe69a}.a7 {background:#b9f1ed}.a13 {background:#c7ddff}.a16 {background:#f6c5db}.translation-note { color:var(--muted);font-size:14px;text-align:center;margin:23px 0 0 }.hidden {display:none!important}.game {padding-top:25px}.back {border:0;background:transparent;color:var(--ink);font-weight:800;padding:0 0 20px}.progress-row {display:flex;justify-content:space-between;font-weight:800}.progress-track {height:10px;background:#ffffff8a;border-radius:99px;margin:8px 0 18px;overflow:hidden}.progress-track i{display:block;height:100%;width:0;background:var(--teal);border-radius:inherit;transition:width .3s}.riddle-card {background:var(--paper);border-radius:30px;padding:20px;box-shadow:0 16px 35px #1036541b;text-align:center}.riddle-top {display:flex;justify-content:space-between;align-items:center}.case-tag {background:#e5f7f7;color:#087d8b;border-radius:99px;padding:6px 11px;font-size:13px;font-weight:800}.speak {border:0;background:#e7f6ff;border-radius:50%;width:47px;height:47px;font-size:21px}.riddle-visual {font-size:75px;min-height:90px;display:grid;place-items:center;margin:8px}.listen-hint {font-size:13px;text-transform:uppercase;letter-spacing:.1em;margin:0;color:var(--teal);font-weight:800}.riddle-card h2 {font:700 clamp(25px,5vw,38px)/1.1 'Baloo 2';margin:8px auto 7px;max-width:650px}.norwegian-question {color:var(--muted);font-weight:800;margin:0 0 14px}.options {display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}.option {border:2px solid #e8edf1;background:white;border-radius:18px;min-height:92px;padding:9px 6px;color:var(--ink);font-weight:800;font-size:15px}.option .choice-emoji {display:block;font-size:38px;line-height:1.15}.option:hover {border-color:var(--teal);background:#effffe}.option.correct {background:#c8f4de;border-color:#23a96e}.option.wrong {background:#ffe0dc;border-color:var(--coral)}.feedback {margin:18px 0 0;padding:13px;border-radius:14px;background:#e5f8ec;font-weight:800}.feedback strong{display:block;font:800 23px 'Baloo 2'}body[data-age='0'] .riddle-card{border:5px solid #ffe69a}body[data-age='7'] .riddle-card{border:5px solid #b9f1ed}body[data-age='13'] .riddle-card{border:5px solid #c7ddff}body[data-age='16'] .riddle-card{border:5px solid #f6c5db}body[data-age='13'] .riddle-card h2,body[data-age='16'] .riddle-card h2{font-family:Nunito;font-size:clamp(23px,4vw,32px);letter-spacing:-.02em}@media (max-width:560px){.app-shell{padding:14px 14px 26px}.hero-mascot{width:170px;right:-24px;top:-20px;opacity:.68}.welcome h1{max-width:280px}.age-grid{margin-top:32px}.age-card{min-height:130px}.options{grid-template-columns:1fr}.option{min-height:64px;display:flex;align-items:center;gap:12px;text-align:left;padding-left:17px}.option .choice-emoji{font-size:32px}}
+* { box-sizing:border-box }
+body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 12% 5%,#fff0be 0 10%,transparent 32%),linear-gradient(150deg,#e5faff,#c9ecf4); font-family:Nunito,system-ui,sans-serif; }
+button { font:inherit; cursor:pointer }
+.app-shell { width:min(100%,900px); min-height:100vh; margin:auto; padding:18px 20px 38px; overflow:hidden }
+.topbar { display:flex; justify-content:space-between; align-items:center }
+.brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2'; padding:0 }
+.brand img { width:48px; height:48px; object-fit:contain }
+.top-actions { display:flex; gap:9px; align-items:center }
+.owner-link { display:inline-flex; align-items:center; border-radius:12px; padding:8px 12px; background:#103654; color:#fff; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
+.stars { background:#fff5cb; padding:7px 12px; border-radius:999px; font-weight:800; color:#8b5b0d }
+.language { border:2px solid #fff; background:#fff; border-radius:12px; padding:7px 9px; font-size:20px; box-shadow:0 3px 9px #10365420 }
+.welcome { position:relative; padding-top:38px }
+.welcome-copy { max-width:570px; position:relative; z-index:1 }
+.eyebrow { margin:0 0 7px; color:#087d8b; font-weight:800; letter-spacing:.05em; text-transform:uppercase }
+.welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2'; margin:0; letter-spacing:-.04em }
+.intro { font-size:18px; line-height:1.5; max-width:490px }
+.hero-mascot { position:absolute; right:-20px; top:-22px; width:245px; transform:rotate(6deg); pointer-events:none }
+.age-grid { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,1fr); gap:13px; margin-top:42px }
+.age-card { min-height:146px; border:0; border-radius:24px; padding:18px; text-align:left; color:var(--ink); box-shadow:0 9px 0 #10365418; transition:transform .15s,box-shadow .15s; position:relative; overflow:hidden }
+.age-card:hover { transform:translateY(-4px); box-shadow:0 13px 0 #10365412 }
+.age-card .emoji { font-size:40px; display:block }
+.age-card strong { font:800 27px 'Baloo 2'; display:block; margin-top:3px }
+.age-card small { font-weight:800; display:block; max-width:75%; line-height:1.2 }
+.a0 { background:#ffe69a }
+.a7 { background:#b9f1ed }
+.a13 { background:#c7ddff }
+.a16 { background:#f6c5db }
+.translation-note { color:var(--muted); font-size:14px; text-align:center; margin:23px 0 0 }
+.hidden { display:none!important }
+.game { padding-top:25px }
+.back { border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 0 20px }
+.progress-row { display:flex; justify-content:space-between; font-weight:800 }
+.progress-track { height:10px; background:#ffffff8a; border-radius:99px; margin:8px 0 18px; overflow:hidden }
+.progress-track i { display:block; height:100%; width:0; background:var(--teal); border-radius:inherit; transition:width .3s }
+.riddle-card { background:var(--paper); border-radius:30px; padding:20px; box-shadow:0 16px 35px #1036541b; text-align:center }
+.riddle-top { display:flex; justify-content:space-between; align-items:center }
+.case-tag { background:#e5f7f7; color:#087d8b; border-radius:99px; padding:6px 11px; font-size:13px; font-weight:800 }
+.speak { border:0; background:#e7f6ff; border-radius:50%; width:47px; height:47px; font-size:21px }
+.riddle-visual { font-size:75px; min-height:90px; display:grid; place-items:center; margin:8px }
+.listen-hint { font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin:0; color:var(--teal); font-weight:800 }
+.riddle-card h2 { font:700 clamp(25px,5vw,38px)/1.1 'Baloo 2'; margin:8px auto 7px; max-width:650px }
+.norwegian-question { color:var(--muted); font-weight:800; margin:0 0 14px }
+.options { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px }
+.option { border:2px solid #e8edf1; background:white; border-radius:18px; min-height:92px; padding:9px 6px; color:var(--ink); font-weight:800; font-size:15px }
+.option .choice-emoji { display:block; font-size:38px; line-height:1.15 }
+.option:hover { border-color:var(--teal); background:#effffe }
+.option.correct { background:#c8f4de; border-color:#23a96e }
+.option.wrong { background:#ffe0dc; border-color:var(--coral) }
+.feedback { margin:18px 0 0; padding:13px; border-radius:14px; background:#e5f8ec; font-weight:800 }
+.feedback strong { display:block; font:800 23px 'Baloo 2' }
+body[data-age='0'] .riddle-card { border:5px solid #ffe69a }
+body[data-age='7'] .riddle-card { border:5px solid #b9f1ed }
+body[data-age='13'] .riddle-card { border:5px solid #c7ddff }
+body[data-age='16'] .riddle-card { border:5px solid #f6c5db }
+body[data-age='13'] .riddle-card h2,
+body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4vw,32px); letter-spacing:-.02em }
+@media (max-width:560px) {
+  .app-shell { padding:14px 14px 26px }
+  .hero-mascot { width:170px; right:-24px; top:-20px; opacity:.68 }
+  .welcome h1 { max-width:280px }
+  .age-grid { margin-top:32px }
+  .age-card { min-height:130px }
+  .options { grid-template-columns:1fr }
+  .option { min-height:64px; display:flex; align-items:center; gap:12px; text-align:left; padding-left:17px }
+  .option .choice-emoji { font-size:32px }
+}

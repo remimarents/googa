@@ -17,7 +17,7 @@
     <main class="app-shell" aria-live="polite">
       <header class="topbar">
         <button class="brand" id="homeButton" aria-label="Googa home"><img src="assets/googa-mascot.png" alt="Googa detective" /><span>Googa</span></button>
-        <div class="top-actions"><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
+        <div class="top-actions"><a class="owner-link hidden" id="ownerLink" href="owner.php">Owner</a><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
       </header>
 
       <section id="welcome" class="welcome">
@@ -46,6 +46,7 @@
         </article>
       </section>
     </main>
+    <script src="session.php"></script>
     <script src="bank.js"></script>
     <script src="app.js"></script>
   </body>

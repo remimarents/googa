@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-08-01T21:17:36.849Z",
+  "sources": {
+    "afsoomali": "https://raw.githubusercontent.com/yahyaqowle/Afsoomali/main/Somali-Words/Somali-Words.txt",
+    "kaikki": "https://kaikki.org/dictionary/Somali/kaikki.org-dictionary-Somali.jsonl",
+    "wikipedia": "https://dumps.wikimedia.org/sowiki/latest/sowiki-latest-pages-articles.xml.bz2"
+  },
+  "counts": {
+    "afsoomali": 23752,
+    "kaikki": 933,
+    "kaikkiAdditions": 205,
+    "combined": 23957,
+    "levels": 300,
+    "reviewWords": 1500
+  }
+}

@@ -35,6 +35,7 @@
     if (!activeStory) return;
     sceneIndex = 0;
     activitySolved = false;
+    document.body.classList.add('reading-story');
     $('storyLibrary').classList.add('hidden');
     $('storyExperience').classList.remove('hidden');
     $('storyReader').style.setProperty('--active-accent', activeStory.accent);
@@ -150,6 +151,7 @@
   $('readerBack').onclick = () => {
     window.GoogaReadAloud?.stop();
     activeStory = null;
+    document.body.classList.remove('reading-story');
     $('storyExperience').classList.add('hidden');
     $('storyLibrary').classList.remove('hidden');
     window.scrollTo({top:0});
@@ -161,13 +163,17 @@
   $('supportDismiss').onclick = closeSupport;
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('supportOverlay').classList.contains('hidden')) closeSupport(); });
   let swipeStart = null;
+  let touchStart = null;
   let swipeHandled = false;
   const reader = $('storyReader');
+  const finishSwipe = (dx, dy) => { if (swipeHandled || Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.25) return; swipeHandled = true; changeScene(dx < 0 ? 1 : -1); setTimeout(() => { swipeHandled = false; }, 350); };
   reader.addEventListener('pointerdown', event => { if (!activeStory || !$('supportOverlay').classList.contains('hidden')) return; swipeHandled = false; swipeStart = { x: event.clientX, y: event.clientY, pointerId: event.pointerId }; });
   reader.addEventListener('pointermove', event => { if (!swipeStart) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; if (Math.abs(dx) > 20 && Math.abs(dx) > Math.abs(dy)) event.preventDefault(); });
-  reader.addEventListener('pointerup', event => { if (!swipeStart || !$('supportOverlay').classList.contains('hidden')) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; swipeStart = null; if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.4) return; swipeHandled = true; changeScene(dx < 0 ? 1 : -1); setTimeout(() => { swipeHandled = false; }, 0); });
+  reader.addEventListener('pointerup', event => { if (!swipeStart || !$('supportOverlay').classList.contains('hidden')) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; swipeStart = null; finishSwipe(dx, dy); });
   reader.addEventListener('click', event => { if (!swipeHandled) return; event.preventDefault(); event.stopImmediatePropagation(); }, true);
   $('storyReader').addEventListener('pointercancel', () => { swipeStart = null; });
+  reader.addEventListener('touchstart', event => { if (!activeStory || !$('supportOverlay').classList.contains('hidden')) return; const touch = event.touches[0]; if (touch) touchStart = { x: touch.clientX, y: touch.clientY }; }, { passive: true });
+  reader.addEventListener('touchend', event => { if (!touchStart || !$('supportOverlay').classList.contains('hidden')) return; const touch = event.changedTouches[0]; const dx = touch.clientX - touchStart.x; const dy = touch.clientY - touchStart.y; touchStart = null; finishSwipe(dx, dy); }, { passive: true });
 
   renderLibrary();
   localizeStatic();

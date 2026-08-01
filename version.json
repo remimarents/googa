@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.02.08",
-  "updatedAt": "2026-08-01T23:11:02Z",
-  "notes": "Adds illustrated Ubax and Muuse voice selection with complete prerecorded Somali audio for both narrators"
+  "version": "2026.08.02.09",
+  "updatedAt": "2026-08-03T00:25:00Z",
+  "notes": "Story reader removes its top bar while reading and adds native touch swipe support"
 }

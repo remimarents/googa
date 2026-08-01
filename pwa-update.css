@@ -1,0 +1,2 @@
+.game-shell .topbar{grid-template-columns:54px minmax(0,1fr) auto 44px 58px}.update-game{min-height:36px;padding:6px 8px;border:1px solid #fff;border-radius:9px;background:#103654;color:#fff;font-size:.68rem;font-weight:950;box-shadow:0 6px 14px #10365433}.update-game[hidden]{display:none}.preview-badge[data-pwa-update]{border:0;cursor:pointer}
+@media(max-width:420px){.game-shell .topbar{grid-template-columns:52px minmax(0,1fr) auto 39px 52px;gap:5px}.update-game{padding:5px 6px;font-size:.61rem}}

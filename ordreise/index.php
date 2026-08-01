@@ -36,14 +36,16 @@ if (empty($_SESSION['googa_payment_csrf'])) {
     <title>Googa – Safarka Erayada</title>
     <link rel="stylesheet" href="styles.css?v=<?= rawurlencode($assetVersion) ?>">
     <link rel="stylesheet" href="wheel.css?v=<?= rawurlencode($assetVersion) ?>">
+    <link rel="stylesheet" href="../pwa-update.css?v=<?= rawurlencode($assetVersion) ?>">
   </head>
   <body>
     <main id="app"></main>
-    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_CAN_PURCHASE=<?= $canPurchase ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_MONTHLY_RELEASE=<?= $monthlyRelease ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;</script>
+    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_CAN_PURCHASE=<?= $canPurchase ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_MONTHLY_RELEASE=<?= $monthlyRelease ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_PWA_UPDATE={version:<?= json_encode($assetVersion) ?>,versionUrl:'../version.php',reloadUrl:'./'};</script>
     <script src="wordbank.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="somaliweb-provisional.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="word-lists.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="levels.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="app.js?v=<?= rawurlencode($assetVersion) ?>"></script>
+    <script src="../pwa-update.js?v=<?= rawurlencode($assetVersion) ?>"></script>
   </body>
 </html>

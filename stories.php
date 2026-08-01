@@ -33,6 +33,7 @@ $assetVersion = googa_app_version();
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('stories.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('stories-reader-nav.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('pwa-update.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="stories-page<?= !$isPublic ? ' is-preview' : '' ?>">
   <main class="stories-shell">
@@ -40,6 +41,7 @@ $assetVersion = googa_app_version();
       <a class="stories-brand" href="./"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA</span></a>
       <div class="stories-top-actions">
         <?php if (!$isPublic): ?><span class="preview-badge">EIERFORHÅNDSVISNING</span><?php endif; ?>
+        <button class="preview-badge" data-pwa-update data-update-label="Oppdater" data-updating-label="Oppdaterer …" type="button" hidden>Oppdater</button>
         <button class="story-language" id="storyLanguage" type="button" aria-label="Vis norsk tekst">🇳🇴</button>
       </div>
     </header>
@@ -90,9 +92,10 @@ $assetVersion = googa_app_version();
     </section>
   </div>
 
-  <script>window.GOOGA_STORY_PREVIEW=<?= !$isPublic ? 'true' : 'false' ?>;</script>
+  <script>window.GOOGA_STORY_PREVIEW=<?= !$isPublic ? 'true' : 'false' ?>;window.GOOGA_PWA_UPDATE={version:<?= json_encode($assetVersion) ?>,versionUrl:'./version.php',reloadUrl:'./stories.php'};</script>
   <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('story-bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('stories.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <script src="<?= htmlspecialchars(googa_asset_url('pwa-update.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 </body>
 </html>

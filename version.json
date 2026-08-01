@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.01.21",
-  "updatedAt": "2026-08-01T22:31:00Z",
-  "notes": "Complete Somali Ubax read-aloud coverage for customer-facing guidance"
+  "version": "2026.08.01.22",
+  "updatedAt": "2026-08-01T22:47:00Z",
+  "notes": "Logout controls visible only to the primary owner"
 }

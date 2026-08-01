@@ -15,6 +15,7 @@ if (empty($_SESSION['googa_family_csrf'])) {
     $_SESSION['googa_family_csrf'] = bin2hex(random_bytes(24));
 }
 $csrf = $_SESSION['googa_family_csrf'];
+$showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA_PRIVATE_LOGOUT_EMAIL;
 ?><!doctype html>
 <html lang="so">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Googa – Qoyska</title>
@@ -30,7 +31,7 @@ $csrf = $_SESSION['googa_family_csrf'];
   </div>
   <aside class="pwa-guide" aria-label="Sida Googa loogu kaydiyo taleefanka"><div><h2>Ku kaydi Googa</h2><p data-speak-so="Ku kaydi Googa. Ka dhig app ku jira shaashadda guriga. iPhone ama iPad: Safari, La wadaag, Ku dar Shaashadda Guriga, dabadeed Ku dar. Android: Chrome, fur liiska, kadib Ku rakib app-ka ama Ku dar shaashadda guriga." data-speak-audio="audio/ui/family-save.mp3">Ka dhig app ku jira shaashadda guriga.</p></div><div class="pwa-steps"><p><strong>iPhone/iPad:</strong> Safari → La wadaag (□↑) → Ku dar Shaashadda Guriga → Ku dar.</p><p><strong>Android:</strong> Chrome → ⋮ → Ku rakib app-ka / Ku dar shaashadda guriga.</p></div></aside>
 </main>
-<button class="family-logout" id="familyLogout" type="button">Ka bax</button>
+<?php if ($showLogout): ?><button class="family-logout" id="familyLogout" type="button">Ka bax</button><?php endif; ?>
 <script src="<?= htmlspecialchars(googa_asset_url('assets/vendor/qrcode.bundle.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <script>
@@ -41,5 +42,5 @@ function renderPending(items){pending.innerHTML=items.length?items.map(d=>`<div 
 async function renderQr(url){if(!url||url===activeUrl)return;activeUrl=url;const canvas=document.createElement('canvas');box.innerHTML='';box.appendChild(canvas);await window.QRCode.toCanvas(canvas,url,{width:214,margin:1})}
 async function loadStatus(){try{const d=await api('status');if(!d.ok)return;await renderQr(d.scanUrl);renderDevices(d.devices);renderPending(d.pending)}catch(e){box.innerHTML='<p class="muted">Xogta qoyska lama heli karo hadda.</p>'}}
 document.querySelector('#rotate').onclick=async()=>{if(window.confirm('Ma rabtaa inaad beddesho QR-koodhka? Koodhkii hore ma shaqayn doono.')){activeUrl='';await api('rotate',{});await loadStatus()}};loadStatus();setInterval(loadStatus,3000);
-let logoutTaps=[];document.querySelector('#familyLogout').onclick=()=>{const now=Date.now();logoutTaps=logoutTaps.filter(t=>now-t<1100);logoutTaps.push(now);if(logoutTaps.length>=3){logoutTaps=[];if(window.confirm('Ma rabtaa inaad ka baxdo Googa?'))location.assign('./?logout=1')}};
+let logoutTaps=[];const familyLogout=document.querySelector('#familyLogout');if(familyLogout)familyLogout.onclick=()=>{const now=Date.now();logoutTaps=logoutTaps.filter(t=>now-t<1100);logoutTaps.push(now);if(logoutTaps.length>=3){logoutTaps=[];if(window.confirm('Ma rabtaa inaad ka baxdo Googa?'))location.assign('./?logout=1')}};
 </script></html>

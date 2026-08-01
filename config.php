@@ -5,6 +5,7 @@ const GOOGA_OWNER_EMAILS = [
     'remi@marents.no',
     'kadiye86@gmail.com',
 ];
+const GOOGA_PRIVATE_LOGOUT_EMAIL = 'remi@marents.no';
 
 const GOOGA_STORAGE_FILE = __DIR__ . '/storage/googa-data.json';
 const GOOGA_VERSION_FILE = __DIR__ . '/version.json';

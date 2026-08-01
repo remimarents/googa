@@ -26,6 +26,7 @@ if (!in_array($choice, ['trial', 'monthly'], true)) {
     $choice = '';
 }
 $autoCheckout = $choice !== '' && hash_equals((string)($_SESSION['googa_checkout_choice'] ?? ''), $choice);
+$showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA_PRIVATE_LOGOUT_EMAIL;
 if ($autoCheckout) {
     unset($_SESSION['googa_checkout_choice']);
 }
@@ -84,7 +85,7 @@ if ($autoCheckout) {
       <button class="cta" type="submit">Ku bilow rukhsadda · kr 50/bishii</button>
     </form>
     <a class="cta" href="./">Dib u hubi marin</a>
-    <a class="ghost" href="./?logout=1">Ka bax</a>
+    <?php if ($showLogout): ?><a class="ghost" href="./?logout=1">Ka bax</a><?php endif; ?>
   </div>
   <?php if ($paymentState === 'cancelled'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin." data-speak-audio="audio/ui/payment-cancelled.mp3">Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin.</p><?php endif; ?>
   <?php if ($paymentState === 'error'): ?><p class="meta" data-speak-so="Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day." data-speak-audio="audio/ui/payment-error.mp3">Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day.</p><?php endif; ?>

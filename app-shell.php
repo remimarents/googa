@@ -6,6 +6,7 @@ require_once __DIR__ . '/lib/version.php';
 $assetVersion = googa_app_version();
 $portalAvailable = !empty($context['user']['stripe']['customer_id']);
 $familyAvailable = empty($context['family_device']) && !empty($context['access']['allowed']);
+$showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA_PRIVATE_LOGOUT_EMAIL;
 ?>
 <!doctype html>
 <html lang="so">
@@ -57,7 +58,7 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
         </article>
       </section>
     </main>
-    <button class="logout-control" id="logoutDot" type="button" data-so="Ka bax" data-no="Logg ut" aria-label="Logg ut" title="Trykk tre ganger for å logge ut">Ka bax</button>
+    <?php if ($showLogout): ?><button class="logout-control" id="logoutDot" type="button" data-so="Ka bax" data-no="Logg ut" aria-label="Logg ut" title="Trykk tre ganger for å logge ut">Ka bax</button><?php endif; ?>
     <style>.logout-control{position:fixed;left:50%;bottom:max(8px,env(safe-area-inset-bottom));z-index:8;transform:translateX(-50%);min-width:76px;min-height:38px;border:1px solid #10365430;border-radius:999px;background:#fffdf7;color:#103654;padding:5px 12px;font:800 12px system-ui;box-shadow:0 2px 8px #10365418;cursor:pointer;opacity:.88}.logout-control:hover,.logout-control:focus-visible{opacity:1;outline:3px solid #087f89;outline-offset:2px}</style>
     <script src="<?= htmlspecialchars(googa_asset_url('session.php'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>

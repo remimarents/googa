@@ -29,7 +29,6 @@ button { font:inherit; cursor:pointer }
 .a7 { background:#b9f1ed }
 .a13 { background:#c7ddff }
 .a16 { background:#f6c5db }
-.translation-note { color:var(--muted); font-size:14px; text-align:center; margin:23px 0 0 }
 .hidden { display:none!important }
 .game { padding-top:25px }
 .back { border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 0 20px }

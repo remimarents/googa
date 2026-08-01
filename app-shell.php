@@ -38,7 +38,6 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
         </div>
         <img class="hero-mascot" src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" />
         <div class="age-grid" id="ageGrid"></div>
-        <p class="translation-note" data-so="Taabo calanka Norway si aad u aragto turjumaadda." data-no="Trykk på det norske flagget for å vise somalisk tekst.">Taabo calanka Norway si aad u aragto turjumaadda.</p>
       </section>
 
       <section id="game" class="game hidden">

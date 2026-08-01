@@ -17,7 +17,10 @@ if (!in_array($action, ['create', 'poll'], true)) {
     exit;
 }
 
-$url = 'https://marents.no/vismalight/api/external-qr.php?app=googa&action=' . $action . ($token !== '' ? '&t=' . rawurlencode($token) : '');
+// The public Googa API calls this operation "poll". The shared QR bridge
+// exposes the same read-only operation as "status".
+$bridgeAction = $action === 'poll' ? 'status' : $action;
+$url = 'https://marents.no/vismalight/api/external-qr.php?app=googa&action=' . $bridgeAction . ($token !== '' ? '&t=' . rawurlencode($token) : '');
 $ch = curl_init($url);
 curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 10]);
 $raw = curl_exec($ch);

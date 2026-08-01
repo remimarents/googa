@@ -297,6 +297,64 @@ Dette gir en komplett læringssløyfe:
 - månedlige nye kapitler, sidehistorier og familieoppdrag
 - pedagogoversikt over hvilke ord og historier barnet har arbeidet med
 
+## Fast innholdsdrip og snikpremiere
+
+En liten snikpremiere mot slutten av hver måned kan skape forventning, redusere oppsigelseslyst og gjøre det tydelig at abonnementet utvikler seg. Dette bør være en fast del av Googas innholdsmetodikk.
+
+Det er ikke nødvendig å ferdigprodusere 24 måneder før lansering. En mer fleksibel modell er:
+
+- en overordnet idéplan for 24 måneder
+- en redaksjonell og pedagogisk plan for de neste 12 månedene
+- seks måneder med ferdigprodusert innhold i buffer
+- ytterligere seks måneder med manus og konsepter klare
+- kvartalsvis justering basert på bruk, fullføring og tilbakemeldinger
+
+### Foreslått månedssyklus
+
+1. **Dag 1:** Månedens nye historie eller hovedopplevelse åpnes.
+2. **Rundt dag 10:** Nye gåter eller et lite spill legges til.
+3. **Rundt dag 20:** En bonusaktivitet knyttet til månedens historie åpnes.
+4. **Siste 5–7 dager:** En snikpremiere på neste måned vises.
+5. **Dag 1 neste måned:** Figuren, historien eller området fra snikpremieren låses opp.
+
+Snikpremieren bør være kort, konkret og visuell. Den kan bestå av et delvis skjult bilde, omtrent fem sekunder lyd og en nedtelling. Eksempel:
+
+> **Bisha dambe… Cigaal wuxuu maqlayaa cod mugdiga ka imanaya.**
+>
+> Neste måned hører Cigaal en lyd fra mørket …
+
+Foreldre kan få en kort norsk forklaring ved å trykke på flagget eller den etablerte språkstøtten.
+
+### Variasjon mellom månedene
+
+For at Googa ikke skal oppleves som bare en samling historier, kan innholdskalenderen veksle mellom fire hovedtyper:
+
+- folkehistorie og kultur
+- detektivoppdrag
+- familieutfordring
+- temaverden, som dyr, mat, natur eller reiser
+
+Historien kan være den narrative motoren som gir nye gåter, ord, lydoppgaver og familiespill. Tidligere månedsinnhold bør ikke forsvinne, men flyttes til et voksende bibliotek. Bare snikpremieren og framhevingen av «månedens opplevelse» skiftes ut.
+
+### Forslag til første 12-måneders sesong
+
+| Måned | Hovedinnhold | Tillegg |
+|---|---|---|
+| 1 | Diin iyo Dawaco | Dyr og tålmodighet |
+| 2 | Wiil Waal | Gåter og kloke svar |
+| 3 | Cigaal Shidaad | Frykt, lyd og fantasi |
+| 4 | Caraweelo | Ledelse og ulike perspektiver |
+| 5 | Detektiv på markedet | Mat og handel |
+| 6 | Den forsvunne kamelen | Spor og natur |
+| 7 | Bestemors hemmelige kiste | Klær og familiehistorie |
+| 8 | Reisen til kysten | Hav, fisk og geografi |
+| 9 | Hvem tok mangoen? | Humor og familie |
+| 10 | Månen og stjernene | Natt, tid og fortelling |
+| 11 | Den store familiequizen | Samspill på tvers av land |
+| 12 | Googas landsbyfest | Årsfinale og samling |
+
+Den anbefalte produksjonsmodellen er dermed **24 måneders idéplan, 12 måneders redaksjonell plan og seks måneders ferdig buffer**. Dette gir forutsigbarhet uten å låse produktet før Googa har lært hvilke historier og aktiviteter familiene faktisk bruker mest.
+
 ## Språklig, kulturell og juridisk kvalitetssikring
 
 - En somalisk pedagog eller språkredaktør bør godkjenne tekst, uttale, aldersnivå og norsk oversettelse.

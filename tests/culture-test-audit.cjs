@@ -31,12 +31,16 @@ async function inspect(page, label) {
     const introAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/intro.mp3'));
     await page.locator('.culture-thesis .culture-speak').click();
     if (!(await introAudio).ok()) throw new Error('Intro MP3 failed');
+    const muuseSample = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/voice-sample.mp3'));
+    await page.locator('#voiceMuuse').click();
+    if (!(await muuseSample).ok()) throw new Error('Muuse sample MP3 failed');
+    if (await page.locator('#voiceMuuse').getAttribute('aria-checked') !== 'true') throw new Error('Muuse voice was not selected');
     await page.screenshot({ path:`/tmp/googa-culture-${viewport.name}-intro.png`, fullPage:true });
     await page.getByRole('button', { name:/Bilow tijaabada/ }).click();
     await inspect(page, `${viewport.name}-question`);
     const questionSpeakers = await page.locator('#cultureQuestion .culture-speak').count();
     if (questionSpeakers !== 6) throw new Error(`Expected six question/scale speakers, got ${questionSpeakers}`);
-    const qAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/question-01.mp3'));
+    const qAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/question-01.mp3'));
     await page.locator('#cultureQuestionSpeak').click();
     if (!(await qAudio).ok()) throw new Error('Question MP3 failed');
     await page.locator('#cultureTranslate').click();
@@ -48,9 +52,12 @@ async function inspect(page, label) {
     if (await page.locator('#cultureActions article').count() !== 2) throw new Error('Two next steps missing');
     const result = await inspect(page, `${viewport.name}-result`);
     if (result.speakers < 6) throw new Error('Result audio controls missing');
-    const resultAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/result-connector.mp3'));
+    const resultAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/result-connector.mp3'));
     await page.locator('#cultureResultSpeak').click();
     if (!(await resultAudio).ok()) throw new Error('Result MP3 failed');
+    const ubaxSample = page.waitForResponse(response => response.url().includes('/audio/culture-test/voice-sample.mp3') && !response.url().includes('/muuse/'));
+    await page.locator('#voiceUbax').click();
+    if (!(await ubaxSample).ok()) throw new Error('Ubax sample MP3 failed');
     await page.screenshot({ path:`/tmp/googa-culture-${viewport.name}-result.png`, fullPage:true });
     if (errors.length) throw new Error(`${viewport.name}: ${errors.join(' | ')}`);
     await context.close();
@@ -59,5 +66,5 @@ async function inspect(page, label) {
   const response = await guest.goto(`${base}culture-test.php`, { waitUntil:'domcontentloaded' });
   if (response.status() !== 200 || !guest.url().endsWith('/')) throw new Error('Guest access gate failed');
   await browser.close();
-  console.log('OK: owner gate, mobile/desktop layout, 24 questions, symbols, Norwegian support and prerecorded Ubax audio');
+  console.log('OK: owner gate, mobile/desktop layout, 24 questions, symbols, Norwegian support and Ubax/Muuse voice switching');
 })().catch(error => { console.error(error); process.exit(1); });

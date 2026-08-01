@@ -1,7 +1,13 @@
 (() => {
   const test = window.GOOGA_CULTURE_TEST;
   const $ = id => document.getElementById(id);
-  const state = { index: 0, answers: [], norwegian: false };
+  const savedVoice = localStorage.getItem('googa-culture-voice');
+  const state = { index: 0, answers: [], norwegian: false, voice: savedVoice === 'muuse' ? 'muuse' : 'ubax' };
+  window.GOOGA_AUDIO_PATH_RESOLVER = audioPath => {
+    if (!audioPath || state.voice !== 'muuse' || !audioPath.startsWith('audio/culture-test/')) return audioPath;
+    if (audioPath.startsWith('audio/culture-test/muuse/')) return audioPath;
+    return audioPath.replace('audio/culture-test/', 'audio/culture-test/muuse/');
+  };
   const show = id => ['cultureIntro','cultureQuestion','cultureResult'].forEach(name => $(name).classList.toggle('hidden', name !== id));
   const playButton = (button, text, audio) => {
     button.innerHTML = window.GoogaReadAloud.icon;
@@ -17,6 +23,23 @@
     $('cultureDisclaimer').textContent = localized(test.disclaimerSo, test.disclaimerNo);
     $('cultureStart').firstElementChild.textContent = state.norwegian ? 'Start testen' : 'Bilow tijaabada';
     if (!$('cultureQuestion').classList.contains('hidden')) renderQuestion();
+  }
+
+  function selectVoice(voice, playSample = true) {
+    state.voice = voice === 'muuse' ? 'muuse' : 'ubax';
+    localStorage.setItem('googa-culture-voice', state.voice);
+    document.querySelectorAll('[data-voice]').forEach(button => {
+      const active = button.dataset.voice === state.voice;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-checked', active ? 'true' : 'false');
+    });
+    if (playSample) {
+      const button = document.querySelector(`[data-voice="${state.voice}"]`);
+      const text = state.voice === 'muuse'
+        ? 'Waxaan ahay Muuse. Waxaan kuu akhrinayaa Af-Soomaaliga.'
+        : 'Waxaan ahay Ubax. Waxaan kuu akhrinayaa Af-Soomaaliga.';
+      window.GoogaReadAloud.play(text, 'audio/culture-test/voice-sample.mp3', button);
+    }
   }
 
   function renderQuestion() {
@@ -85,9 +108,11 @@
   }
 
   $('cultureLanguage').onclick = () => { state.norwegian = !state.norwegian; updateLanguage(); };
+  document.querySelectorAll('[data-voice]').forEach(button => button.onclick = () => selectVoice(button.dataset.voice));
   $('cultureStart').onclick = () => { state.index = 0; state.answers = []; renderQuestion(); show('cultureQuestion'); window.scrollTo(0,0); };
   $('cultureBack').onclick = () => { if (state.index === 0) show('cultureIntro'); else { state.index -= 1; renderQuestion(); } };
   $('cultureTranslate').onclick = () => $('cultureQuestionNo').classList.toggle('hidden');
   $('cultureRestart').onclick = () => { state.index = 0; state.answers = []; show('cultureIntro'); window.scrollTo(0,0); };
+  selectVoice(state.voice, false);
   updateLanguage();
 })();

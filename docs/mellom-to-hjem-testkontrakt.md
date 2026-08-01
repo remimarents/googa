@@ -47,8 +47,9 @@ Resultatoverskriftene er redaksjonelle, ikke normbaserte: Nysgjerrig utforsker, 
 - Somali er hovedspråk.
 - Norsk vises med en tydelig språkknapp eller som støtte under spørsmålet.
 - Små høyttalersymboler spiller ferdiginnspilte MP3-filer, ikke dynamisk nettleseropplesning når filen er tilgjengelig.
-- Stemme: Microsoft Neural TTS `so-SO-UbaxNeural`, tempo −10 prosent.
-- Lyd finnes for intro, personvernforklaring, alle 24 spørsmål, alle fem svaralternativer, fire resultatnivåer, tre result akser og seks mulige neste steg.
+- Brukeren velger mellom den kvinnelige stemmen Ubax (`so-SO-UbaxNeural`) og den mannlige stemmen Muuse (`so-SO-MuuseNeural`). Valget vises med to små illustrerte figurer og huskes bare lokalt på enheten.
+- Begge stemmene er generert med tempo −10 prosent. Et kort stemmeeksempel spilles når brukeren bytter forteller.
+- Begge lydsett inneholder intro, personvernforklaring, alle 24 spørsmål, alle fem svaralternativer, fire resultatnivåer, tre resultatakser og seks mulige neste steg.
 
 ## Personvern og etikk
 

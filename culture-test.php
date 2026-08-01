@@ -35,7 +35,15 @@ $assetVersion = googa_app_version();
   <main class="culture-shell">
     <header class="culture-topbar">
       <a class="culture-brand" href="./"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA</span></a>
-      <div><span class="culture-preview">EIERFORHÅNDSVISNING</span><button class="culture-language" id="cultureLanguage" type="button" aria-label="Vis norsk støtte">🇳🇴 <span>Norsk</span></button></div>
+      <div class="culture-toolbar">
+        <span class="culture-preview">EIERFORHÅNDSVISNING</span>
+        <div class="culture-voice-picker" role="radiogroup" aria-label="Dooro codka Soomaaliga">
+          <span class="culture-voice-label">CODKA</span>
+          <button class="culture-voice active" id="voiceUbax" type="button" role="radio" aria-checked="true" data-voice="ubax" aria-label="Dooro codka Ubax"><img src="<?= htmlspecialchars(googa_asset_url('assets/voices/narrator-ubax.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>Ubax</span></button>
+          <button class="culture-voice" id="voiceMuuse" type="button" role="radio" aria-checked="false" data-voice="muuse" aria-label="Dooro codka Muuse"><img src="<?= htmlspecialchars(googa_asset_url('assets/voices/narrator-muuse.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>Muuse</span></button>
+        </div>
+        <button class="culture-language" id="cultureLanguage" type="button" aria-label="Vis norsk støtte">🇳🇴 <span>Norsk</span></button>
+      </div>
     </header>
 
     <section class="culture-intro" id="cultureIntro">

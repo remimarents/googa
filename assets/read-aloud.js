@@ -28,6 +28,9 @@
 
   const play = (text, audioPath, button) => {
     stop();
+    if (typeof window.GOOGA_AUDIO_PATH_RESOLVER === 'function') {
+      try { audioPath = window.GOOGA_AUDIO_PATH_RESOLVER(audioPath, text) || audioPath; } catch (_) {}
+    }
     if (!audioPath) {
       browserSpeech(text, button);
       return;

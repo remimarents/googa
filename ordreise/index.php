@@ -35,6 +35,7 @@ if (empty($_SESSION['googa_payment_csrf'])) {
     <link rel="manifest" href="manifest.webmanifest">
     <title>Googa – Safarka Erayada</title>
     <link rel="stylesheet" href="styles.css?v=<?= rawurlencode($assetVersion) ?>">
+    <link rel="stylesheet" href="wheel.css?v=<?= rawurlencode($assetVersion) ?>">
   </head>
   <body>
     <main id="app"></main>

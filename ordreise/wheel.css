@@ -1,0 +1,2 @@
+.letter{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-108px) rotate(calc(-1 * var(--angle)))}
+@media(max-width:420px){.letter{transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-100px) rotate(calc(-1 * var(--angle)))}}

@@ -55,6 +55,9 @@ function googa_default_user(string $email, string $name = ''): array
             'coupon_id' => null,
             'promo_code_id' => null,
         ],
+        'entitlements' => [
+            'ordreise_full' => null,
+        ],
         'family' => [
             'pairing_version' => null,
             'devices' => [],
@@ -246,6 +249,16 @@ function googa_access_state(array $user, string $mode = 'paid'): array
         return ['allowed' => true, 'source' => 'trial', 'label' => 'Trial'];
     }
     return ['allowed' => false, 'source' => 'none', 'label' => 'No active access'];
+}
+
+function googa_has_ordreise_full_access(array $user): bool
+{
+    if ((string)($user['role'] ?? '') === 'owner' || googa_access_state($user, 'paid')['allowed']) {
+        return true;
+    }
+    $entitlements = is_array($user['entitlements'] ?? null) ? $user['entitlements'] : [];
+    return is_array($entitlements['ordreise_full'] ?? null)
+        && (($entitlements['ordreise_full']['status'] ?? '') === 'active');
 }
 
 function googa_family_data(array $user): array

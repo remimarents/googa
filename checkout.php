@@ -11,12 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !hash_equals((string)($_SESSION['go
     exit('Ugyldig betalingsforespørsel.');
 }
 $kind = (string)($_POST['kind'] ?? '');
-if ($kind !== 'trial') {
+if (!in_array($kind, ['trial', 'ordreise_lifetime'], true)) {
     http_response_code(400);
     exit('Ugyldig betalingsvalg.');
 }
 try {
     $user = ($context['email'] ?? '') !== '' ? (array)$context['user'] : null;
+    if ($kind === 'ordreise_lifetime' && !is_array($user)) {
+        throw new RuntimeException('Du må være innlogget for å kjøpe Ordreise.');
+    }
     $session = googa_stripe_create_checkout($user, $kind);
     $url = (string)($session['url'] ?? '');
     if ($url === '') {

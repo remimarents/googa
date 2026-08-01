@@ -6,9 +6,14 @@ session_start();
 require_once __DIR__ . '/../lib/store.php';
 
 $context = googa_session_context();
-if (empty($context['authenticated']) || empty($context['access']['allowed'])) {
+if (empty($context['authenticated'])) {
     header('Location: ../');
     exit;
+}
+$user = is_array($context['user'] ?? null) ? $context['user'] : [];
+$premium = googa_has_ordreise_full_access($user);
+if (empty($_SESSION['googa_payment_csrf'])) {
+    $_SESSION['googa_payment_csrf'] = bin2hex(random_bytes(24));
 }
 ?>
 <!doctype html>
@@ -24,7 +29,7 @@ if (empty($context['authenticated']) || empty($context['access']['allowed'])) {
   </head>
   <body>
     <main id="app"></main>
-    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;</script>
+    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;</script>
     <script src="wordbank.js"></script>
     <script src="somaliweb-provisional.js"></script>
     <script src="word-lists.js"></script>

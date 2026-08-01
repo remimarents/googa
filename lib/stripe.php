@@ -53,6 +53,25 @@ function googa_stripe_create_checkout(?array $user, string $kind): array
     $email = googa_normalize_email((string)($user['email'] ?? ''));
     $discount = max(0, min(100, (int)($user['discount_percent'] ?? 0)));
     $intent = bin2hex(random_bytes(16));
+    if ($kind === 'ordreise_lifetime') {
+        if (!is_array($user) || $email === '') {
+            throw new RuntimeException('Du må være innlogget for å kjøpe Ordreise.');
+        }
+        return googa_stripe_request('POST', 'checkout/sessions', [
+            'mode' => 'payment',
+            'success_url' => GOOGA_PUBLIC_BASE_URL . '/success.php?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => GOOGA_PUBLIC_BASE_URL . '/ordreise/?payment=cancelled',
+            'client_reference_id' => $intent,
+            'line_items[0][price]' => GOOGA_ORDREISE_LIFETIME_PRICE_ID,
+            'line_items[0][quantity]' => 1,
+            'metadata[googa_app]' => 'googa',
+            'metadata[googa_intent]' => $intent,
+            'metadata[googa_kind]' => $kind,
+            'metadata[googa_email]' => $email,
+            'metadata[googa_product]' => 'ordreise_lifetime',
+            'customer_email' => $email,
+        ]);
+    }
     $params = [
         'mode' => 'subscription',
         'success_url' => GOOGA_PUBLIC_BASE_URL . '/success.php?session_id={CHECKOUT_SESSION_ID}',
@@ -144,7 +163,7 @@ function googa_stripe_apply_subscription(array &$data, array $subscription, stri
 function googa_stripe_apply_checkout_session(array &$data, array $session): bool
 {
     $metadata = is_array($session['metadata'] ?? null) ? $session['metadata'] : [];
-    if (($metadata['googa_app'] ?? '') !== 'googa' || !in_array((string)($metadata['googa_kind'] ?? ''), ['trial', 'monthly'], true)) {
+    if (($metadata['googa_app'] ?? '') !== 'googa' || !in_array((string)($metadata['googa_kind'] ?? ''), ['trial', 'monthly', 'ordreise_lifetime'], true)) {
         return false;
     }
     if (($session['status'] ?? '') !== 'complete' || !in_array((string)($session['payment_status'] ?? ''), ['paid', 'no_payment_required'], true)) {
@@ -153,6 +172,29 @@ function googa_stripe_apply_checkout_session(array &$data, array $session): bool
     $email = googa_normalize_email((string)($metadata['googa_email'] ?? ''));
     if ($email === '') {
         $email = googa_stripe_checkout_email($session);
+    }
+    if (($metadata['googa_kind'] ?? '') === 'ordreise_lifetime') {
+        if ($email === '') {
+            return false;
+        }
+        googa_ensure_user($data, $email, (string)(($session['customer_details']['name'] ?? '')));
+        $user = googa_stripe_find_user($data, $email, (string)($session['customer'] ?? ''), '');
+        if (!is_array($user)) {
+            return false;
+        }
+        $entitlements = is_array($user['entitlements'] ?? null) ? $user['entitlements'] : [];
+        $entitlements['ordreise_full'] = [
+            'status' => 'active',
+            'product_id' => GOOGA_ORDREISE_LIFETIME_PRODUCT_ID,
+            'price_id' => GOOGA_ORDREISE_LIFETIME_PRICE_ID,
+            'checkout_session_id' => (string)($session['id'] ?? ''),
+            'payment_intent_id' => (string)($session['payment_intent'] ?? ''),
+            'customer_id' => (string)($session['customer'] ?? ''),
+            'purchased_at' => gmdate('c'),
+        ];
+        $user['entitlements'] = $entitlements;
+        googa_write_user($data, $user);
+        return true;
     }
     $subscriptionId = (string)($session['subscription'] ?? '');
     if ($email === '' || $subscriptionId === '') {

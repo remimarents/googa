@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T21:17:36.849Z",
+  "generatedAt": "2026-08-01T22:14:46.137Z",
   "sources": {
     "afsoomali": "https://raw.githubusercontent.com/yahyaqowle/Afsoomali/main/Somali-Words/Somali-Words.txt",
     "kaikki": "https://kaikki.org/dictionary/Somali/kaikki.org-dictionary-Somali.jsonl",
@@ -10,7 +10,7 @@
     "kaikki": 933,
     "kaikkiAdditions": 205,
     "combined": 23957,
-    "levels": 300,
+    "levels": 1001,
     "reviewWords": 1500
   }
 }

@@ -18,11 +18,14 @@ if (preg_match('/^cs_(live|test)_[A-Za-z0-9]+$/', $sessionId)) {
         $expectedIntent = (string)($_SESSION['googa_checkout_intent'] ?? '');
         $actualIntent = (string)($metadata['googa_intent'] ?? '');
         $sameBrowser = $expectedIntent !== '' && $actualIntent !== '' && hash_equals($expectedIntent, $actualIntent);
+        $isOrdreise = ($metadata['googa_kind'] ?? '') === 'ordreise_lifetime';
         if ($ready && $sameBrowser && isset($data['users'][$email])) {
             $user = $data['users'][$email];
             googa_login_user($user);
             unset($_SESSION['googa_checkout_intent']);
-            if (!googa_user_has_password($user)) {
+            if ($isOrdreise) {
+                $next = './ordreise/?payment=success';
+            } elseif (!googa_user_has_password($user)) {
                 $token = googa_create_password_token($data, $email, true);
                 $next = './reset-password.php?t=' . rawurlencode((string)$token) . '&new=1';
             } else {

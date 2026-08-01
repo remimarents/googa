@@ -93,7 +93,7 @@ const candidates = [...combined]
 const levels = [];
 const usedSeeds = new Set();
 for (const seed of candidates.filter((word) => word.length >= 4 && word.length <= 7)) {
-  if (levels.length >= 300 || usedSeeds.has(seed)) break;
+  if (levels.length >= 1001 || usedSeeds.has(seed)) break;
   const found = candidates
     .filter((word) => word.length >= 3 && word.length <= seed.length && canMake(word, seed))
     .sort((a, b) => rank(b) - rank(a) || b.length - a.length || a.localeCompare(b));

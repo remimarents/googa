@@ -28,7 +28,7 @@ if ($context['role'] === 'owner' && empty($_SESSION['googa_mode'])) {
 }
 
 if (!$context['access']['allowed']) {
-    require __DIR__ . '/login.php';
+    require __DIR__ . '/access.php';
     exit;
 }
 

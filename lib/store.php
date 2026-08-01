@@ -43,6 +43,8 @@ function googa_default_user(string $email, string $name = ''): array
             'monthly_price_id' => GOOGA_MONTHLY_PRICE_ID,
             'intro_price_id' => GOOGA_INTRO_PRICE_ID,
             'customer_id' => null,
+            'subscription_id' => null,
+            'checkout_session_id' => null,
             'subscription_status' => 'none',
             'current_period_ends_at' => null,
             'coupon_id' => null,
@@ -194,4 +196,3 @@ function googa_require_owner(array $context): void
         exit;
     }
 }
-

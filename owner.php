@@ -36,10 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user['access_override_until'] = googa_date_or_null((string)($_POST['access_override_until'] ?? ''));
             $user['access_override_reason'] = trim((string)($_POST['access_override_reason'] ?? ''));
             $user['notes'] = trim((string)($_POST['notes'] ?? ''));
-            $stripe['subscription_status'] = (string)($_POST['subscription_status'] ?? 'none');
-            $stripe['customer_id'] = trim((string)($_POST['customer_id'] ?? '')) ?: null;
-            $stripe['coupon_id'] = trim((string)($_POST['coupon_id'] ?? '')) ?: null;
-            $stripe['promo_code_id'] = trim((string)($_POST['promo_code_id'] ?? '')) ?: null;
             $user['stripe'] = $stripe;
             googa_write_user($data, $user);
             $message = 'Bruker lagret.';
@@ -203,12 +199,9 @@ function googa_form_date(?string $iso): string
           </select>
         </div>
         <div class="field">
-          <label for="subscription_status">Stripe-status</label>
-          <select id="subscription_status" name="subscription_status">
-            <?php foreach (['none','trialing','active','past_due','canceled'] as $status): ?>
-            <option value="<?= $status ?>"<?= (($selectedStripe['subscription_status'] ?? 'none') === $status) ? ' selected' : '' ?>><?= $status ?></option>
-            <?php endforeach; ?>
-          </select>
+          <label>Stripe-status</label>
+          <input value="<?= htmlspecialchars((string)($selectedStripe['subscription_status'] ?? 'none'), ENT_QUOTES, 'UTF-8') ?>" readonly>
+          <small>Oppdateres automatisk fra Stripe. Bruk «Manuell tilgang» for en tidsavgrenset gave.</small>
         </div>
         <div class="field">
           <label for="trial_ends_at">Trial slutter</label>
@@ -223,16 +216,8 @@ function googa_form_date(?string $iso): string
           <input id="access_override_reason" name="access_override_reason" value="<?= htmlspecialchars((string)($selected['access_override_reason'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
         </div>
         <div class="field">
-          <label for="customer_id">Stripe customer id</label>
-          <input id="customer_id" name="customer_id" value="<?= htmlspecialchars((string)($selectedStripe['customer_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
-        </div>
-        <div class="field">
-          <label for="coupon_id">Stripe coupon id</label>
-          <input id="coupon_id" name="coupon_id" value="<?= htmlspecialchars((string)($selectedStripe['coupon_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
-        </div>
-        <div class="field">
-          <label for="promo_code_id">Stripe promo code id</label>
-          <input id="promo_code_id" name="promo_code_id" value="<?= htmlspecialchars((string)($selectedStripe['promo_code_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
+          <label>Stripe-kunde</label>
+          <input value="<?= htmlspecialchars((string)($selectedStripe['customer_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" readonly>
         </div>
         <div class="field">
           <label for="notes">Notater</label>

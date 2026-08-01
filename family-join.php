@@ -18,7 +18,7 @@ $ownerEmail = '';
 $owner = null;
 foreach ($data['users'] as $email => $candidate) {
     $family = googa_family_data($candidate);
-    if (googa_is_future($family['pairing_expires_at']) && hash_equals($family['pairing_token_hash'], hash('sha256', $token))) {
+    if ($family['pairing_version'] !== '' && hash_equals(googa_family_pairing_token((string)$email, $family['pairing_version']), $token)) {
         $ownerEmail = googa_normalize_email((string)$email);
         $owner = $candidate;
         break;
@@ -26,9 +26,8 @@ foreach ($data['users'] as $email => $candidate) {
 }
 if (!is_array($owner) || !googa_access_state($owner, 'paid')['allowed']) {
     http_response_code(403);
-    exit('Koodhkan wuu dhacay ama rukhsaddu ma shaqaynayso.');
+    exit('Koodhkani ma shaqaynayo hadda.');
 }
-
 $currentOwner = googa_normalize_email((string)($_SESSION['googa_family_owner'] ?? ''));
 $currentDevice = trim((string)($_SESSION['googa_family_device'] ?? ''));
 if ($currentOwner === $ownerEmail && googa_family_device_is_valid($owner, $currentDevice)) {
@@ -38,22 +37,21 @@ if ($currentOwner === $ownerEmail && googa_family_device_is_valid($owner, $curre
 
 $family = googa_family_data($owner);
 $deviceId = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
-$family['devices'][] = [
-    'id_hash' => hash('sha256', $deviceId),
-    'label' => 'Qalabka carruurta ' . (count($family['devices']) + 1),
-    'joined_at' => googa_now(),
+$requestId = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+$family['pending_devices'][] = [
+    'request_hash' => hash('sha256', $requestId),
+    'device_hash' => hash('sha256', $deviceId),
+    'requested_at' => googa_now(),
+    'expires_at' => gmdate('c', time() + (10 * 60)),
 ];
-usort($family['devices'], static fn(array $a, array $b): int => strcmp((string)($a['joined_at'] ?? ''), (string)($b['joined_at'] ?? '')));
-while (count($family['devices']) > 3) {
-    array_shift($family['devices']);
-}
 $owner['family'] = $family;
 googa_write_user($data, $owner);
 googa_save_data($data);
 
 session_regenerate_id(true);
-unset($_SESSION['googa_email'], $_SESSION['googa_name'], $_SESSION['googa_mode']);
-$_SESSION['googa_family_owner'] = $ownerEmail;
-$_SESSION['googa_family_device'] = $deviceId;
-header('Location: ./', true, 303);
+unset($_SESSION['googa_email'], $_SESSION['googa_name'], $_SESSION['googa_mode'], $_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
+$_SESSION['googa_family_pending_owner'] = $ownerEmail;
+$_SESSION['googa_family_pending_request'] = $requestId;
+$_SESSION['googa_family_pending_device'] = $deviceId;
+header('Location: family-pending.php', true, 303);
 exit;

@@ -51,9 +51,9 @@ function googa_default_user(string $email, string $name = ''): array
             'promo_code_id' => null,
         ],
         'family' => [
-            'pairing_token_hash' => null,
-            'pairing_expires_at' => null,
+            'pairing_version' => null,
             'devices' => [],
+            'pending_devices' => [],
         ],
         'notes' => '',
     ];
@@ -176,11 +176,35 @@ function googa_family_data(array $user): array
 {
     $family = is_array($user['family'] ?? null) ? $user['family'] : [];
     $devices = is_array($family['devices'] ?? null) ? $family['devices'] : [];
+    $pending = is_array($family['pending_devices'] ?? null) ? $family['pending_devices'] : [];
     return [
-        'pairing_token_hash' => (string)($family['pairing_token_hash'] ?? ''),
-        'pairing_expires_at' => $family['pairing_expires_at'] ?? null,
+        'pairing_version' => (string)($family['pairing_version'] ?? ''),
         'devices' => array_values(array_filter($devices, 'is_array')),
+        'pending_devices' => array_values(array_filter($pending, 'is_array')),
     ];
+}
+
+function googa_family_secret(): string
+{
+    static $secret = null;
+    if (is_string($secret)) {
+        return $secret;
+    }
+    $secret = is_file(GOOGA_FAMILY_SECRET_FILE) ? trim((string)file_get_contents(GOOGA_FAMILY_SECRET_FILE)) : '';
+    if (strlen($secret) < 32) {
+        throw new RuntimeException('Family QR is not configured.');
+    }
+    return $secret;
+}
+
+function googa_family_pairing_token(string $email, string $version): string
+{
+    return rtrim(strtr(base64_encode(hash_hmac('sha256', googa_normalize_email($email) . '|' . $version, googa_family_secret(), true)), '+/', '-_'), '=');
+}
+
+function googa_family_new_pairing_version(): string
+{
+    return bin2hex(random_bytes(16));
 }
 
 function googa_family_device_is_valid(array $user, string $deviceId): bool

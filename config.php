@@ -12,4 +12,5 @@ const GOOGA_MONTHLY_PRICE_ID = 'price_1TzedtBgfqMKZQay3RROQJTQ';
 const GOOGA_INTRO_PRICE_ID = 'price_1TzedtBgfqMKZQayCgFS0j8s';
 const GOOGA_PRODUCT_ID = 'prod_UzdvEnhniM03Gn';
 const GOOGA_STRIPE_ENV_FILE = '/home/ferdighet/.googa-stripe.env';
+const GOOGA_FAMILY_SECRET_FILE = '/home/ferdighet/.googa-family.env';
 const GOOGA_PUBLIC_BASE_URL = 'https://ferdighet.no/googa';

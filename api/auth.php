@@ -41,6 +41,7 @@ if ($action === 'poll' && ($data['status'] ?? '') === 'approved') {
         $_SESSION['googa_email'] = googa_normalize_email((string)($data['email'] ?? ''));
         $_SESSION['googa_name'] = (string)($data['identity'] ?? '');
         unset($_SESSION['googa_mode']);
+        unset($_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
         $store = googa_load_data();
         googa_ensure_user($store, (string)$_SESSION['googa_email'], (string)$_SESSION['googa_name']);
         googa_save_data($store);

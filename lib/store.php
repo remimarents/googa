@@ -50,6 +50,11 @@ function googa_default_user(string $email, string $name = ''): array
             'coupon_id' => null,
             'promo_code_id' => null,
         ],
+        'family' => [
+            'pairing_token_hash' => null,
+            'pairing_expires_at' => null,
+            'devices' => [],
+        ],
         'notes' => '',
     ];
 }
@@ -167,24 +172,71 @@ function googa_access_state(array $user, string $mode = 'paid'): array
     return ['allowed' => false, 'source' => 'none', 'label' => 'No active access'];
 }
 
+function googa_family_data(array $user): array
+{
+    $family = is_array($user['family'] ?? null) ? $user['family'] : [];
+    $devices = is_array($family['devices'] ?? null) ? $family['devices'] : [];
+    return [
+        'pairing_token_hash' => (string)($family['pairing_token_hash'] ?? ''),
+        'pairing_expires_at' => $family['pairing_expires_at'] ?? null,
+        'devices' => array_values(array_filter($devices, 'is_array')),
+    ];
+}
+
+function googa_family_device_is_valid(array $user, string $deviceId): bool
+{
+    if ($deviceId === '') {
+        return false;
+    }
+    $expected = hash('sha256', $deviceId);
+    foreach (googa_family_data($user)['devices'] as $device) {
+        if (hash_equals((string)($device['id_hash'] ?? ''), $expected)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function googa_session_context(): array
 {
     $email = googa_normalize_email((string)($_SESSION['googa_email'] ?? ''));
     $name = trim((string)($_SESSION['googa_name'] ?? ''));
     $mode = (string)($_SESSION['googa_mode'] ?? '');
+    $familyOwner = googa_normalize_email((string)($_SESSION['googa_family_owner'] ?? ''));
+    $familyDevice = trim((string)($_SESSION['googa_family_device'] ?? ''));
     $data = googa_load_data();
     $user = $email !== '' ? googa_ensure_user($data, $email, $name) : null;
     if ($email !== '') {
         googa_save_data($data);
     }
     $role = is_array($user) ? (string)($user['role'] ?? 'user') : 'guest';
+    if ($email === '' && $familyOwner !== '' && isset($data['users'][$familyOwner]) && is_array($data['users'][$familyOwner])) {
+        $owner = $data['users'][$familyOwner];
+        if (googa_family_device_is_valid($owner, $familyDevice)) {
+            return [
+                'authenticated' => true,
+                'email' => '',
+                'account_email' => $familyOwner,
+                'name' => 'Qoyska Googa',
+                'role' => 'child',
+                'mode' => 'family',
+                'user' => $owner,
+                'access' => googa_access_state($owner, 'paid'),
+                'family_device' => true,
+            ];
+        }
+        unset($_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
+    }
     return [
+        'authenticated' => $email !== '',
         'email' => $email,
+        'account_email' => $email,
         'name' => $name,
         'role' => $role,
         'mode' => $mode,
         'user' => $user,
         'access' => is_array($user) ? googa_access_state($user, $mode === '' ? 'paid' : $mode) : ['allowed' => false, 'source' => 'guest', 'label' => 'Guest'],
+        'family_device' => false,
     ];
 }
 

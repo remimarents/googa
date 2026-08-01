@@ -11,6 +11,7 @@ if (isset($_GET['quick']) && (string)$_GET['quick'] === 'ahab') {
     $_SESSION['googa_email'] = 'kadiye86@gmail.com';
     $_SESSION['googa_name'] = 'Ahab';
     unset($_SESSION['googa_mode']);
+    unset($_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
     header('Location: ./');
     exit;
 }

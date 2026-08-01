@@ -15,12 +15,12 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-if (empty($_SESSION['googa_email'])) {
+$context = googa_session_context();
+
+if (empty($context['authenticated'])) {
     require __DIR__ . '/login.php';
     exit;
 }
-
-$context = googa_session_context();
 
 if ($context['role'] === 'owner' && empty($_SESSION['googa_mode'])) {
     require __DIR__ . '/owner-mode.php';

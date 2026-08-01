@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "status": "implemented-with-review-required",
+  "culture_test": {
+    "authentication": "none",
+    "raw_answers_sent_to_server": false,
+    "result_profile_sent_to_server": false,
+    "persistence": "none",
+    "analytics_allowed": ["test_started", "test_completed", "share_used", "offer_opened", "checkout_started", "purchase_completed"],
+    "analytics_forbidden": ["raw_answers", "dimension_scores", "result_level", "ethnicity_inference"]
+  },
+  "dpia": "screening-required-before-new-server-side-storage-or-profile-analytics"
+}

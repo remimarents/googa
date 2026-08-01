@@ -1,22 +1,7 @@
 <?php
 declare(strict_types=1);
 
-session_name('googa');
-session_start();
-
-require_once __DIR__ . '/lib/store.php';
 require_once __DIR__ . '/lib/version.php';
-
-$context = googa_session_context();
-if (empty($context['authenticated']) || empty($context['access']['allowed'])) {
-    header('Location: ./');
-    exit;
-}
-if (($context['role'] ?? '') !== 'owner') {
-    http_response_code(404);
-    header('Location: ./');
-    exit;
-}
 $assetVersion = googa_app_version();
 ?><!doctype html>
 <html lang="so">
@@ -25,18 +10,21 @@ $assetVersion = googa_app_version();
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123b59">
   <title>Googa – Laba dal, hal sheeko</title>
+  <meta name="description" content="Gratis kulturkompass for voksne mellom Norge og Somalia. Ingen innlogging – svarene blir på enheten din.">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="Googa"><meta property="og:title" content="Laba dal, hal sheeko – hvor ligger ditt kulturkompass?"><meta property="og:description" content="Ta Googas gratis test for voksne. Ingen innlogging, og svarene blir på enheten din."><meta property="og:url" content="https://ferdighet.no/googa/culture-test.php"><meta property="og:image" content="https://ferdighet.no/googa/assets/culture-test-share.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-test.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-commerce.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="culture-test-page">
   <main class="culture-shell">
     <header class="culture-topbar">
       <a class="culture-brand" href="./"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA</span></a>
       <div class="culture-toolbar">
-        <span class="culture-preview">EIERFORHÅNDSVISNING</span>
+        <span class="culture-preview">BILAASH · AKOON LOOMA BAAHNA</span>
         <div class="culture-voice-picker" role="radiogroup" aria-label="Dooro codka Soomaaliga">
           <span class="culture-voice-label">CODKA</span>
           <button class="culture-voice active" id="voiceUbax" type="button" role="radio" aria-checked="true" data-voice="ubax" aria-label="Dooro codka Ubax"><img src="<?= htmlspecialchars(googa_asset_url('assets/voices/narrator-ubax.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>Ubax</span></button>
@@ -78,6 +66,9 @@ $assetVersion = googa_app_version();
       <p class="culture-result-intro" id="cultureResultIntro"></p>
       <div class="culture-axes" id="cultureAxes"></div>
       <section class="culture-actions"><p class="culture-kicker">TALLAABOOYINKA XIGA</p><h2>Labadaada buundo ee xiga</h2><div id="cultureActions"></div></section>
+      <section class="culture-share" id="cultureShareCard"><div class="share-brand"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA · LABA DAL, HAL SHEEKO</span></div><p>Tilmaamaha dhaqankayga</p><h2 id="cultureShareTitle"></h2><div id="cultureShareAxes"></div><footer><span>🇳🇴</span><b>Aqoonta hal hoy waxay naga caawisaa inaan fahanno kan kale.</b><span>🇸🇴</span></footer></section>
+      <div class="culture-share-buttons"><button class="culture-primary" id="cultureShare" type="button">La wadaag natiijada</button><button class="culture-secondary" id="cultureDownload" type="button">Kaydi kaarka</button></div>
+      <section class="culture-commerce"><p class="culture-kicker">QAADO BUUNDADA QOYSKA</p><h2>Googa la tijaabi qoyskaaga</h2><p>Halxiraalo, cod Af-Soomaali ah iyo ciyaar qoyska oo dhan ah.</p><a class="culture-buy" href="./?buy=trial"><span><small>2 maalmood oo tijaabo ah</small><b>Ku bilow kr 5</b><em>Kadib kr 50 bishii · jooji wakhti kasta</em></span><strong>→</strong></a><div class="culture-more-offers"><a href="gift.php">🎁 Hadiyad sii qoys</a><a href="./#annual">★ Kr 499 sanadkii</a><a href="help.php#ambassador">🌍 Noqo safiir</a><a href="help.php">🏫 Ururro</a></div></section>
       <div class="culture-result-buttons"><button class="culture-primary" id="cultureRestart" type="button">Mar kale samee</button><a class="culture-secondary" href="./">Ku noqo Googa</a></div>
       <p class="culture-review">Utkast · Ikke normert eller psykometrisk validert.</p>
     </section>

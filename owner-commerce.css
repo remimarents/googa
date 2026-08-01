@@ -1,0 +1,1 @@
+.ambassador-form{display:grid!important;grid-template-columns:1.4fr 1fr .7fr auto!important;gap:10px;align-items:end}.ambassador-form .field{margin:0}@media(max-width:620px){.ambassador-form{grid-template-columns:1fr!important}.ambassador-form .save{width:100%}}

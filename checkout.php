@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !hash_equals((string)($_SESSION['go
     exit('Ugyldig betalingsforespørsel.');
 }
 $kind = (string)($_POST['kind'] ?? '');
-if (!in_array($kind, ['trial', 'ordreise_lifetime'], true)) {
+if (!in_array($kind, ['trial', 'annual', 'ordreise_lifetime', 'gift_3', 'gift_6', 'gift_12'], true)) {
     http_response_code(400);
     exit('Ugyldig betalingsvalg.');
 }
@@ -20,7 +20,10 @@ try {
     if ($kind === 'ordreise_lifetime' && (!is_array($user) || !googa_has_active_googa_subscription($user))) {
         throw new RuntimeException('Ordreise krever et aktivt Googa-abonnement.');
     }
-    $session = googa_stripe_create_checkout($user, $kind);
+    $session = googa_stripe_create_checkout($user, $kind, [
+        'recipient_email' => (string)($_POST['recipient_email'] ?? ''),
+        'recipient_name' => (string)($_POST['recipient_name'] ?? ''),
+    ]);
     $url = (string)($session['url'] ?? '');
     if ($url === '') {
         throw new RuntimeException('Stripe returnerte ingen betalingslenke.');

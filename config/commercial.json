@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "ambassadors": {
+    "creation": "owner-dashboard",
+    "discount_duration_months": 3,
+    "allowed_discount_percent": [10, 15, 20, 25],
+    "tracking": "unique-stripe-promotion-code",
+    "public_help_route": "/help.php#ambassador"
+  },
+  "organizations": {
+    "delivery": "manual",
+    "checkout_recommendation": true,
+    "followup_owner_record": "organization_orders"
+  }
+}

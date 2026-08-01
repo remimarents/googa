@@ -6,6 +6,7 @@ session_start();
 
 require_once __DIR__ . '/lib/store.php';
 require_once __DIR__ . '/lib/version.php';
+require_once __DIR__ . '/lib/stripe.php';
 
 $context = googa_session_context();
 googa_require_owner($context);
@@ -25,6 +26,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit('Invalid request');
     }
     $action = (string)($_POST['action'] ?? '');
+    if ($action === 'create-ambassador') {
+        try {
+            $promo = googa_stripe_create_ambassador((string)($_POST['ambassador_name'] ?? ''), (string)($_POST['ambassador_code'] ?? ''), (int)($_POST['ambassador_percent'] ?? 20));
+            $data['ambassadors'][(string)$promo['id']] = [
+                'name' => trim((string)($_POST['ambassador_name'] ?? '')),
+                'code' => (string)($promo['code'] ?? ''),
+                'percent' => max(1, min(50, (int)($_POST['ambassador_percent'] ?? 20))),
+                'promotion_code_id' => (string)$promo['id'],
+                'coupon_id' => (string)(($promo['coupon']['id'] ?? $promo['coupon'] ?? '')),
+                'created_at' => googa_now(),
+            ];
+            googa_save_data($data);
+            $message = 'Ambassadørkode opprettet i Stripe.';
+        } catch (Throwable $error) {
+            $message = 'Kunne ikke opprette kode: ' . $error->getMessage();
+        }
+    }
     $email = googa_normalize_email((string)($_POST['email'] ?? ''));
     if ($email !== '') {
         $user = googa_ensure_user($data, $email, (string)($_POST['name'] ?? ''));
@@ -68,6 +86,7 @@ ksort($users);
 $selectedEmail = googa_normalize_email((string)($_GET['email'] ?? ''));
 $selected = $selectedEmail !== '' && isset($users[$selectedEmail]) ? $users[$selectedEmail] : googa_default_user('');
 $selectedStripe = is_array($selected['stripe'] ?? null) ? $selected['stripe'] : [];
+$ambassadors = is_array($data['ambassadors'] ?? null) ? $data['ambassadors'] : [];
 
 function googa_form_date(?string $iso): string
 {
@@ -83,6 +102,7 @@ function googa_form_date(?string $iso): string
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Googa – eierdashbord</title>
 <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
+<link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('owner-commerce.css'), ENT_QUOTES, 'UTF-8') ?>">
 <style>
 .owner-shell{width:min(1100px,100%);margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left))}
 .owner-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
@@ -234,5 +254,17 @@ function googa_form_date(?string $iso): string
       </form>
     </section>
   </div>
+  <section class="panel" style="margin-top:18px">
+    <h2>Ambassadører og sporbare rabattkoder</h2>
+    <p>Hver kode gir avtalt rabatt på Googa de tre første månedene. Stripe teller innløsningene; opprett bare koder etter at vilkår er avtalt.</p>
+    <form method="post" class="ambassador-form">
+      <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="action" value="create-ambassador">
+      <div class="field"><label for="ambassador_name">Navn</label><input id="ambassador_name" name="ambassador_name" required></div>
+      <div class="field"><label for="ambassador_code">Kode</label><input id="ambassador_code" name="ambassador_code" minlength="4" pattern="[A-Za-z0-9]+" placeholder="NAVN20" required></div>
+      <div class="field"><label for="ambassador_percent">Rabatt</label><select id="ambassador_percent" name="ambassador_percent"><?php foreach ([10,15,20,25] as $percent): ?><option value="<?= $percent ?>"<?= $percent === 20 ? ' selected' : '' ?>><?= $percent ?>%</option><?php endforeach; ?></select></div>
+      <button class="save" type="submit">Opprett i Stripe</button>
+    </form>
+    <?php if ($ambassadors): ?><table class="table"><thead><tr><th>Navn</th><th>Kode</th><th>Rabatt</th><th>Stripe-ID</th></tr></thead><tbody><?php foreach ($ambassadors as $ambassador): ?><tr><td data-label="Navn"><?= htmlspecialchars((string)($ambassador['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td><td data-label="Kode"><strong><?= htmlspecialchars((string)($ambassador['code'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong></td><td data-label="Rabatt"><?= (int)($ambassador['percent'] ?? 0) ?>% · 3 mnd</td><td data-label="Stripe-ID"><small><?= htmlspecialchars((string)($ambassador['promotion_code_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?></small></td></tr><?php endforeach; ?></tbody></table><?php endif; ?>
+  </section>
 </main>
 </html>

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "status": "implemented",
+  "primary": "free-test",
+  "entrypoints": {
+    "free-test": {
+      "route": "/culture-test.php",
+      "authentication": "none",
+      "answer_storage": "client-memory-only",
+      "complete_result_before_commerce": true,
+      "primary_cta": "Prøv Googa med familien for kr 5"
+    },
+    "low-barrier": {
+      "route": "/",
+      "offer": "kr 5 now, then kr 50 monthly after two days"
+    }
+  }
+}

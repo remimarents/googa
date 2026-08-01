@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "status": "implemented",
+  "provider": "stripe-checkout",
+  "catalog": {
+    "trial": {"price_now_nok": 5, "trial_days": 2, "renews_monthly_nok": 50},
+    "annual": {"price_nok": 499, "interval": "year"},
+    "gift_3": {"price_nok": 149, "months": 3, "renewal": false},
+    "gift_6": {"price_nok": 279, "months": 6, "renewal": false},
+    "gift_12": {"price_nok": 499, "months": 12, "renewal": false},
+    "organization_starter": {"price_nok": 2500, "families": 25, "fulfillment": "manual"}
+  },
+  "rules": {
+    "prices_are_server_authoritative": true,
+    "access_requires_verified_checkout_or_webhook": true,
+    "success_redirect_alone_grants_access": false,
+    "organization_package_is_optional_checkout_item": true
+  }
+}

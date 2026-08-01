@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/store.php';
+require_once __DIR__ . '/mail.php';
 
 function googa_stripe_config(): array
 {
@@ -20,6 +21,9 @@ function googa_stripe_request(string $method, string $path, array $params = []):
 {
     $config = googa_stripe_config();
     $url = 'https://api.stripe.com/v1/' . ltrim($path, '/');
+    if ($method === 'GET' && $params !== []) {
+        $url .= '?' . http_build_query($params, '', '&');
+    }
     $curl = curl_init($url);
     if ($curl === false) {
         throw new RuntimeException('Unable to start Stripe request.');
@@ -48,11 +52,33 @@ function googa_stripe_request(string $method, string $path, array $params = []):
     return $decoded;
 }
 
-function googa_stripe_create_checkout(?array $user, string $kind): array
+function googa_stripe_create_checkout(?array $user, string $kind, array $options = []): array
 {
     $email = googa_normalize_email((string)($user['email'] ?? ''));
     $discount = max(0, min(100, (int)($user['discount_percent'] ?? 0)));
     $intent = bin2hex(random_bytes(16));
+    if (str_starts_with($kind, 'gift_')) {
+        $months = (int)substr($kind, 5);
+        $recipientEmail = googa_normalize_email((string)($options['recipient_email'] ?? ''));
+        $recipientName = trim((string)($options['recipient_name'] ?? ''));
+        if (!isset(GOOGA_GIFT_PRICE_IDS[$months]) || $recipientEmail === '') {
+            throw new RuntimeException('Gaven mangler en gyldig mottaker eller varighet.');
+        }
+        return googa_stripe_request('POST', 'checkout/sessions', [
+            'mode' => 'payment',
+            'success_url' => GOOGA_PUBLIC_BASE_URL . '/success.php?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => GOOGA_PUBLIC_BASE_URL . '/gift.php?payment=cancelled',
+            'client_reference_id' => $intent,
+            'line_items[0][price]' => GOOGA_GIFT_PRICE_IDS[$months],
+            'line_items[0][quantity]' => 1,
+            'metadata[googa_app]' => 'googa',
+            'metadata[googa_intent]' => $intent,
+            'metadata[googa_kind]' => $kind,
+            'metadata[googa_recipient_email]' => $recipientEmail,
+            'metadata[googa_recipient_name]' => mb_substr($recipientName, 0, 120),
+            'metadata[googa_gift_months]' => $months,
+        ]);
+    }
     if ($kind === 'ordreise_lifetime') {
         if (!is_array($user) || $email === '') {
             throw new RuntimeException('Du må være innlogget for å kjøpe Ordreise.');
@@ -78,7 +104,7 @@ function googa_stripe_create_checkout(?array $user, string $kind): array
         'cancel_url' => GOOGA_PUBLIC_BASE_URL . '/?payment=cancelled',
         'client_reference_id' => $intent,
         'payment_method_collection' => 'always',
-        'line_items[0][price]' => GOOGA_MONTHLY_PRICE_ID,
+        'line_items[0][price]' => $kind === 'annual' ? GOOGA_ANNUAL_PRICE_ID : GOOGA_MONTHLY_PRICE_ID,
         'line_items[0][quantity]' => 1,
         'metadata[googa_app]' => 'googa',
         'metadata[googa_intent]' => $intent,
@@ -86,6 +112,9 @@ function googa_stripe_create_checkout(?array $user, string $kind): array
         'subscription_data[metadata][googa_app]' => 'googa',
         'subscription_data[metadata][googa_intent]' => $intent,
         'subscription_data[metadata][googa_kind]' => $kind,
+        'allow_promotion_codes' => 'true',
+        'optional_items[0][price]' => GOOGA_ORGANIZATION_PRICE_ID,
+        'optional_items[0][quantity]' => 1,
     ];
     if ($email !== '') {
         $params['customer_email'] = $email;
@@ -106,6 +135,7 @@ function googa_stripe_create_checkout(?array $user, string $kind): array
             'metadata[googa_email]' => $email,
         ]);
         $params['discounts[0][coupon]'] = (string)$coupon['id'];
+        unset($params['allow_promotion_codes']);
     }
     if ($discount === 100) {
         throw new RuntimeException('Full rabatt må gis fra eierpanelet som manuell tilgang.');
@@ -163,11 +193,39 @@ function googa_stripe_apply_subscription(array &$data, array $subscription, stri
 function googa_stripe_apply_checkout_session(array &$data, array $session): bool
 {
     $metadata = is_array($session['metadata'] ?? null) ? $session['metadata'] : [];
-    if (($metadata['googa_app'] ?? '') !== 'googa' || !in_array((string)($metadata['googa_kind'] ?? ''), ['trial', 'monthly', 'ordreise_lifetime'], true)) {
+    $kind = (string)($metadata['googa_kind'] ?? '');
+    if (($metadata['googa_app'] ?? '') !== 'googa' || (!in_array($kind, ['trial', 'monthly', 'annual', 'ordreise_lifetime'], true) && !str_starts_with($kind, 'gift_'))) {
         return false;
     }
     if (($session['status'] ?? '') !== 'complete' || !in_array((string)($session['payment_status'] ?? ''), ['paid', 'no_payment_required'], true)) {
         return false;
+    }
+    if (str_starts_with($kind, 'gift_')) {
+        $recipientEmail = googa_normalize_email((string)($metadata['googa_recipient_email'] ?? ''));
+        $months = max(0, (int)($metadata['googa_gift_months'] ?? 0));
+        if ($recipientEmail === '' || !isset(GOOGA_GIFT_PRICE_IDS[$months])) {
+            return false;
+        }
+        googa_ensure_user($data, $recipientEmail, (string)($metadata['googa_recipient_name'] ?? ''));
+        $user = $data['users'][$recipientEmail];
+        $sessionId = (string)($session['id'] ?? '');
+        $gifts = is_array($user['gifts'] ?? null) ? $user['gifts'] : [];
+        if ($sessionId !== '' && isset($gifts[$sessionId])) {
+            return true;
+        }
+        $base = googa_is_future($user['access_override_until'] ?? null)
+            ? new DateTimeImmutable((string)$user['access_override_until'])
+            : new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $user['access_override_until'] = $base->modify('+' . $months . ' months')->format(DATE_ATOM);
+        $user['access_override_reason'] = 'Googa gave ' . $months . ' måneder · Stripe ' . (string)($session['id'] ?? '');
+        $gifts[$sessionId] = ['months' => $months, 'purchased_at' => googa_now()];
+        $user['gifts'] = $gifts;
+        googa_write_user($data, $user);
+        $token = googa_create_password_token($data, $recipientEmail, true);
+        if (is_string($token) && !googa_send_gift_email($recipientEmail, (string)($metadata['googa_recipient_name'] ?? ''), $months, $token)) {
+            error_log('Googa gift email could not be sent for ' . $recipientEmail);
+        }
+        return true;
     }
     $email = googa_normalize_email((string)($metadata['googa_email'] ?? ''));
     if ($email === '') {
@@ -211,8 +269,46 @@ function googa_stripe_apply_checkout_session(array &$data, array $session): bool
             $user['stripe'] = $stripe;
             googa_write_user($data, $user);
         }
+        $sessionId = (string)($session['id'] ?? '');
+        if ($sessionId !== '') {
+            $lineItems = googa_stripe_request('GET', 'checkout/sessions/' . rawurlencode($sessionId) . '/line_items', ['limit' => 20]);
+            foreach ((array)($lineItems['data'] ?? []) as $lineItem) {
+                $priceId = (string)(($lineItem['price']['id'] ?? ''));
+                if ($priceId === GOOGA_ORGANIZATION_PRICE_ID) {
+                    $data['organization_orders'][$sessionId] = [
+                        'email' => $email,
+                        'status' => 'paid_followup_required',
+                        'created_at' => googa_now(),
+                    ];
+                }
+            }
+        }
     }
     return $ok;
+}
+
+function googa_stripe_create_ambassador(string $name, string $code, int $percent): array
+{
+    $name = trim($name);
+    $code = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $code) ?? '');
+    $percent = max(1, min(50, $percent));
+    if ($name === '' || strlen($code) < 4) {
+        throw new RuntimeException('Navn og kode med minst fire tegn er påkrevd.');
+    }
+    $coupon = googa_stripe_request('POST', 'coupons', [
+        'percent_off' => $percent,
+        'duration' => 'repeating',
+        'duration_in_months' => 3,
+        'name' => 'Googa ambassadør ' . $percent . '% i 3 mnd',
+        'applies_to[products][0]' => GOOGA_PRODUCT_ID,
+        'metadata[googa_ambassador]' => $name,
+    ]);
+    return googa_stripe_request('POST', 'promotion_codes', [
+        'coupon' => (string)$coupon['id'],
+        'code' => $code,
+        'metadata[googa_ambassador]' => $name,
+        'metadata[googa_channel]' => 'ambassador',
+    ]);
 }
 
 function googa_stripe_verify_signature(string $payload, string $header): bool

@@ -19,6 +19,13 @@ if (preg_match('/^cs_(live|test)_[A-Za-z0-9]+$/', $sessionId)) {
         $actualIntent = (string)($metadata['googa_intent'] ?? '');
         $sameBrowser = $expectedIntent !== '' && $actualIntent !== '' && hash_equals($expectedIntent, $actualIntent);
         $isOrdreise = ($metadata['googa_kind'] ?? '') === 'ordreise_lifetime';
+        $isGift = str_starts_with((string)($metadata['googa_kind'] ?? ''), 'gift_');
+        if ($ready && $sameBrowser && $isGift) {
+            unset($_SESSION['googa_checkout_intent']);
+            googa_save_data($data);
+            header('Location: ./gift.php?payment=success', true, 303);
+            exit;
+        }
         if ($ready && $sameBrowser && isset($data['users'][$email])) {
             $user = $data['users'][$email];
             googa_login_user($user);

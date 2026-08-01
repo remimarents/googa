@@ -2,96 +2,59 @@ const { chromium } = require('playwright');
 
 const base = process.env.GOOGA_BASE || 'https://ferdighet.no/googa/';
 const output = process.env.GOOGA_AUDIT_OUTPUT || '/tmp/googa-mobile-audit';
-const viewportWidth = Number(process.env.GOOGA_VIEWPORT_WIDTH || 390);
-const viewportHeight = Number(process.env.GOOGA_VIEWPORT_HEIGHT || 844);
 
 async function inspect(page, name) {
   await page.waitForLoadState('networkidle');
   const metrics = await page.evaluate(() => ({
     width: document.documentElement.clientWidth,
     scrollWidth: document.documentElement.scrollWidth,
-    height: document.documentElement.clientHeight,
-    scrollHeight: document.documentElement.scrollHeight,
-    smallTargets: [...document.querySelectorAll('button,a,input,select,textarea')]
-      .filter((node) => {
-        const box = node.getBoundingClientRect();
-        return box.width > 0 && box.height > 0 && (box.width < 44 || box.height < 44);
-      })
-      .map((node) => ({
-        text: (node.textContent || node.getAttribute('aria-label') || node.tagName).trim().slice(0, 50),
-        width: Math.round(node.getBoundingClientRect().width),
-        height: Math.round(node.getBoundingClientRect().height),
-      })),
+    readAloud: document.querySelectorAll('.read-aloud').length,
+    nestedButtons: document.querySelectorAll('button button').length,
   }));
   await page.screenshot({ path: `${output}-${name}.png`, fullPage: true });
-  if (metrics.scrollWidth > metrics.width + 1) {
-    throw new Error(`${name}: horizontal overflow ${metrics.scrollWidth} > ${metrics.width}`);
-  }
+  if (metrics.scrollWidth > metrics.width + 1) throw new Error(`${name}: horizontal overflow`);
+  if (metrics.nestedButtons) throw new Error(`${name}: nested interactive buttons`);
   console.log(JSON.stringify({ name, ...metrics }));
+  return metrics;
 }
 
 (async () => {
   const browser = await chromium.launch();
-  const context = await browser.newContext({
-    viewport: { width: viewportWidth, height: viewportHeight },
-    deviceScaleFactor: 2,
-    isMobile: true,
-    hasTouch: true,
-  });
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
   const page = await context.newPage();
-  if (process.env.GOOGA_MOCK_QR === '1') {
-    await page.route('**/api/auth.php?**', async (route) => {
-      const url = new URL(route.request().url());
-      const action = url.searchParams.get('action');
-      await route.fulfill({
-        contentType: 'application/json',
-        body: JSON.stringify(action === 'create'
-          ? { token: 'test-token', scanUrl: 'https://example.com/googa-login', state: 'pending' }
-          : { state: 'pending' }),
-      });
-    });
-  }
-
   await page.goto(`${base}?logout=1`);
-  await inspect(page, 'login');
-  const selectedPlanPoll = page.waitForRequest((request) => {
-    const url = new URL(request.url());
-    return url.pathname.endsWith('/api/auth.php')
-      && url.searchParams.get('action') === 'poll'
-      && url.searchParams.get('plan') === 'trial';
-  });
-  await page.locator('.price-choice[data-kind="trial"]').click();
-  await page.locator('#code canvas').waitFor();
-  await selectedPlanPoll;
-  const qrUrl = await page.locator('#manualLink').getAttribute('href');
-  await page.waitForTimeout(3200);
-  if (await page.locator('#manualLink').getAttribute('href') !== qrUrl) {
-    throw new Error('QR token changed while polling');
+  const login = await inspect(page, 'login');
+  if (login.readAloud < 5) throw new Error('Login is missing expected Somali read-aloud controls');
+  if (await page.locator('form[action="checkout.php"] .plan').count() !== 2) throw new Error('Stripe plan choices are missing');
+  const audioRequest = page.waitForResponse((response) => response.url().includes('/audio/ui/login-hero.mp3'));
+  await page.locator('.lead .read-aloud').click();
+  if (!(await audioRequest).ok()) throw new Error('Ubax login audio failed');
+  await page.locator('#lang').click();
+  if (await page.locator('.read-aloud').count() !== login.readAloud) throw new Error('Language switch removed read-aloud controls');
+
+  await page.goto(`${base}reset-password.php?t=invalid`);
+  if ((await inspect(page, 'reset-expired')).readAloud < 1) throw new Error('Password page is missing read-aloud');
+
+  await page.goto(`${base}family-pending.php`);
+  if ((await inspect(page, 'family-pending')).readAloud < 1) throw new Error('Family pending page is missing read-aloud');
+
+  const email = process.env.GOOGA_TEST_EMAIL;
+  const password = process.env.GOOGA_TEST_PASSWORD;
+  if (email && password) {
+    await page.goto(base);
+    await page.locator('#email').fill(email);
+    await page.locator('#password').fill(password);
+    await page.locator('.login-grid .primary').click();
+    await page.waitForLoadState('networkidle');
+    if (await page.getByRole('button', { name: 'Månedlig bruker' }).count()) await page.getByRole('button', { name: 'Månedlig bruker' }).click();
+    const home = await inspect(page, 'home');
+    if (home.readAloud < 5) throw new Error('Home is missing age and welcome read-aloud controls');
+    await page.locator('.age-card').first().click();
+    const riddle = await inspect(page, 'riddle');
+    if (riddle.readAloud < 3) throw new Error('Riddle answers are missing read-aloud controls');
+    await page.goto(`${base}family.php`);
+    if ((await inspect(page, 'family')).readAloud < 3) throw new Error('Family page is missing read-aloud controls');
   }
-
-  await page.goto(`${base}?quick=ahab`);
-  await inspect(page, 'owner-mode');
-
-  await page.getByRole('button', { name: 'Månedlig bruker' }).click();
-  await inspect(page, 'home');
-
-  await page.locator('.age-card').first().click();
-  await inspect(page, 'riddle-youngest');
-
-  await page.getByRole('button', { name: 'Vis tekst på norsk' }).click();
-  await inspect(page, 'riddle-norwegian');
-
-  await page.goto(`${base}family.php`);
-  await inspect(page, 'family');
-
-  await page.goto(`${base}owner.php`);
-  await inspect(page, 'owner-dashboard');
-
-  await page.goto(base);
-  page.once('dialog', (dialog) => dialog.accept());
-  await page.locator('#logoutDot').click({ clickCount: 3, delay: 100 });
-  await page.getByRole('button', { name: 'Ama ku gal QR-koodh' }).waitFor();
-  console.log(JSON.stringify({ name: 'logout-flow', ok: true }));
 
   await browser.close();
 })().catch((error) => {

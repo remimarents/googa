@@ -15,6 +15,8 @@ $files = [
     './styles.css?v=' . rawurlencode($version),
     './bank.js?v=' . rawurlencode($version),
     './app.js?v=' . rawurlencode($version),
+    './assets/read-aloud.js?v=' . rawurlencode($version),
+    './audio/ui/welcome.mp3',
 ];
 ?>
 const CACHE = <?= json_encode($cacheName) ?>;

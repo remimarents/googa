@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.01.19",
-  "updatedAt": "2026-08-01T21:35:00Z",
-  "notes": "Payment-first signup, email/password login and family-only QR"
+  "version": "2026.08.01.20",
+  "updatedAt": "2026-08-01T22:05:00Z",
+  "notes": "Somali Ubax read-aloud controls across customer and family flows"
 }

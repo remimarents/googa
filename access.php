@@ -53,17 +53,17 @@ if ($autoCheckout) {
 <main class="gate">
   <img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" width="150">
   <p class="eyebrow">GOOGA</p>
-  <h1>Akoonkaaga waa la aqoonsaday</h1>
+  <h1 data-speak-so="Akoonkaaga waa la aqoonsaday." data-speak-audio="audio/ui/access-title.mp3">Akoonkaaga waa la aqoonsaday</h1>
   <p class="sub"><?= htmlspecialchars((string)$context['email'], ENT_QUOTES, 'UTF-8') ?></p>
-  <p>
+  <p data-speak-so="Waad soo gashay, laakiin koontadan weli ma leh marin firfircoon gudaha Googa. Dooro tijaabada ama rukhsadda bishii si aad u bilowdo." data-speak-audio="audio/ui/access-intro.mp3">
     Waad soo gashay, laakiin koontadan weli ma leh marin firfircoon gudaha Googa.
     Dooro tijaabada ama rukhsadda bishii si aad u bilowdo.
   </p>
   <div class="grid">
-    <div class="card"><span>Tijaabo</span><b>kr 5</b><small>2 maalmood, ka dib kr 50 bishii</small></div>
-    <div class="card"><span>Rukhsad</span><b>kr 50</b><small>bishii</small></div>
+    <div class="card" data-speak-so="Tijaabada Googa. Shan karoon laba maalmood, ka dib konton karoon bishii." data-speak-audio="audio/ui/plan-trial.mp3"><span>Tijaabo</span><b>kr 5</b><small>2 maalmood, ka dib kr 50 bishii</small></div>
+    <div class="card" data-speak-so="Rukhsadda Googa. Konton karoon bishii." data-speak-audio="audio/ui/plan-monthly.mp3"><span>Rukhsad</span><b>kr 50</b><small>bishii</small></div>
   </div>
-  <p>
+  <p data-speak-so="Tijaabadu waxay ku kacaysaa shan karoon hadda, ka dibna rukhsaddu waa konton karoon bishii ilaa aad joojiso. Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka." data-speak-audio="audio/ui/access-offer.mp3">
     Tijaabadu waxay ku kacaysaa kr 5 hadda, ka dibna rukhsaddu waa kr 50 bishii ilaa aad joojiso.
     Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka.
     Bare Af-Soomaali ah ayaa si joogto ah ugu dari doona halxiraalo cusub, ciyaaro cusub iyo waxyaabo kale si app-ku bil kasta u yeesho wax cusub.
@@ -91,5 +91,6 @@ if ($autoCheckout) {
   <?php if ($paymentState === 'processing'): ?><p class="meta">Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood.</p><?php endif; ?>
   <?php if ($paymentState === 'portal-error'): ?><p class="meta">Maareynta rukhsadda lama furi karin hadda.</p><?php endif; ?>
 </main>
+<script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php if ($autoCheckout): ?><script>document.getElementById(<?= json_encode($choice === 'trial' ? 'trialCheckout' : 'monthlyCheckout') ?>).requestSubmit();</script><?php endif; ?>
 </html>

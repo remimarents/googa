@@ -35,7 +35,7 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
         <div class="welcome-copy">
           <p class="eyebrow" data-so="Ciyaar. Ogaansho. Af-Soomaali." data-no="Lek. Oppdagelse. Somali.">Ciyaar. Ogaansho. Af-Soomaali.</p>
           <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
-          <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag.">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
+          <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag." data-speak-so="Ciyaar. Ogaansho. Af-Soomaali. Maskaxda yar, sir weyn! Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-speak-audio="audio/ui/welcome.mp3">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
           <p class="build-note" id="buildNote">v<?= htmlspecialchars($assetVersion, ENT_QUOTES, 'UTF-8') ?></p>
         </div>
         <img class="hero-mascot" src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" />
@@ -61,6 +61,7 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
     <style>.logout-control{position:fixed;left:50%;bottom:max(8px,env(safe-area-inset-bottom));z-index:8;transform:translateX(-50%);min-width:76px;min-height:38px;border:1px solid #10365430;border-radius:999px;background:#fffdf7;color:#103654;padding:5px 12px;font:800 12px system-ui;box-shadow:0 2px 8px #10365418;cursor:pointer;opacity:.88}.logout-control:hover,.logout-control:focus-visible{opacity:1;outline:3px solid #087f89;outline-offset:2px}</style>
     <script src="<?= htmlspecialchars(googa_asset_url('session.php'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+    <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('app.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   </body>
 </html>

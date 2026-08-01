@@ -50,6 +50,7 @@
   const enhance = (root = document) => {
     root.querySelectorAll('[data-speak-button]:not([data-speak-ready])').forEach(button => {
       button.dataset.speakReady = '1';
+      button.innerHTML = icon;
       button.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();

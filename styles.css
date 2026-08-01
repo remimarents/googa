@@ -65,31 +65,39 @@ button { cursor:pointer }
 .a13 { background:linear-gradient(145deg,#e0ebff,#b5d0fb) }
 .a16 { background:linear-gradient(145deg,#ffe2ef,#f2b8d3) }
 .hidden { display:none!important }
-.game { padding-top:25px }
-.back { min-height:44px; border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 4px 12px }
-.progress-row { display:flex; justify-content:space-between; font-weight:800 }
-.progress-track { height:10px; background:#ffffff8a; border-radius:99px; margin:8px 0 18px; overflow:hidden }
-.progress-track i { display:block; height:100%; width:0; background:var(--teal); border-radius:inherit; transition:width .3s }
-.riddle-card { background:var(--paper); border-radius:30px; padding:20px; box-shadow:var(--shadow); text-align:center }
-.riddle-top { display:flex; justify-content:space-between; align-items:center }
-.case-tag { background:#e5f7f7; color:#087d8b; border-radius:99px; padding:6px 11px; font-size:13px; font-weight:800 }
-.speak { border:0; background:#e7f6ff; border-radius:50%; width:47px; height:47px; font-size:21px }
-.riddle-visual { font-size:75px; min-height:90px; display:grid; place-items:center; margin:8px }
-.listen-hint { font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin:0; color:var(--teal); font-weight:800 }
-.riddle-card h2 { font:700 clamp(25px,5vw,38px)/1.1 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:8px auto 7px; max-width:650px }
+.game { --age-accent:var(--teal); --age-soft:#dff7f7; padding-top:18px }
+.game-toolbar { display:grid; grid-template-columns:auto minmax(240px,1fr); align-items:center; gap:16px; margin-bottom:14px; padding:10px 12px; border:1px solid #ffffffba; border-radius:20px; background:#ffffffa8; box-shadow:var(--soft-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px) }
+.back { display:inline-flex; align-items:center; gap:8px; min-height:44px; border:0; border-radius:13px; background:#103654; color:#fff; font-weight:900; padding:9px 14px; box-shadow:0 6px 16px #10365424; transition:transform .16s,box-shadow .16s }
+.back:hover { transform:translateY(-1px); box-shadow:0 9px 20px #1036542c }
+.back>span:first-child { font-size:20px; line-height:1 }
+.progress-shell { min-width:0; padding:0 4px }
+.progress-row { display:flex; justify-content:space-between; gap:12px; color:#35566f; font-size:13px; font-weight:900 }
+.progress-row span:last-child { color:var(--ink) }
+.progress-track { height:9px; background:#10365412; border-radius:99px; margin:7px 0 0; overflow:hidden; box-shadow:inset 0 1px 2px #10365412 }
+.progress-track i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--age-accent),#ffc84b); border-radius:inherit; transition:width .3s; box-shadow:0 0 12px color-mix(in srgb,var(--age-accent) 55%,transparent) }
+.riddle-card { position:relative; isolation:isolate; overflow:hidden; min-height:570px; background:linear-gradient(145deg,#fffef9 0%,#fffdf5 54%,var(--age-soft) 140%); border:1px solid #ffffffdc; border-radius:34px; padding:24px 28px 28px; box-shadow:0 24px 60px #1036541c,inset 0 0 0 4px color-mix(in srgb,var(--age-accent) 20%,transparent); text-align:center }
+.riddle-card::before { content:""; position:absolute; z-index:-1; width:280px; height:280px; right:-130px; top:-150px; border:42px solid color-mix(in srgb,var(--age-accent) 11%,transparent); border-radius:50% }
+.riddle-card::after { content:""; position:absolute; z-index:-1; inset:0; background-image:radial-gradient(color-mix(in srgb,var(--age-accent) 16%,transparent) 1.2px,transparent 1.2px); background-size:19px 19px; mask-image:linear-gradient(130deg,transparent 48%,#000 100%); pointer-events:none }
+.riddle-top { display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2 }
+.case-tag { display:inline-flex; align-items:center; min-height:34px; background:color-mix(in srgb,var(--age-accent) 13%,white); color:color-mix(in srgb,var(--age-accent) 85%,#103654); border:1px solid color-mix(in srgb,var(--age-accent) 20%,white); border-radius:99px; padding:6px 12px; font-size:12px; font-weight:900; letter-spacing:.05em; text-transform:uppercase }
+.speak { display:grid; place-items:center; width:49px; height:49px; border:1px solid #ffffff; background:#fffffff0; color:var(--teal-dark); border-radius:50%; box-shadow:0 7px 18px #10365419; transition:transform .16s,background .16s,color .16s }
+.speak:hover,.speak.is-playing { transform:scale(1.06); background:var(--teal); color:#fff }
+.riddle-visual { width:118px; min-height:118px; display:grid; place-items:center; margin:10px auto 8px; border:1px solid #ffffffd9; border-radius:34px; background:linear-gradient(145deg,#ffffffdc,var(--age-soft)); box-shadow:0 12px 28px #10365418,inset 0 1px 0 #fff; font-size:70px; transform:rotate(-2deg) }
+.listen-hint { font-size:11px; text-transform:uppercase; letter-spacing:.14em; margin:13px 0 0; color:var(--teal); font-weight:900 }
+.riddle-card h2 { font:800 clamp(28px,5vw,42px)/1.08 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:7px auto 8px; max-width:680px; letter-spacing:-.025em; text-wrap:balance }
 .norwegian-question { color:var(--muted); font-weight:800; margin:0 0 14px }
-.options { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px }
-.option { border:2px solid #e8edf1; background:white; border-radius:18px; min-height:92px; padding:9px 6px; color:var(--ink); font-weight:800; font-size:15px }
+.options { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px }
+.option { position:relative; overflow:hidden; border:1px solid #dbe7eb; background:#fffffff2; border-radius:20px; min-height:104px; padding:12px 9px; color:var(--ink); font-weight:900; font-size:15px; box-shadow:0 7px 18px #10365410,inset 0 1px 0 #fff; transition:transform .16s,border-color .16s,box-shadow .16s,background .16s }
 .option .choice-emoji { display:block; font-size:38px; line-height:1.15 }
-.option:hover { border-color:var(--teal); background:#effffe }
+.option:hover { transform:translateY(-3px); border-color:var(--age-accent); background:#fff; box-shadow:0 13px 26px #10365418 }
 .option.correct { background:#c8f4de; border-color:#23a96e }
 .option.wrong { background:#ffe0dc; border-color:var(--coral) }
-.feedback { margin:18px 0 0; padding:13px; border-radius:14px; background:#e5f8ec; font-weight:800 }
+.feedback { margin:18px 0 0; padding:14px 16px; border:1px solid #8bd8ac; border-radius:17px; background:linear-gradient(145deg,#e8fff1,#c9f4dc); box-shadow:0 8px 20px #148b4d17; font-weight:800 }
 .feedback strong { display:block; font:800 23px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif }
-body[data-age='0'] .riddle-card { border:5px solid #ffe69a }
-body[data-age='7'] .riddle-card { border:5px solid #b9f1ed }
-body[data-age='13'] .riddle-card { border:5px solid #c7ddff }
-body[data-age='16'] .riddle-card { border:5px solid #f6c5db }
+body[data-age='0'] .game { --age-accent:#dba620; --age-soft:#fff1b7 }
+body[data-age='7'] .game { --age-accent:#078f91; --age-soft:#c6f2ed }
+body[data-age='13'] .game { --age-accent:#4d78c9; --age-soft:#d8e7ff }
+body[data-age='16'] .game { --age-accent:#b65481; --age-soft:#f7d5e5 }
 body[data-age='13'] .riddle-card h2,
 body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4vw,32px); letter-spacing:-.02em }
 @media (max-width:560px) {
@@ -131,18 +139,21 @@ body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4
   .card-action { padding-top:10px; font-size:10px }
   .card-action b { width:24px; height:24px }
   .game { padding-top:12px }
+  .game-toolbar { grid-template-columns:1fr; gap:9px; margin-bottom:10px; padding:9px; border-radius:18px }
+  .back { justify-content:flex-start; width:max-content; min-height:40px; padding:7px 12px; font-size:13px }
+  .progress-shell { padding:0 3px 3px }
   .progress-row { font-size:14px }
   .progress-track { margin-bottom:12px }
-  .riddle-card { border-radius:25px; padding:14px }
+  .riddle-card { min-height:calc(100dvh - 180px); border-radius:27px; padding:14px 14px 18px }
   .riddle-top { align-items:flex-start }
   .case-tag { padding:7px 10px }
   .speak { width:48px; height:48px }
-  .riddle-visual { min-height:62px; margin:3px; font-size:58px }
+  .riddle-visual { width:88px; min-height:88px; margin:3px auto 6px; border-radius:27px; font-size:55px }
   .listen-hint { margin-top:2px; font-size:11px }
   .riddle-card h2 { margin-top:6px; font-size:clamp(24px,7.5vw,32px) }
-  .options { margin-top:15px; gap:8px }
+  .options { margin-top:16px; gap:9px }
   .options { grid-template-columns:1fr }
-  .option { min-height:60px; display:flex; align-items:center; gap:12px; text-align:left; padding:8px 14px }
+  .option { min-height:64px; display:flex; align-items:center; gap:12px; text-align:left; padding:9px 14px; border-radius:17px }
   .option .choice-emoji { font-size:30px }
 }
 

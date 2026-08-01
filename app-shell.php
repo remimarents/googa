@@ -47,9 +47,13 @@ $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA
       </section>
 
       <section id="game" class="game hidden">
-        <button class="back" id="backButton">← <span data-so="Kooxaha da'da" data-no="Aldersgrupper">Kooxaha da'da</span></button>
-        <div class="progress-row"><span id="ageLabel"></span><span id="progress"></span></div>
-        <div class="progress-track"><i id="progressFill"></i></div>
+        <div class="game-toolbar">
+          <button class="back" id="backButton"><span aria-hidden="true">←</span> <span data-so="Kooxaha da'da" data-no="Aldersgrupper">Kooxaha da'da</span></button>
+          <div class="progress-shell">
+            <div class="progress-row"><span id="ageLabel"></span><span id="progress"></span></div>
+            <div class="progress-track"><i id="progressFill"></i></div>
+          </div>
+        </div>
         <article class="riddle-card">
           <div class="riddle-top"><span class="case-tag" id="caseTag"></span><button class="speak" id="speakButton" aria-label="Les gåten høyt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9.2a4 4 0 0 1 0 5.6M18.5 6.7a7.5 7.5 0 0 1 0 10.6"/></svg></button></div>
           <div id="riddleVisual" class="riddle-visual" aria-hidden="true"></div>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="so">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#103654" />
+    <meta name="description" content="Googa – somaliske gåter for nysgjerrige hoder." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>Googa — ciyaar iyo halxiraale</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell" aria-live="polite">
+      <header class="topbar">
+        <button class="brand" id="homeButton" aria-label="Googa home"><img src="assets/googa-mascot.png" alt="Googa detective" /><span>Googa</span></button>
+        <div class="top-actions"><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
+      </header>
+
+      <section id="welcome" class="welcome">
+        <div class="welcome-copy">
+          <p class="eyebrow" data-so="Ciyaar. Ogaansho. Af-Soomaali." data-no="Lek. Oppdagelse. Somali.">Ciyaar. Ogaansho. Af-Soomaali.</p>
+          <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
+          <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag.">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
+        </div>
+        <img class="hero-mascot" src="assets/googa-mascot.png" alt="Googa" />
+        <div class="age-grid" id="ageGrid"></div>
+        <p class="translation-note" data-so="Taabo calanka Norway si aad u aragto turjumaadda." data-no="Trykk på det norske flagget for å vise somalisk tekst.">Taabo calanka Norway si aad u aragto turjumaadda.</p>
+      </section>
+
+      <section id="game" class="game hidden">
+        <button class="back" id="backButton">← <span data-so="Kooxaha da'da" data-no="Aldersgrupper">Kooxaha da'da</span></button>
+        <div class="progress-row"><span id="ageLabel"></span><span id="progress"></span></div>
+        <div class="progress-track"><i id="progressFill"></i></div>
+        <article class="riddle-card">
+          <div class="riddle-top"><span class="case-tag" id="caseTag"></span><button class="speak" id="speakButton" aria-label="Les gåten høyt">🔊</button></div>
+          <div id="riddleVisual" class="riddle-visual" aria-hidden="true"></div>
+          <p class="listen-hint" data-so="Dhegeyso si fiican" data-no="Lytt godt">Dhegeyso si fiican</p>
+          <h2 id="question"></h2>
+          <p id="norwegianQuestion" class="norwegian-question hidden"></p>
+          <div id="options" class="options"></div>
+          <div id="feedback" class="feedback hidden"></div>
+        </article>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -124,6 +124,19 @@
     document.querySelectorAll('[data-option]').forEach(button => button.onclick = () => answerActivity(button, activity.options[Number(button.dataset.option)]));
   }
 
+  function changeScene(direction) {
+    const nextIndex = sceneIndex + direction;
+    if (!activeStory || nextIndex < 0 || nextIndex >= activeStory.scenes.length) return;
+    const reader = $('storyReader');
+    reader.classList.remove('page-turn-next', 'page-turn-prev');
+    void reader.offsetWidth;
+    reader.classList.add(direction > 0 ? 'page-turn-next' : 'page-turn-prev');
+    sceneIndex = nextIndex;
+    activitySolved = false;
+    renderScene();
+    if (activeStory.age === '0') playScene(document.querySelector('.paragraph-play'));
+  }
+
   function answerActivity(button, option) {
     if (activitySolved) return;
     const correct = option.so === activeStory.activity.answer;
@@ -141,12 +154,16 @@
     $('storyLibrary').classList.remove('hidden');
     window.scrollTo({top:0});
   };
-  $('previousScene').onclick = () => { if (sceneIndex > 0) { sceneIndex--; activitySolved = false; renderScene(); } };
-  $('nextScene').onclick = () => { if (sceneIndex < activeStory.scenes.length - 1) { sceneIndex++; activitySolved = false; renderScene(); if (activeStory.age === '0') playScene(document.querySelector('.paragraph-play')); } };
+  $('previousScene').onclick = () => changeScene(-1);
+  $('nextScene').onclick = () => changeScene(1);
   $('storyLanguage').onclick = () => { language = language === 'so' ? 'no' : 'so'; localizeStatic(); renderLibrary(); if (activeStory) renderScene(); };
   $('sheetClose').onclick = closeSupport;
   $('supportDismiss').onclick = closeSupport;
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('supportOverlay').classList.contains('hidden')) closeSupport(); });
+  let swipeStart = null;
+  $('storyReader').addEventListener('pointerdown', event => { if (!activeStory || event.target.closest('button')) return; swipeStart = { x: event.clientX, y: event.clientY }; });
+  $('storyReader').addEventListener('pointerup', event => { if (!swipeStart || !$('supportOverlay').classList.contains('hidden')) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; swipeStart = null; if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.4) return; changeScene(dx < 0 ? 1 : -1); });
+  $('storyReader').addEventListener('pointercancel', () => { swipeStart = null; });
 
   renderLibrary();
   localizeStatic();

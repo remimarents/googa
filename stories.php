@@ -32,6 +32,7 @@ $assetVersion = googa_app_version();
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('stories.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('stories-reader-nav.css'), ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="stories-page<?= !$isPublic ? ' is-preview' : '' ?>">
   <main class="stories-shell">

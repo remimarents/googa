@@ -86,10 +86,10 @@ if ($autoCheckout) {
     <a class="cta" href="./">Dib u hubi marin</a>
     <a class="ghost" href="./?logout=1">Ka bax</a>
   </div>
-  <?php if ($paymentState === 'cancelled'): ?><p class="meta">Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin.</p><?php endif; ?>
-  <?php if ($paymentState === 'error'): ?><p class="meta">Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day.</p><?php endif; ?>
-  <?php if ($paymentState === 'processing'): ?><p class="meta">Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood.</p><?php endif; ?>
-  <?php if ($paymentState === 'portal-error'): ?><p class="meta">Maareynta rukhsadda lama furi karin hadda.</p><?php endif; ?>
+  <?php if ($paymentState === 'cancelled'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin." data-speak-audio="audio/ui/payment-cancelled.mp3">Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin.</p><?php endif; ?>
+  <?php if ($paymentState === 'error'): ?><p class="meta" data-speak-so="Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day." data-speak-audio="audio/ui/payment-error.mp3">Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day.</p><?php endif; ?>
+  <?php if ($paymentState === 'processing'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood." data-speak-audio="audio/ui/payment-processing.mp3">Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood.</p><?php endif; ?>
+  <?php if ($paymentState === 'portal-error'): ?><p class="meta" data-speak-so="Maareynta rukhsadda lama furi karin hadda." data-speak-audio="audio/ui/portal-error.mp3">Maareynta rukhsadda lama furi karin hadda.</p><?php endif; ?>
 </main>
 <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php if ($autoCheckout): ?><script>document.getElementById(<?= json_encode($choice === 'trial' ? 'trialCheckout' : 'monthlyCheckout') ?>).requestSubmit();</script><?php endif; ?>

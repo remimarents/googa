@@ -17,8 +17,8 @@ if (!in_array($kind, ['trial', 'ordreise_lifetime'], true)) {
 }
 try {
     $user = ($context['email'] ?? '') !== '' ? (array)$context['user'] : null;
-    if ($kind === 'ordreise_lifetime' && !is_array($user)) {
-        throw new RuntimeException('Du må være innlogget for å kjøpe Ordreise.');
+    if ($kind === 'ordreise_lifetime' && (!is_array($user) || !googa_has_active_googa_subscription($user))) {
+        throw new RuntimeException('Ordreise krever et aktivt Googa-abonnement.');
     }
     $session = googa_stripe_create_checkout($user, $kind);
     $url = (string)($session['url'] ?? '');
@@ -29,6 +29,6 @@ try {
     header('Location: ' . $url, true, 303);
 } catch (Throwable $error) {
     error_log('Googa checkout: ' . $error->getMessage());
-    header('Location: ./?payment=error');
+    header('Location: ' . ($kind === 'ordreise_lifetime' ? './ordreise/help.php?payment=subscription-required' : './?payment=error'));
 }
 exit;

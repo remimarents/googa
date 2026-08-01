@@ -251,14 +251,40 @@ function googa_access_state(array $user, string $mode = 'paid'): array
     return ['allowed' => false, 'source' => 'none', 'label' => 'No active access'];
 }
 
+function googa_has_active_googa_subscription(array $user): bool
+{
+    if ((string)($user['role'] ?? '') === 'owner') {
+        return true;
+    }
+    $stripe = is_array($user['stripe'] ?? null) ? $user['stripe'] : [];
+    return in_array((string)($stripe['subscription_status'] ?? 'none'), ['active', 'trialing'], true);
+}
+
 function googa_has_ordreise_full_access(array $user): bool
 {
-    if ((string)($user['role'] ?? '') === 'owner' || googa_access_state($user, 'paid')['allowed']) {
+    if ((string)($user['role'] ?? '') === 'owner') {
         return true;
     }
     $entitlements = is_array($user['entitlements'] ?? null) ? $user['entitlements'] : [];
-    return is_array($entitlements['ordreise_full'] ?? null)
+    return googa_has_active_googa_subscription($user)
+        && is_array($entitlements['ordreise_full'] ?? null)
         && (($entitlements['ordreise_full']['status'] ?? '') === 'active');
+}
+
+function googa_ordreise_free_is_live(): bool
+{
+    return time() >= (strtotime(GOOGA_ORDREISE_FREE_START_AT) ?: PHP_INT_MAX);
+}
+
+function googa_ordreise_months_since_purchase(array $user): int
+{
+    $entitlements = is_array($user['entitlements'] ?? null) ? $user['entitlements'] : [];
+    $purchasedAt = (string)(($entitlements['ordreise_full']['purchased_at'] ?? ''));
+    try { $start = new DateTimeImmutable($purchasedAt); } catch (Throwable) { return 0; }
+    $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+    if ($start > $now) return 0;
+    $months = ((int)$now->format('Y') - (int)$start->format('Y')) * 12 + (int)$now->format('n') - (int)$start->format('n');
+    return max(0, $months - ((int)$now->format('d') < (int)$start->format('d') ? 1 : 0));
 }
 
 function googa_family_data(array $user): array

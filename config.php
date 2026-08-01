@@ -14,6 +14,7 @@ const GOOGA_INTRO_PRICE_ID = 'price_1TzedtBgfqMKZQayCgFS0j8s';
 const GOOGA_PRODUCT_ID = 'prod_UzdvEnhniM03Gn';
 const GOOGA_ORDREISE_LIFETIME_PRODUCT_ID = 'prod_UzkeQIlE4R9YVf';
 const GOOGA_ORDREISE_LIFETIME_PRICE_ID = 'price_1Tzl8kBgfqMKZQayczXhHMGe';
+const GOOGA_ORDREISE_FREE_START_AT = '2026-09-01T00:00:00+02:00';
 const GOOGA_STRIPE_ENV_FILE = '/home/ferdighet/.googa-stripe.env';
 const GOOGA_FAMILY_SECRET_FILE = '/home/ferdighet/.googa-family.env';
 const GOOGA_PUBLIC_BASE_URL = 'https://ferdighet.no/googa';

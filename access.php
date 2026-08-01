@@ -72,7 +72,7 @@ body{padding:max(10px,env(safe-area-inset-top)) 0 max(10px,env(safe-area-inset-b
   <div class="grid single-offer">
     <div class="card" data-speak-so="Googa maanta ku bilow shan karoon. Waxaad helaysaa laba maalmood oo tijaabo ah. Kadib rukhsaddu waa konton karoon bishii ilaa aad joojiso." data-speak-audio="audio/ui/plan-trial.mp3"><span>Googa maanta bilow</span><b>kr 5</b><small>2 maalmood oo tijaabo ah. Kadib kr 50 bishii ilaa aad joojiso.</small></div>
   </div>
-  <a class="ordreise-free" href="ordreise/"><span>★</span><strong>Ordreise på af-soomaali</strong><small>10 heer oo bilaash ah · 10 nivåer gratis</small><b>Bilow / Start →</b></a>
+  <a class="ordreise-free" href="ordreise/help.php"><span>★</span><strong>Ordreise på af-soomaali</strong><small>10 gratis nivåer fra neste måned</small><b>Les mer →</b></a>
   <p data-speak-so="Tijaabadu waxay ku kacaysaa shan karoon hadda, ka dibna rukhsaddu waa konton karoon bishii ilaa aad joojiso. Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka." data-speak-audio="audio/ui/access-offer.mp3">
     Tijaabadu waxay ku kacaysaa kr 5 hadda, ka dibna rukhsaddu waa kr 50 bishii ilaa aad joojiso.
     Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka.

@@ -13,6 +13,13 @@ if (empty($context['authenticated'])) {
 }
 $user = is_array($context['user'] ?? null) ? $context['user'] : [];
 $premium = googa_has_ordreise_full_access($user);
+$freeLive = googa_ordreise_free_is_live();
+$canPurchase = googa_has_active_googa_subscription($user) && !$premium;
+if (!$premium && !$freeLive) {
+    header('Location: help.php');
+    exit;
+}
+$monthlyRelease = googa_ordreise_months_since_purchase($user);
 $assetVersion = googa_app_version();
 if (empty($_SESSION['googa_payment_csrf'])) {
     $_SESSION['googa_payment_csrf'] = bin2hex(random_bytes(24));
@@ -31,7 +38,7 @@ if (empty($_SESSION['googa_payment_csrf'])) {
   </head>
   <body>
     <main id="app"></main>
-    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;</script>
+    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_CAN_PURCHASE=<?= $canPurchase ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_MONTHLY_RELEASE=<?= $monthlyRelease ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;</script>
     <script src="wordbank.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="somaliweb-provisional.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="word-lists.js?v=<?= rawurlencode($assetVersion) ?>"></script>

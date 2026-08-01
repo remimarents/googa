@@ -161,8 +161,12 @@
   $('supportDismiss').onclick = closeSupport;
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !$('supportOverlay').classList.contains('hidden')) closeSupport(); });
   let swipeStart = null;
-  $('storyReader').addEventListener('pointerdown', event => { if (!activeStory || event.target.closest('button')) return; swipeStart = { x: event.clientX, y: event.clientY }; });
-  $('storyReader').addEventListener('pointerup', event => { if (!swipeStart || !$('supportOverlay').classList.contains('hidden')) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; swipeStart = null; if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.4) return; changeScene(dx < 0 ? 1 : -1); });
+  let swipeHandled = false;
+  const reader = $('storyReader');
+  reader.addEventListener('pointerdown', event => { if (!activeStory || !$('supportOverlay').classList.contains('hidden')) return; swipeHandled = false; swipeStart = { x: event.clientX, y: event.clientY, pointerId: event.pointerId }; });
+  reader.addEventListener('pointermove', event => { if (!swipeStart) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; if (Math.abs(dx) > 20 && Math.abs(dx) > Math.abs(dy)) event.preventDefault(); });
+  reader.addEventListener('pointerup', event => { if (!swipeStart || !$('supportOverlay').classList.contains('hidden')) return; const dx = event.clientX - swipeStart.x; const dy = event.clientY - swipeStart.y; swipeStart = null; if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.4) return; swipeHandled = true; changeScene(dx < 0 ? 1 : -1); setTimeout(() => { swipeHandled = false; }, 0); });
+  reader.addEventListener('click', event => { if (!swipeHandled) return; event.preventDefault(); event.stopImmediatePropagation(); }, true);
   $('storyReader').addEventListener('pointercancel', () => { swipeStart = null; });
 
   renderLibrary();

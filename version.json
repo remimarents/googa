@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.02.06",
-  "updatedAt": "2026-08-02T23:55:00Z",
-  "notes": "Stories and Ordreise now offer a PWA update button when a newer version is available"
+  "version": "2026.08.02.07",
+  "updatedAt": "2026-08-03T00:10:00Z",
+  "notes": "Story reader uses compact edge arrows and swipe navigation across the whole page"
 }

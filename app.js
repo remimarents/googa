@@ -6,7 +6,7 @@ const groups = [
 ];
 
 // Demo-bank: Somali wording should be reviewed by a native Somali editor before production.
-const riddles = {
+let riddles = {
   '0': [
     {q:'Waxaan leeyahay afar lugood, laakiin ma socdo. Maxaan ahay?', no:'Jeg har fire bein, men går aldri. Hva er jeg?', a:'Kursi', an:'Stol', v:'🪑', o:[['🪑','Kursi','Stol'],['🐄','Sac','Ku'],['🐕','Eey','Hund']]},
     {q:'Waxaan leeyahay baalal, waan duulaa. Maxaan ahay?', no:'Jeg har vinger og kan fly. Hva er jeg?', a:'Shimbir', an:'Fugl', v:'🐦', o:[['🐦','Shimbir','Fugl'],['🐟','Kalluun','Fisk'],['🐈','Bisad','Katt']]},
@@ -37,6 +37,19 @@ const riddles = {
   ]
 };
 
+// Imported bank: preliminary Somali language review; suitable for prototype/pilot use.
+if (Array.isArray(window.GOOGA_BANK) && window.GOOGA_BANK.length) {
+  const elder = new Set(['G019','G020','G021','G022','G023','G076']);
+  const teen = new Set(['G015','G016','G017','G018','G024','G025']);
+  const young = new Set(['G007','G008','G009','G010','G011','G013','G014','G026','G027','G032','G033','G036','G037','G040','G041','G042','G043','G046','G047','G051','G052','G053','G061','G062','G064','G065','G066','G077','G078','G079','G080','G081','G082','G084','G085','G086']);
+  const pools = {0:[],7:[],13:[],16:[]};
+  window.GOOGA_BANK.forEach(item => { const age = elder.has(item.id) ? '16' : teen.has(item.id) ? '13' : young.has(item.id) ? '7' : '0'; pools[age].push({...item, age}); });
+  const icons = {Dabeecad:'🌍',Dareen:'✨',Maskax:'💭',Luqad:'🔤',Waxbarasho:'📚',Guri:'🏠',Jikada:'🍽️',Cunto:'🍎',Xayawaan:'🦊',Jirka:'🖐️',Gaadiid:'🚗',Ciyaar:'⚽',Qalab:'🧰'};
+  riddles = Object.fromEntries(Object.entries(pools).map(([age,list]) => [age,list.map((item,i) => {
+    const choices=[item,...list.filter(x=>x.id!==item.id).slice(i+1,i+3)]; while(choices.length<3) choices.push(list[(i+choices.length+1)%list.length]);
+    return {q:item.q,no:item.no,a:item.a,an:item.no,v:icons[item.category]||'❓',id:item.id,o:choices.sort((a,b)=>a.id.localeCompare(b.id)).map(x=>[icons[x.category]||'❓',x.a,x.no])};
+  })]));
+}
 let language='so', group, index=0, score=0, locked=false;
 const $=id=>document.getElementById(id);
 function text(so,no){ return language==='no'?no:so }

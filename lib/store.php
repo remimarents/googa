@@ -34,6 +34,11 @@ function googa_default_user(string $email, string $name = ''): array
         'role' => $role,
         'created_at' => googa_now(),
         'updated_at' => googa_now(),
+        'password_hash' => null,
+        'password_set_at' => null,
+        'password_reset_hash' => null,
+        'password_reset_expires_at' => null,
+        'password_reset_requested_at' => null,
         'discount_percent' => 0,
         'trial_ends_at' => null,
         'access_override_until' => null,
@@ -93,8 +98,79 @@ function googa_load_data(): array
 function googa_save_data(array $data): void
 {
     $data['updated_at'] = googa_now();
-    file_put_contents(GOOGA_STORAGE_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    file_put_contents(GOOGA_STORAGE_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES), LOCK_EX);
     @chmod(GOOGA_STORAGE_FILE, 0644);
+}
+
+function googa_user_has_password(array $user): bool
+{
+    return str_starts_with((string)($user['password_hash'] ?? ''), '$');
+}
+
+function googa_verify_password(array $user, string $password): bool
+{
+    $hash = (string)($user['password_hash'] ?? '');
+    return $hash !== '' && password_verify($password, $hash);
+}
+
+function googa_set_password(array &$data, string $email, string $password): bool
+{
+    $email = googa_normalize_email($email);
+    if (strlen($password) < 10 || !isset($data['users'][$email]) || !is_array($data['users'][$email])) {
+        return false;
+    }
+    $user = $data['users'][$email];
+    $user['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
+    $user['password_set_at'] = googa_now();
+    $user['password_reset_hash'] = null;
+    $user['password_reset_expires_at'] = null;
+    $user['password_reset_requested_at'] = null;
+    googa_write_user($data, $user);
+    return true;
+}
+
+function googa_create_password_token(array &$data, string $email, bool $ignoreRateLimit = false): ?string
+{
+    $email = googa_normalize_email($email);
+    if (!isset($data['users'][$email]) || !is_array($data['users'][$email])) {
+        return null;
+    }
+    $user = $data['users'][$email];
+    $last = strtotime((string)($user['password_reset_requested_at'] ?? '')) ?: 0;
+    if (!$ignoreRateLimit && $last > time() - 60) {
+        return null;
+    }
+    $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    $user['password_reset_hash'] = hash('sha256', $token);
+    $user['password_reset_expires_at'] = gmdate('c', time() + 3600);
+    $user['password_reset_requested_at'] = googa_now();
+    googa_write_user($data, $user);
+    return $token;
+}
+
+function googa_find_user_by_password_token(array $data, string $token): ?array
+{
+    if (!preg_match('/^[A-Za-z0-9_-]{40,60}$/', $token)) {
+        return null;
+    }
+    $hash = hash('sha256', $token);
+    foreach ($data['users'] as $user) {
+        if (!is_array($user) || !googa_is_future($user['password_reset_expires_at'] ?? null)) {
+            continue;
+        }
+        if (hash_equals((string)($user['password_reset_hash'] ?? ''), $hash)) {
+            return $user;
+        }
+    }
+    return null;
+}
+
+function googa_login_user(array $user): void
+{
+    session_regenerate_id(true);
+    $_SESSION['googa_email'] = googa_normalize_email((string)($user['email'] ?? ''));
+    $_SESSION['googa_name'] = (string)($user['name'] ?? '');
+    unset($_SESSION['googa_mode'], $_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
 }
 
 function googa_ensure_user(array &$data, string $email, string $name = ''): array

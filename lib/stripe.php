@@ -48,27 +48,31 @@ function googa_stripe_request(string $method, string $path, array $params = []):
     return $decoded;
 }
 
-function googa_stripe_create_checkout(array $user, string $kind): array
+function googa_stripe_create_checkout(?array $user, string $kind): array
 {
     $email = googa_normalize_email((string)($user['email'] ?? ''));
-    if ($email === '') {
-        throw new RuntimeException('Missing account email.');
-    }
     $discount = max(0, min(100, (int)($user['discount_percent'] ?? 0)));
+    $intent = bin2hex(random_bytes(16));
     $params = [
         'mode' => 'subscription',
         'success_url' => GOOGA_PUBLIC_BASE_URL . '/success.php?session_id={CHECKOUT_SESSION_ID}',
-        'cancel_url' => GOOGA_PUBLIC_BASE_URL . '/access.php?payment=cancelled',
-        'customer_email' => $email,
-        'client_reference_id' => $email,
+        'cancel_url' => GOOGA_PUBLIC_BASE_URL . '/?payment=cancelled',
+        'client_reference_id' => $intent,
         'payment_method_collection' => 'always',
         'line_items[0][price]' => GOOGA_MONTHLY_PRICE_ID,
         'line_items[0][quantity]' => 1,
-        'metadata[googa_email]' => $email,
+        'metadata[googa_app]' => 'googa',
+        'metadata[googa_intent]' => $intent,
         'metadata[googa_kind]' => $kind,
-        'subscription_data[metadata][googa_email]' => $email,
+        'subscription_data[metadata][googa_app]' => 'googa',
+        'subscription_data[metadata][googa_intent]' => $intent,
         'subscription_data[metadata][googa_kind]' => $kind,
     ];
+    if ($email !== '') {
+        $params['customer_email'] = $email;
+        $params['metadata[googa_email]'] = $email;
+        $params['subscription_data[metadata][googa_email]'] = $email;
+    }
     if ($kind === 'trial') {
         $params['line_items[1][price]'] = GOOGA_INTRO_PRICE_ID;
         $params['line_items[1][quantity]'] = 1;
@@ -88,6 +92,17 @@ function googa_stripe_create_checkout(array $user, string $kind): array
         throw new RuntimeException('Full rabatt må gis fra eierpanelet som manuell tilgang.');
     }
     return googa_stripe_request('POST', 'checkout/sessions', $params);
+}
+
+function googa_stripe_checkout_email(array $session): string
+{
+    $details = is_array($session['customer_details'] ?? null) ? $session['customer_details'] : [];
+    $email = googa_normalize_email((string)($details['email'] ?? $session['customer_email'] ?? ''));
+    if ($email === '' && !empty($session['customer'])) {
+        $customer = googa_stripe_request('GET', 'customers/' . rawurlencode((string)$session['customer']));
+        $email = googa_normalize_email((string)($customer['email'] ?? ''));
+    }
+    return $email;
 }
 
 function googa_stripe_find_user(array $data, string $email, string $customerId, string $subscriptionId): ?array
@@ -129,11 +144,21 @@ function googa_stripe_apply_subscription(array &$data, array $subscription, stri
 function googa_stripe_apply_checkout_session(array &$data, array $session): bool
 {
     $metadata = is_array($session['metadata'] ?? null) ? $session['metadata'] : [];
-    $email = googa_normalize_email((string)($metadata['googa_email'] ?? $session['client_reference_id'] ?? ''));
+    if (($metadata['googa_app'] ?? '') !== 'googa' || !in_array((string)($metadata['googa_kind'] ?? ''), ['trial', 'monthly'], true)) {
+        return false;
+    }
+    if (($session['status'] ?? '') !== 'complete' || !in_array((string)($session['payment_status'] ?? ''), ['paid', 'no_payment_required'], true)) {
+        return false;
+    }
+    $email = googa_normalize_email((string)($metadata['googa_email'] ?? ''));
+    if ($email === '') {
+        $email = googa_stripe_checkout_email($session);
+    }
     $subscriptionId = (string)($session['subscription'] ?? '');
     if ($email === '' || $subscriptionId === '') {
         return false;
     }
+    googa_ensure_user($data, $email, (string)(($session['customer_details']['name'] ?? '')));
     $subscription = googa_stripe_request('GET', 'subscriptions/' . rawurlencode($subscriptionId));
     $ok = googa_stripe_apply_subscription($data, $subscription, $email);
     if ($ok) {

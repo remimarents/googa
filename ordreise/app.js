@@ -1,6 +1,8 @@
 const app = document.querySelector('#app');
 const levels = window.GOOGA_ORDREISE_LEVELS || [];
-const words = new Set(window.GOOGA_ORDREISE_WORDS || []);
+const provisionalRecords = window.GOOGA_ORDREISE_PROVISIONAL || [];
+const provisionalWords = provisionalRecords.filter((record) => record.enabled && record.status === 'provisional').map((record) => record.word);
+const words = new Set([...(window.GOOGA_ORDREISE_WORDS || []), ...provisionalWords]);
 const storageKey = `googa-ordreise:${window.GOOGA_ORDREISE_USER || 'guest'}`;
 const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
 const state = { level: Math.min(saved.level || 0, Math.max(0, levels.length - 1)), found: saved.found || {}, letters: [], bonus: [], norwegian: false };

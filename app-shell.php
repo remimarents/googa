@@ -55,8 +55,8 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
         </article>
       </section>
     </main>
-    <button class="logout-dot" id="logoutDot" type="button" aria-label="Logg ut" title="Logg ut">·</button>
-    <style>.logout-dot{position:fixed;right:7px;bottom:5px;width:16px;height:16px;padding:0;border:0;background:transparent;color:#103654;opacity:.24;font:900 16px/12px system-ui;cursor:pointer}.logout-dot:hover,.logout-dot:focus-visible{opacity:.7;outline:0}</style>
+    <button class="logout-control" id="logoutDot" type="button" data-so="Ka bax" data-no="Logg ut" aria-label="Logg ut" title="Trykk tre ganger for å logge ut">Ka bax</button>
+    <style>.logout-control{position:fixed;left:50%;bottom:8px;z-index:5;transform:translateX(-50%);border:1px solid #10365430;border-radius:999px;background:#fffdf7;color:#103654;padding:5px 12px;font:800 12px system-ui;box-shadow:0 2px 8px #10365418;cursor:pointer;opacity:.8}.logout-control:hover,.logout-control:focus-visible{opacity:1;outline:2px solid #0b8691;outline-offset:2px}</style>
     <script src="<?= htmlspecialchars(googa_asset_url('session.php'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('app.js'), ENT_QUOTES, 'UTF-8') ?>"></script>

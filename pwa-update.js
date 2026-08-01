@@ -26,6 +26,7 @@
     location.replace(target.toString());
   }
   document.addEventListener('click', event => { const button = event.target.closest('[data-pwa-update]'); if (button) apply(button); });
+  show();
   check();
   setInterval(check, 60000);
 })();

@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.02.09",
-  "updatedAt": "2026-08-03T00:25:00Z",
-  "notes": "Story reader removes its top bar while reading and adds native touch swipe support"
+  "version": "2026.08.02.10",
+  "updatedAt": "2026-08-03T00:35:00Z",
+  "notes": "PWA update controls are always visible in Stories and Ordreise"
 }

@@ -41,7 +41,7 @@ $assetVersion = googa_app_version();
       <a class="stories-brand" href="./"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA</span></a>
       <div class="stories-top-actions">
         <?php if (!$isPublic): ?><span class="preview-badge">EIERFORHÅNDSVISNING</span><?php endif; ?>
-        <button class="preview-badge" data-pwa-update data-update-label="Oppdater" data-updating-label="Oppdaterer …" type="button" hidden>Oppdater</button>
+        <button class="preview-badge" data-pwa-update data-update-label="Oppdater" data-updating-label="Oppdaterer …" type="button">Oppdater</button>
         <button class="story-language" id="storyLanguage" type="button" aria-label="Vis norsk tekst">🇳🇴</button>
       </div>
     </header>

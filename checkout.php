@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !hash_equals((string)($_SESSION['go
     exit('Ugyldig betalingsforespørsel.');
 }
 $kind = (string)($_POST['kind'] ?? '');
-if (!in_array($kind, ['trial', 'monthly'], true)) {
+if ($kind !== 'trial') {
     http_response_code(400);
     exit('Ugyldig betalingsvalg.');
 }

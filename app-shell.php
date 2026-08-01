@@ -1,3 +1,10 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/lib/version.php';
+
+$assetVersion = googa_app_version();
+?>
 <!doctype html>
 <html lang="so">
   <head>
@@ -5,19 +12,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#103654" />
     <meta name="description" content="Googa – somaliske gåter for nysgjerrige hoder." />
-    <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="icon" href="assets/icon-192.png" />
+    <link rel="manifest" href="<?= htmlspecialchars(googa_asset_url('manifest.php'), ENT_QUOTES, 'UTF-8') ?>" />
+    <link rel="icon" href="<?= htmlspecialchars(googa_asset_url('assets/icon-192.png'), ENT_QUOTES, 'UTF-8') ?>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
     <title>Googa — ciyaar iyo halxiraale</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>" />
   </head>
   <body>
     <main class="app-shell" aria-live="polite">
       <header class="topbar">
-        <button class="brand" id="homeButton" aria-label="Googa home"><img src="assets/googa-mascot.png" alt="Googa detective" /><span>Googa</span></button>
-        <div class="top-actions"><a class="owner-link hidden" id="ownerLink" href="owner.php">Owner</a><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
+        <button class="brand" id="homeButton" aria-label="Googa home"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa detective" /><span>Googa</span></button>
+        <div class="top-actions"><button class="update-link hidden" id="updateButton" type="button">Cusboonaysii</button><a class="owner-link hidden" id="ownerLink" href="owner.php">Owner</a><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
       </header>
 
       <section id="welcome" class="welcome">
@@ -25,8 +32,9 @@
           <p class="eyebrow" data-so="Ciyaar. Ogaansho. Af-Soomaali." data-no="Lek. Oppdagelse. Somali.">Ciyaar. Ogaansho. Af-Soomaali.</p>
           <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
           <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag.">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
+          <p class="build-note" id="buildNote">v<?= htmlspecialchars($assetVersion, ENT_QUOTES, 'UTF-8') ?></p>
         </div>
-        <img class="hero-mascot" src="assets/googa-mascot.png" alt="Googa" />
+        <img class="hero-mascot" src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" />
         <div class="age-grid" id="ageGrid"></div>
         <p class="translation-note" data-so="Taabo calanka Norway si aad u aragto turjumaadda." data-no="Trykk på det norske flagget for å vise somalisk tekst.">Taabo calanka Norway si aad u aragto turjumaadda.</p>
       </section>
@@ -46,8 +54,8 @@
         </article>
       </section>
     </main>
-    <script src="session.php"></script>
-    <script src="bank.js"></script>
-    <script src="app.js"></script>
+    <script src="<?= htmlspecialchars(googa_asset_url('session.php'), ENT_QUOTES, 'UTF-8') ?>"></script>
+    <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+    <script src="<?= htmlspecialchars(googa_asset_url('app.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   </body>
 </html>

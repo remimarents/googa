@@ -7,6 +7,8 @@ button { font:inherit; cursor:pointer }
 .brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2'; padding:0 }
 .brand img { width:48px; height:48px; object-fit:contain }
 .top-actions { display:flex; gap:9px; align-items:center }
+.update-link { display:inline-flex; align-items:center; border:0; border-radius:12px; padding:8px 12px; background:#ffcf5a; color:#103654; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
+.update-link[disabled] { opacity:.7; cursor:wait }
 .owner-link { display:inline-flex; align-items:center; border-radius:12px; padding:8px 12px; background:#103654; color:#fff; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
 .stars { background:#fff5cb; padding:7px 12px; border-radius:999px; font-weight:800; color:#8b5b0d }
 .language { border:2px solid #fff; background:#fff; border-radius:12px; padding:7px 9px; font-size:20px; box-shadow:0 3px 9px #10365420 }
@@ -15,6 +17,7 @@ button { font:inherit; cursor:pointer }
 .eyebrow { margin:0 0 7px; color:#087d8b; font-weight:800; letter-spacing:.05em; text-transform:uppercase }
 .welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2'; margin:0; letter-spacing:-.04em }
 .intro { font-size:18px; line-height:1.5; max-width:490px }
+.build-note { margin:10px 0 0; color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase }
 .hero-mascot { position:absolute; right:-20px; top:-22px; width:245px; transform:rotate(6deg); pointer-events:none }
 .age-grid { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,1fr); gap:13px; margin-top:42px }
 .age-card { min-height:146px; border:0; border-radius:24px; padding:18px; text-align:left; color:var(--ink); box-shadow:0 9px 0 #10365418; transition:transform .15s,box-shadow .15s; position:relative; overflow:hidden }

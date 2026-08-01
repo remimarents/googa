@@ -5,6 +5,7 @@ session_name('googa');
 session_start();
 
 require_once __DIR__ . '/lib/store.php';
+require_once __DIR__ . '/lib/version.php';
 
 header('Content-Type: application/javascript; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
@@ -18,4 +19,4 @@ $payload = [
     'access' => $context['access'],
 ];
 echo 'window.GOOGA_SESSION = ' . json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ';';
-
+echo 'window.GOOGA_BUILD = ' . json_encode(googa_version_data(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ';';

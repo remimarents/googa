@@ -7,7 +7,7 @@ const GOOGA_OWNER_EMAILS = [
 ];
 
 const GOOGA_STORAGE_FILE = __DIR__ . '/storage/googa-data.json';
+const GOOGA_VERSION_FILE = __DIR__ . '/version.json';
 const GOOGA_MONTHLY_PRICE_ID = 'price_1TzedtBgfqMKZQay3RROQJTQ';
 const GOOGA_INTRO_PRICE_ID = 'price_1TzedtBgfqMKZQayCgFS0j8s';
 const GOOGA_PRODUCT_ID = 'prod_UzdvEnhniM03Gn';
-

@@ -32,4 +32,4 @@ if (!$context['access']['allowed']) {
     exit;
 }
 
-require __DIR__ . '/index.html';
+require __DIR__ . '/app-shell.php';

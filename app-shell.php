@@ -56,6 +56,8 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
         </article>
       </section>
     </main>
+    <button class="logout-dot" id="logoutDot" type="button" aria-label="Logg ut" title="Logg ut">·</button>
+    <style>.logout-dot{position:fixed;right:7px;bottom:5px;width:16px;height:16px;padding:0;border:0;background:transparent;color:#103654;opacity:.24;font:900 16px/12px system-ui;cursor:pointer}.logout-dot:hover,.logout-dot:focus-visible{opacity:.7;outline:0}</style>
     <script src="<?= htmlspecialchars(googa_asset_url('session.php'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('app.js'), ENT_QUOTES, 'UTF-8') ?>"></script>

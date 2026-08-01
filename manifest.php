@@ -14,7 +14,7 @@ echo json_encode([
     'background_color' => '#dff7ff',
     'theme_color' => '#103654',
     'icons' => [
-        ['src' => googa_asset_url('assets/icon-192.png'), 'sizes' => '192x192', 'type' => 'image/png'],
-        ['src' => googa_asset_url('assets/icon-512.png'), 'sizes' => '512x512', 'type' => 'image/png'],
+        ['src' => googa_asset_url('assets/icon-192.png'), 'sizes' => '192x192', 'type' => 'image/png', 'purpose' => 'any maskable'],
+        ['src' => googa_asset_url('assets/icon-512.png'), 'sizes' => '512x512', 'type' => 'image/png', 'purpose' => 'any maskable'],
     ],
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

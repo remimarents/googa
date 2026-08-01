@@ -16,6 +16,8 @@ $familyAvailable = empty($context['family_device']) && !empty($context['access']
     <meta name="description" content="Googa – somaliske gåter for nysgjerrige hoder." />
     <link rel="manifest" href="<?= htmlspecialchars(googa_asset_url('manifest.php'), ENT_QUOTES, 'UTF-8') ?>" />
     <link rel="icon" href="<?= htmlspecialchars(googa_asset_url('assets/icon-192.png'), ENT_QUOTES, 'UTF-8') ?>" />
+    <link rel="apple-touch-icon" href="<?= htmlspecialchars(googa_asset_url('assets/icon-512.png'), ENT_QUOTES, 'UTF-8') ?>" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />

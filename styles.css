@@ -64,6 +64,19 @@ button { cursor:pointer }
 .a7 { background:linear-gradient(145deg,#d7faf5,#9fe6df) }
 .a13 { background:linear-gradient(145deg,#e0ebff,#b5d0fb) }
 .a16 { background:linear-gradient(145deg,#ffe2ef,#f2b8d3) }
+.story-launch { position:relative; overflow:hidden; display:grid; grid-template-columns:240px minmax(0,1fr); min-height:205px; margin-top:22px; border:1px solid #ffffffd3; border-radius:30px; background:linear-gradient(125deg,#103654,#174f70 62%,#087f89); color:#fff; text-decoration:none; box-shadow:0 20px 48px #10365428; transition:transform .18s,box-shadow .18s }
+.story-launch:hover { transform:translateY(-3px); box-shadow:0 26px 58px #10365432 }
+.story-launch::after { content:""; position:absolute; width:240px; height:240px; right:-130px; top:-130px; border:38px solid #ffffff0d; border-radius:50% }
+.story-launch-art { position:relative; min-height:205px }
+.story-launch-art img { position:absolute; width:150px; height:150px; object-fit:cover; border:4px solid #ffffffb8; border-radius:25px; box-shadow:0 14px 30px #071f3450 }
+.story-launch-art img:first-child { left:22px; top:22px; transform:rotate(-6deg) }
+.story-launch-art img:last-child { left:92px; top:42px; transform:rotate(7deg) }
+.story-launch-copy { position:relative; z-index:2; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:25px 34px }
+.story-launch-copy small { display:inline-flex; margin-bottom:6px; padding:5px 9px; border-radius:999px; background:#ffc84b; color:#103654; font-size:9px; font-weight:900; letter-spacing:.12em }
+.story-launch-copy strong { font:800 clamp(29px,4vw,42px)/1 'Baloo 2',Nunito,sans-serif; letter-spacing:-.025em }
+.story-launch-copy>span { max-width:540px; margin-top:7px; color:#dcecf2; font-size:14px; font-weight:700; line-height:1.4 }
+.story-launch-copy b { display:inline-flex; align-items:center; gap:8px; margin-top:15px; padding:9px 13px; border-radius:12px; background:#fff; color:#103654; font-size:12px }
+.story-launch-copy b i { font-style:normal }
 .hidden { display:none!important }
 .game { --age-accent:var(--teal); --age-soft:#dff7f7; padding-top:18px }
 .game-toolbar { display:grid; grid-template-columns:auto minmax(240px,1fr); align-items:center; gap:16px; margin-bottom:14px; padding:10px 12px; border:1px solid #ffffffba; border-radius:20px; background:#ffffffa8; box-shadow:var(--soft-shadow); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px) }
@@ -138,6 +151,16 @@ body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4
   .age-card small { margin-top:3px; font-size:11px }
   .card-action { padding-top:10px; font-size:10px }
   .card-action b { width:24px; height:24px }
+  .story-launch { grid-template-columns:118px minmax(0,1fr); min-height:190px; margin-top:13px; border-radius:25px }
+  .story-launch-art { min-height:190px }
+  .story-launch-art img { width:93px; height:93px; border-width:3px; border-radius:19px }
+  .story-launch-art img:first-child { left:10px; top:27px }
+  .story-launch-art img:last-child { left:29px; top:75px }
+  .story-launch-copy { padding:19px 13px 18px 9px }
+  .story-launch-copy small { font-size:7px }
+  .story-launch-copy strong { font-size:25px }
+  .story-launch-copy>span { font-size:11px }
+  .story-launch-copy b { margin-top:10px; padding:8px 10px; font-size:10px }
   .game { padding-top:12px }
   .game-toolbar { grid-template-columns:1fr; gap:9px; margin-bottom:10px; padding:9px; border-radius:18px }
   .back { justify-content:flex-start; width:max-content; min-height:40px; padding:7px 12px; font-size:13px }

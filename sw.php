@@ -16,6 +16,13 @@ $files = [
     './bank.js?v=' . rawurlencode($version),
     './app.js?v=' . rawurlencode($version),
     './assets/read-aloud.js?v=' . rawurlencode($version),
+    './stories.css?v=' . rawurlencode($version),
+    './story-bank.js?v=' . rawurlencode($version),
+    './stories.js?v=' . rawurlencode($version),
+    './assets/stories/diin-dawaco.png?v=' . rawurlencode($version),
+    './assets/stories/wiil-waal.png?v=' . rawurlencode($version),
+    './assets/stories/cigaal-shidaad.png?v=' . rawurlencode($version),
+    './assets/stories/caraweelo.png?v=' . rawurlencode($version),
     './audio/ui/welcome.mp3',
 ];
 ?>
@@ -63,6 +70,7 @@ self.addEventListener('fetch', event => {
     || url.pathname.endsWith('/family-pending.php')
     || url.pathname.endsWith('/family-pending-status.php')
     || url.pathname.endsWith('/family-session.php')
+    || url.pathname.endsWith('/stories.php')
     || url.pathname.endsWith('/sw.php')
     || url.pathname.endsWith('/googa/')
     || url.pathname.endsWith('/googa');

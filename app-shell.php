@@ -7,6 +7,7 @@ $assetVersion = googa_app_version();
 $portalAvailable = !empty($context['user']['stripe']['customer_id']);
 $familyAvailable = empty($context['family_device']) && !empty($context['access']['allowed']);
 $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA_PRIVATE_LOGOUT_EMAIL;
+$storiesAvailable = GOOGA_STORIES_PUBLIC || ($context['role'] ?? '') === 'owner';
 ?>
 <!doctype html>
 <html lang="so">
@@ -44,6 +45,12 @@ $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA
         </div>
         <div class="age-section-head"><div><p class="section-kicker" data-so="DOORO KOOXDA" data-no="VELG GRUPPE">DOORO KOOXDA</p><h2 data-so="Yaa ciyaaraya?" data-no="Hvem skal spille?">Yaa ciyaaraya?</h2></div><span class="daily-pill"><i>✦</i> <span data-so="4 heer" data-no="4 nivåer">4 heer</span></span></div>
         <div class="age-grid" id="ageGrid"></div>
+        <?php if ($storiesAvailable): ?>
+        <a class="story-launch" href="stories.php">
+          <span class="story-launch-art" aria-hidden="true"><img src="<?= htmlspecialchars(googa_asset_url('assets/stories/diin-dawaco.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><img src="<?= htmlspecialchars(googa_asset_url('assets/stories/wiil-waal.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""></span>
+          <span class="story-launch-copy"><small><?= GOOGA_STORIES_PUBLIC ? 'SHEEKOOYIN' : 'EIERFORHÅNDSVISNING' ?></small><strong data-so="Sheeko ku baro Af-Soomaaliga" data-no="Lær somali gjennom historier">Sheeko ku baro Af-Soomaaliga</strong><span data-so="Dhegeyso, taabo oo faham — afar sheeko oo da' kasta loo habeeyey." data-no="Lytt, trykk og forstå – fire historier tilpasset hver aldersgruppe.">Dhegeyso, taabo oo faham — afar sheeko oo da' kasta loo habeeyey.</span><b><i data-so="Fur sheekooyinka" data-no="Åpne historiene">Fur sheekooyinka</i> →</b></span>
+        </a>
+        <?php endif; ?>
       </section>
 
       <section id="game" class="game hidden">

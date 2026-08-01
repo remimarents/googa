@@ -15,3 +15,5 @@ const GOOGA_PRODUCT_ID = 'prod_UzdvEnhniM03Gn';
 const GOOGA_STRIPE_ENV_FILE = '/home/ferdighet/.googa-stripe.env';
 const GOOGA_FAMILY_SECRET_FILE = '/home/ferdighet/.googa-family.env';
 const GOOGA_PUBLIC_BASE_URL = 'https://ferdighet.no/googa';
+// Owners can always preview stories. Set to true only when the first story season is ready for subscribers.
+const GOOGA_STORIES_PUBLIC = false;

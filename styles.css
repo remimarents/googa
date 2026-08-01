@@ -1,47 +1,69 @@
-:root { --ink:#103654; --sky:#dff7ff; --teal:#087f89; --gold:#ffc84b; --coral:#d95f50; --paper:#fffdf7; --muted:#526b80; --line:#d8e5eb; --shadow:0 16px 38px #1036541a; }
+:root { --ink:#0d3451; --sky:#dff7ff; --teal:#07858d; --teal-dark:#066971; --gold:#ffc84b; --coral:#d95f50; --paper:#fffdf8; --muted:#526b80; --line:#d8e5eb; --shadow:0 18px 48px #1036541a; --soft-shadow:0 8px 24px #10365414; }
 * { box-sizing:border-box }
 html { -webkit-text-size-adjust:100%; }
-body { margin:0; min-height:100vh; min-height:100dvh; color:var(--ink); background:radial-gradient(circle at 12% 5%,#fff0be 0 10%,transparent 32%),linear-gradient(150deg,#e5faff,#c9ecf4); font-family:Nunito,ui-rounded,system-ui,-apple-system,sans-serif; }
+body { margin:0; min-height:100vh; min-height:100dvh; color:var(--ink); background:radial-gradient(circle at 4% 2%,#fff1b7 0 8%,transparent 28%),radial-gradient(circle at 96% 18%,#bceff2 0 8%,transparent 30%),linear-gradient(155deg,#f6fcfb 0%,#dff5f7 48%,#cceef3 100%); background-attachment:fixed; font-family:Nunito,ui-rounded,system-ui,-apple-system,sans-serif; }
 button,input,select,textarea { font:inherit }
 button,a { -webkit-tap-highlight-color:transparent }
 button { cursor:pointer }
 :focus-visible { outline:3px solid #087f89; outline-offset:3px }
-.read-aloud { display:inline-grid; place-items:center; width:34px; height:34px; margin:0 0 0 6px; padding:0; border:1px solid #087f8938; border-radius:50%; background:#e5f7f7; color:#103654; font-size:16px; line-height:1; vertical-align:middle; box-shadow:0 2px 6px #10365412; cursor:pointer }
-.read-aloud:hover,.read-aloud:focus-visible,.read-aloud.is-playing { background:#087f89; color:#fff; transform:scale(1.05) }
+.read-aloud { display:inline-grid; place-items:center; width:36px; height:36px; margin:0 0 0 7px; padding:0; border:1px solid #ffffffd9; border-radius:50%; background:#fffffff2; color:var(--teal-dark); line-height:1; vertical-align:middle; box-shadow:0 5px 16px #10365418,inset 0 0 0 1px #087f8918; cursor:pointer; transition:transform .16s,background .16s,color .16s,box-shadow .16s }
+.read-aloud svg,.speak svg { width:18px; height:18px; fill:currentColor; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
+.read-aloud svg path:first-child,.speak svg path:first-child { stroke:none }
+.read-aloud svg path:not(:first-child),.speak svg path:not(:first-child) { fill:none }
+.read-aloud:hover,.read-aloud:focus-visible,.read-aloud.is-playing { background:var(--teal); color:#fff; transform:scale(1.06); box-shadow:0 7px 20px #087f8932 }
 .read-aloud.is-playing { animation:googa-pulse 1s ease-in-out infinite }
 @keyframes googa-pulse { 50% { box-shadow:0 0 0 7px #087f8920 } }
 .age-card-wrap { position:relative; min-width:0 }
 .age-card-wrap .age-card { width:100%; height:100% }
-.age-card-wrap>.read-aloud { position:absolute; z-index:2; right:9px; top:9px; margin:0 }
+.age-card-wrap>.read-aloud { position:absolute; z-index:3; right:11px; top:11px; margin:0 }
 .option-row { display:grid; grid-template-columns:minmax(0,1fr) 46px; gap:8px; align-items:stretch }
 .option-row>.read-aloud { width:46px; height:100%; min-height:60px; margin:0; border-radius:14px; font-size:18px }
-.app-shell { width:min(100%,900px); min-height:100vh; min-height:100dvh; margin:auto; padding:18px 20px max(68px,calc(50px + env(safe-area-inset-bottom))); overflow-x:clip }
-.topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; position:relative; z-index:5 }
-.brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; padding:0; min-height:48px }
-.brand img { width:48px; height:48px; object-fit:contain }
+.app-shell { width:min(100%,940px); min-height:100vh; min-height:100dvh; margin:auto; padding:16px 20px max(72px,calc(54px + env(safe-area-inset-bottom))); overflow-x:clip }
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; position:relative; z-index:5; min-height:66px; padding:8px 10px; border:1px solid #ffffffb8; border-radius:22px; background:#ffffffa6; box-shadow:var(--soft-shadow); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px) }
+.brand { border:0; background:transparent; display:flex; gap:8px; align-items:center; color:var(--ink); font:800 27px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; padding:0 5px; min-height:48px }
+.brand img { width:50px; height:50px; object-fit:contain; filter:drop-shadow(0 5px 7px #10365420) }
 .top-actions { min-width:0; display:flex; gap:8px; align-items:center; justify-content:flex-end }
 .update-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border:0; border-radius:12px; padding:8px 12px; background:#ffcf5a; color:#103654; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
 .update-link[disabled] { opacity:.7; cursor:wait }
-.owner-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border-radius:12px; padding:8px 12px; background:#103654; color:#fff; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420; white-space:nowrap }
-.stars { min-width:56px; min-height:44px; display:inline-flex; align-items:center; justify-content:center; background:#fff5cb; padding:7px 11px; border-radius:999px; font-weight:800; color:#7b500b; white-space:nowrap }
-.language { flex:0 0 48px; width:48px; height:44px; border:2px solid #fff; background:#fff; border-radius:12px; padding:5px; font-size:20px; box-shadow:0 3px 9px #10365420 }
-.welcome { position:relative; padding-top:38px }
-.welcome-copy { max-width:570px; position:relative; z-index:1 }
+.owner-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border:1px solid #ffffff18; border-radius:13px; padding:8px 13px; background:linear-gradient(145deg,#174565,#0c304c); color:#fff; text-decoration:none; font-weight:800; box-shadow:0 5px 13px #10365425; white-space:nowrap; transition:transform .15s,box-shadow .15s }
+.owner-link:hover { transform:translateY(-2px); box-shadow:0 8px 18px #1036542c }
+.stars { min-width:58px; min-height:44px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #ffe69a; background:linear-gradient(145deg,#fff8d8,#ffedaa); padding:7px 11px; border-radius:14px; font-weight:800; color:#76500e; white-space:nowrap; box-shadow:0 4px 12px #a8781320 }
+.language { flex:0 0 48px; width:48px; height:44px; border:1px solid #ffffff; background:#fff; border-radius:13px; padding:5px; font-size:20px; box-shadow:0 5px 13px #1036541d }
+.welcome { position:relative; padding-top:18px }
+.hero-card { position:relative; min-height:390px; overflow:hidden; padding:46px 42px; border:1px solid #ffffffc9; border-radius:36px; background:linear-gradient(125deg,#fffdf6 0%,#fff9e8 42%,#dff7f7 100%); box-shadow:0 24px 60px #10365418 }
+.hero-card::before { content:""; position:absolute; width:260px; height:260px; left:-105px; bottom:-160px; border:42px solid #ffc84b1e; border-radius:50% }
+.hero-card::after { content:""; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(#087f8918 1.2px,transparent 1.2px); background-size:18px 18px; mask-image:linear-gradient(90deg,transparent 48%,#000 100%) }
+.welcome-copy { max-width:510px; position:relative; z-index:2 }
 .eyebrow { margin:0 0 7px; color:#087d8b; font-weight:800; letter-spacing:.05em; text-transform:uppercase }
-.welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:0; letter-spacing:-.04em }
-.intro { font-size:18px; line-height:1.5; max-width:490px }
+.welcome h1 { max-width:520px; font:800 clamp(48px,7vw,72px)/.94 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:0; letter-spacing:-.045em; text-wrap:balance }
+.intro { font-size:18px; line-height:1.5; max-width:455px; color:#35566f; font-weight:700 }
 .build-note { margin:10px 0 0; color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase }
-.hero-mascot { position:absolute; right:-20px; top:-22px; width:245px; transform:rotate(6deg); pointer-events:none }
-.age-grid { position:relative; z-index:2; display:grid; grid-template-columns:repeat(2,1fr); gap:13px; margin-top:42px }
-.age-card { min-height:146px; border:0; border-radius:24px; padding:18px; text-align:left; color:var(--ink); box-shadow:0 9px 0 #10365418; transition:transform .15s,box-shadow .15s; position:relative; overflow:hidden }
-.age-card:hover { transform:translateY(-4px); box-shadow:0 13px 0 #10365412 }
-.age-card .emoji { font-size:40px; display:block }
-.age-card strong { font:800 27px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; display:block; margin-top:3px }
-.age-card small { font-weight:800; display:block; max-width:75%; line-height:1.2 }
-.a0 { background:#ffe69a }
-.a7 { background:#b9f1ed }
-.a13 { background:#c7ddff }
-.a16 { background:#f6c5db }
+.hero-art { position:absolute; z-index:1; right:12px; bottom:0; width:40%; height:100%; display:grid; place-items:end center }
+.hero-orbit { position:absolute; width:270px; aspect-ratio:1; right:15px; bottom:40px; border-radius:50%; background:radial-gradient(circle at 38% 34%,#fff 0 10%,#bdebec 50%,#79ced3 100%); box-shadow:0 20px 60px #087f8926,inset 0 0 0 16px #ffffff38 }
+.hero-mascot { position:relative; z-index:2; width:min(285px,100%); transform:translateY(14px) rotate(2deg); filter:drop-shadow(0 20px 20px #10365428); pointer-events:none }
+.clue { position:absolute; z-index:3; display:grid; place-items:center; width:45px; height:45px; border:1px solid #ffffffd9; border-radius:50%; background:#ffffffe8; color:var(--teal); font:800 25px 'Baloo 2'; box-shadow:0 8px 20px #1036541c }
+.clue-one { right:22px; top:58px; transform:rotate(9deg) }.clue-two { left:14px; bottom:78px; color:#c58716; transform:rotate(-8deg) }
+.age-section-head { display:flex; align-items:end; justify-content:space-between; gap:18px; margin:30px 4px 14px }
+.section-kicker { margin:0 0 2px; color:var(--teal); font-size:12px; font-weight:900; letter-spacing:.13em }
+.age-section-head h2 { margin:0; font:800 clamp(29px,5vw,38px)/1 'Baloo 2',Nunito,sans-serif; letter-spacing:-.025em }
+.daily-pill { display:inline-flex; align-items:center; gap:6px; min-height:38px; padding:7px 13px; border:1px solid #ffffffd1; border-radius:999px; background:#ffffffb8; color:#526b80; font-size:13px; font-weight:800; box-shadow:0 5px 16px #10365412 }
+.daily-pill i { color:#d49a1d; font-style:normal }
+.age-grid { position:relative; z-index:2; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:0 }
+.age-card { display:flex; flex-direction:column; min-height:210px; width:100%; border:1px solid #ffffffba; border-radius:27px; padding:17px; text-align:left; color:var(--ink); box-shadow:0 12px 26px #10365414,inset 0 1px 0 #ffffff99; transition:transform .18s,box-shadow .18s; position:relative; overflow:hidden }
+.age-card::before { content:""; position:absolute; width:115px; height:115px; border:25px solid #ffffff30; border-radius:50%; right:-58px; bottom:-63px }
+.age-card:hover { transform:translateY(-5px); box-shadow:0 18px 34px #1036541c,inset 0 1px 0 #fff }
+.card-top { display:flex; align-items:center; justify-content:space-between; padding-right:39px }
+.age-card .emoji { display:grid; place-items:center; width:52px; height:52px; border:1px solid #ffffffd6; border-radius:17px; background:#ffffff9c; font-size:28px; box-shadow:0 5px 13px #10365412 }
+.age-badge { padding:5px 9px; border-radius:999px; background:#10365412; font-size:12px; font-weight:900 }
+.card-copy { margin-top:18px }
+.age-card strong { font:800 24px/1.03 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; display:block; letter-spacing:-.02em }
+.age-card small { margin-top:5px; color:#35566f; font-size:12px; font-weight:800; display:block; line-height:1.2 }
+.card-action { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:14px; border-top:1px solid #10365412; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.06em }
+.card-action b { display:grid; place-items:center; width:27px; height:27px; border-radius:50%; background:#103654; color:#fff; font-size:15px }
+.a0 { background:linear-gradient(145deg,#fff0b7,#ffdf75) }
+.a7 { background:linear-gradient(145deg,#d7faf5,#9fe6df) }
+.a13 { background:linear-gradient(145deg,#e0ebff,#b5d0fb) }
+.a16 { background:linear-gradient(145deg,#ffe2ef,#f2b8d3) }
 .hidden { display:none!important }
 .game { padding-top:25px }
 .back { min-height:44px; border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 4px 12px }
@@ -71,27 +93,43 @@ body[data-age='16'] .riddle-card { border:5px solid #f6c5db }
 body[data-age='13'] .riddle-card h2,
 body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4vw,32px); letter-spacing:-.02em }
 @media (max-width:560px) {
-  .app-shell { padding:10px 14px max(66px,calc(48px + env(safe-area-inset-bottom))) }
-  .topbar { gap:6px }
-  .brand { flex:0 0 50px; min-width:50px }
+  .app-shell { padding:8px 10px max(66px,calc(48px + env(safe-area-inset-bottom))) }
+  .topbar { gap:5px; min-height:62px; padding:7px; border-radius:19px }
+  .brand { flex:0 0 48px; min-width:48px; padding:0 }
   .brand span { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap }
-  .brand img { width:46px; height:46px }
-  .top-actions { gap:6px; flex:1 1 auto }
-  .owner-link,.update-link { min-height:44px; padding:7px; border-radius:11px; font-size:13px }
-  .stars { min-width:50px; padding:6px 9px }
-  .language { flex-basis:46px; width:46px }
-  .welcome { padding-top:24px }
+  .brand img { width:47px; height:47px }
+  .top-actions { gap:5px; flex:1 1 auto }
+  .owner-link,.update-link { min-height:43px; padding:7px 9px; border-radius:12px; font-size:12px }
+  .stars { min-width:50px; min-height:43px; padding:6px 8px; border-radius:12px }
+  .language { flex-basis:44px; width:44px; height:43px; border-radius:12px }
+  .welcome { padding-top:12px }
+  .hero-card { min-height:370px; padding:27px 19px; border-radius:28px }
+  .hero-card::before { width:200px; height:200px; left:-110px; bottom:-120px }
   .welcome-copy { max-width:100% }
-  .welcome .eyebrow { max-width:245px; font-size:13px }
-  .welcome h1 { max-width:250px; font-size:clamp(39px,12vw,52px); line-height:.96 }
-  .intro { max-width:285px; margin-top:18px; font-size:17px; line-height:1.42 }
-  .hero-mascot { width:145px; right:-15px; top:38px; opacity:.34 }
+  .welcome .eyebrow { max-width:230px; font-size:11px; line-height:1.35; letter-spacing:.09em }
+  .welcome h1 { max-width:245px; font-size:clamp(42px,12vw,49px); line-height:.92 }
+  .intro { position:relative; z-index:4; max-width:230px; margin-top:20px; font-size:15px; line-height:1.43 }
+  .hero-art { right:-10px; width:47%; }
+  .hero-orbit { width:175px; right:-8px; bottom:47px; box-shadow:0 15px 38px #087f8924,inset 0 0 0 10px #ffffff38 }
+  .hero-mascot { width:175px; transform:translate(2px,4px) rotate(2deg) }
+  .clue { width:36px; height:36px; font-size:20px }
+  .clue-one { right:15px; top:67px }.clue-two { left:0; bottom:68px }
   .build-note { display:none }
-  .age-grid { margin-top:28px; gap:11px }
-  .age-card { min-height:122px; border-radius:21px; padding:15px; box-shadow:0 7px 0 #10365416 }
-  .age-card .emoji { font-size:32px }
-  .age-card strong { font-size:24px }
-  .age-card small { max-width:100%; font-size:13px }
+  .age-section-head { margin:23px 4px 12px }
+  .section-kicker { font-size:10px }
+  .age-section-head h2 { font-size:29px }
+  .daily-pill { min-height:34px; padding:5px 10px; font-size:11px }
+  .age-grid { grid-template-columns:repeat(2,1fr); gap:10px }
+  .age-card { min-height:172px; border-radius:23px; padding:13px; box-shadow:0 9px 20px #10365412,inset 0 1px 0 #ffffff99 }
+  .age-card-wrap>.read-aloud { right:9px; top:9px }
+  .card-top { padding-right:35px }
+  .age-card .emoji { width:45px; height:45px; border-radius:14px; font-size:25px }
+  .age-badge { padding:4px 7px; font-size:10px }
+  .card-copy { margin-top:13px }
+  .age-card strong { font-size:21px }
+  .age-card small { margin-top:3px; font-size:11px }
+  .card-action { padding-top:10px; font-size:10px }
+  .card-action b { width:24px; height:24px }
   .game { padding-top:12px }
   .progress-row { font-size:14px }
   .progress-track { margin-bottom:12px }
@@ -109,9 +147,12 @@ body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4
 }
 
 @media (max-width:370px) {
-  .owner-link,.update-link { padding-inline:7px; font-size:13px }
-  .stars { min-width:46px }
-  .language { flex-basis:44px; width:44px }
+  .owner-link,.update-link { padding-inline:6px; font-size:11px }
+  .stars { min-width:45px }
+  .language { flex-basis:42px; width:42px }
+  .hero-card { min-height:355px }
+  .welcome h1 { max-width:220px; font-size:40px }
+  .intro { max-width:210px; font-size:14px }
 }
 
 @media (prefers-reduced-motion:reduce) {

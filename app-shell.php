@@ -33,13 +33,16 @@ $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA
       </header>
 
       <section id="welcome" class="welcome">
-        <div class="welcome-copy">
-          <p class="eyebrow" data-so="Ciyaar. Ogaansho. Af-Soomaali." data-no="Lek. Oppdagelse. Somali.">Ciyaar. Ogaansho. Af-Soomaali.</p>
-          <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
-          <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag." data-speak-so="Ciyaar. Ogaansho. Af-Soomaali. Maskaxda yar, sir weyn! Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-speak-audio="audio/ui/welcome.mp3">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
-          <p class="build-note" id="buildNote">v<?= htmlspecialchars($assetVersion, ENT_QUOTES, 'UTF-8') ?></p>
+        <div class="hero-card">
+          <div class="welcome-copy">
+            <p class="eyebrow" data-so="Ciyaar · Ogaansho · Af-Soomaali" data-no="Lek · Oppdagelse · Somali">Ciyaar · Ogaansho · Af-Soomaali</p>
+            <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
+            <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag." data-speak-so="Ciyaar. Ogaansho. Af-Soomaali. Maskaxda yar, sir weyn! Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-speak-audio="audio/ui/welcome.mp3">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
+            <p class="build-note" id="buildNote">v<?= htmlspecialchars($assetVersion, ENT_QUOTES, 'UTF-8') ?></p>
+          </div>
+          <div class="hero-art" aria-hidden="true"><span class="hero-orbit"></span><span class="clue clue-one">?</span><span class="clue clue-two">✦</span><img class="hero-mascot" src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="" /></div>
         </div>
-        <img class="hero-mascot" src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" />
+        <div class="age-section-head"><div><p class="section-kicker" data-so="DOORO KOOXDA" data-no="VELG GRUPPE">DOORO KOOXDA</p><h2 data-so="Yaa ciyaaraya?" data-no="Hvem skal spille?">Yaa ciyaaraya?</h2></div><span class="daily-pill"><i>✦</i> <span data-so="4 heer" data-no="4 nivåer">4 heer</span></span></div>
         <div class="age-grid" id="ageGrid"></div>
       </section>
 
@@ -48,7 +51,7 @@ $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA
         <div class="progress-row"><span id="ageLabel"></span><span id="progress"></span></div>
         <div class="progress-track"><i id="progressFill"></i></div>
         <article class="riddle-card">
-          <div class="riddle-top"><span class="case-tag" id="caseTag"></span><button class="speak" id="speakButton" aria-label="Les gåten høyt">🔊</button></div>
+          <div class="riddle-top"><span class="case-tag" id="caseTag"></span><button class="speak" id="speakButton" aria-label="Les gåten høyt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path d="M16 9.2a4 4 0 0 1 0 5.6M18.5 6.7a7.5 7.5 0 0 1 0 10.6"/></svg></button></div>
           <div id="riddleVisual" class="riddle-visual" aria-hidden="true"></div>
           <p class="listen-hint" data-so="Dhegeyso si fiican" data-no="Lytt godt">Dhegeyso si fiican</p>
           <h2 id="question"></h2>

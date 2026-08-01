@@ -1,21 +1,25 @@
-:root { --ink:#103654; --sky:#dff7ff; --teal:#10aab1; --gold:#ffc84b; --coral:#ff816c; --paper:#fffdf7; --muted:#5b7185; }
+:root { --ink:#103654; --sky:#dff7ff; --teal:#087f89; --gold:#ffc84b; --coral:#d95f50; --paper:#fffdf7; --muted:#526b80; --line:#d8e5eb; --shadow:0 16px 38px #1036541a; }
 * { box-sizing:border-box }
-body { margin:0; min-height:100vh; color:var(--ink); background:radial-gradient(circle at 12% 5%,#fff0be 0 10%,transparent 32%),linear-gradient(150deg,#e5faff,#c9ecf4); font-family:Nunito,system-ui,sans-serif; }
-button { font:inherit; cursor:pointer }
-.app-shell { width:min(100%,900px); min-height:100vh; margin:auto; padding:18px 20px 38px; overflow:hidden }
-.topbar { display:flex; justify-content:space-between; align-items:center }
-.brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2'; padding:0 }
+html { -webkit-text-size-adjust:100%; }
+body { margin:0; min-height:100vh; min-height:100dvh; color:var(--ink); background:radial-gradient(circle at 12% 5%,#fff0be 0 10%,transparent 32%),linear-gradient(150deg,#e5faff,#c9ecf4); font-family:Nunito,ui-rounded,system-ui,-apple-system,sans-serif; }
+button,input,select,textarea { font:inherit }
+button,a { -webkit-tap-highlight-color:transparent }
+button { cursor:pointer }
+:focus-visible { outline:3px solid #087f89; outline-offset:3px }
+.app-shell { width:min(100%,900px); min-height:100vh; min-height:100dvh; margin:auto; padding:18px 20px max(68px,calc(50px + env(safe-area-inset-bottom))); overflow-x:clip }
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; position:relative; z-index:5 }
+.brand { border:0; background:transparent; display:flex; gap:7px; align-items:center; color:var(--ink); font:800 30px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; padding:0; min-height:48px }
 .brand img { width:48px; height:48px; object-fit:contain }
-.top-actions { display:flex; gap:9px; align-items:center }
-.update-link { display:inline-flex; align-items:center; border:0; border-radius:12px; padding:8px 12px; background:#ffcf5a; color:#103654; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
+.top-actions { min-width:0; display:flex; gap:8px; align-items:center; justify-content:flex-end }
+.update-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border:0; border-radius:12px; padding:8px 12px; background:#ffcf5a; color:#103654; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
 .update-link[disabled] { opacity:.7; cursor:wait }
-.owner-link { display:inline-flex; align-items:center; border-radius:12px; padding:8px 12px; background:#103654; color:#fff; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420 }
-.stars { background:#fff5cb; padding:7px 12px; border-radius:999px; font-weight:800; color:#8b5b0d }
-.language { border:2px solid #fff; background:#fff; border-radius:12px; padding:7px 9px; font-size:20px; box-shadow:0 3px 9px #10365420 }
+.owner-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; border-radius:12px; padding:8px 12px; background:#103654; color:#fff; text-decoration:none; font-weight:800; box-shadow:0 3px 9px #10365420; white-space:nowrap }
+.stars { min-width:56px; min-height:44px; display:inline-flex; align-items:center; justify-content:center; background:#fff5cb; padding:7px 11px; border-radius:999px; font-weight:800; color:#7b500b; white-space:nowrap }
+.language { flex:0 0 48px; width:48px; height:44px; border:2px solid #fff; background:#fff; border-radius:12px; padding:5px; font-size:20px; box-shadow:0 3px 9px #10365420 }
 .welcome { position:relative; padding-top:38px }
 .welcome-copy { max-width:570px; position:relative; z-index:1 }
 .eyebrow { margin:0 0 7px; color:#087d8b; font-weight:800; letter-spacing:.05em; text-transform:uppercase }
-.welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2'; margin:0; letter-spacing:-.04em }
+.welcome h1 { font:800 clamp(40px,8vw,70px)/.93 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:0; letter-spacing:-.04em }
 .intro { font-size:18px; line-height:1.5; max-width:490px }
 .build-note { margin:10px 0 0; color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase }
 .hero-mascot { position:absolute; right:-20px; top:-22px; width:245px; transform:rotate(6deg); pointer-events:none }
@@ -23,7 +27,7 @@ button { font:inherit; cursor:pointer }
 .age-card { min-height:146px; border:0; border-radius:24px; padding:18px; text-align:left; color:var(--ink); box-shadow:0 9px 0 #10365418; transition:transform .15s,box-shadow .15s; position:relative; overflow:hidden }
 .age-card:hover { transform:translateY(-4px); box-shadow:0 13px 0 #10365412 }
 .age-card .emoji { font-size:40px; display:block }
-.age-card strong { font:800 27px 'Baloo 2'; display:block; margin-top:3px }
+.age-card strong { font:800 27px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; display:block; margin-top:3px }
 .age-card small { font-weight:800; display:block; max-width:75%; line-height:1.2 }
 .a0 { background:#ffe69a }
 .a7 { background:#b9f1ed }
@@ -31,17 +35,17 @@ button { font:inherit; cursor:pointer }
 .a16 { background:#f6c5db }
 .hidden { display:none!important }
 .game { padding-top:25px }
-.back { border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 0 20px }
+.back { min-height:44px; border:0; background:transparent; color:var(--ink); font-weight:800; padding:0 4px 12px }
 .progress-row { display:flex; justify-content:space-between; font-weight:800 }
 .progress-track { height:10px; background:#ffffff8a; border-radius:99px; margin:8px 0 18px; overflow:hidden }
 .progress-track i { display:block; height:100%; width:0; background:var(--teal); border-radius:inherit; transition:width .3s }
-.riddle-card { background:var(--paper); border-radius:30px; padding:20px; box-shadow:0 16px 35px #1036541b; text-align:center }
+.riddle-card { background:var(--paper); border-radius:30px; padding:20px; box-shadow:var(--shadow); text-align:center }
 .riddle-top { display:flex; justify-content:space-between; align-items:center }
 .case-tag { background:#e5f7f7; color:#087d8b; border-radius:99px; padding:6px 11px; font-size:13px; font-weight:800 }
 .speak { border:0; background:#e7f6ff; border-radius:50%; width:47px; height:47px; font-size:21px }
 .riddle-visual { font-size:75px; min-height:90px; display:grid; place-items:center; margin:8px }
 .listen-hint { font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin:0; color:var(--teal); font-weight:800 }
-.riddle-card h2 { font:700 clamp(25px,5vw,38px)/1.1 'Baloo 2'; margin:8px auto 7px; max-width:650px }
+.riddle-card h2 { font:700 clamp(25px,5vw,38px)/1.1 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif; margin:8px auto 7px; max-width:650px }
 .norwegian-question { color:var(--muted); font-weight:800; margin:0 0 14px }
 .options { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:22px }
 .option { border:2px solid #e8edf1; background:white; border-radius:18px; min-height:92px; padding:9px 6px; color:var(--ink); font-weight:800; font-size:15px }
@@ -50,7 +54,7 @@ button { font:inherit; cursor:pointer }
 .option.correct { background:#c8f4de; border-color:#23a96e }
 .option.wrong { background:#ffe0dc; border-color:var(--coral) }
 .feedback { margin:18px 0 0; padding:13px; border-radius:14px; background:#e5f8ec; font-weight:800 }
-.feedback strong { display:block; font:800 23px 'Baloo 2' }
+.feedback strong { display:block; font:800 23px 'Baloo 2',Nunito,ui-rounded,system-ui,sans-serif }
 body[data-age='0'] .riddle-card { border:5px solid #ffe69a }
 body[data-age='7'] .riddle-card { border:5px solid #b9f1ed }
 body[data-age='13'] .riddle-card { border:5px solid #c7ddff }
@@ -58,12 +62,49 @@ body[data-age='16'] .riddle-card { border:5px solid #f6c5db }
 body[data-age='13'] .riddle-card h2,
 body[data-age='16'] .riddle-card h2 { font-family:Nunito; font-size:clamp(23px,4vw,32px); letter-spacing:-.02em }
 @media (max-width:560px) {
-  .app-shell { padding:14px 14px 26px }
-  .hero-mascot { width:170px; right:-24px; top:-20px; opacity:.68 }
-  .welcome h1 { max-width:280px }
-  .age-grid { margin-top:32px }
-  .age-card { min-height:130px }
+  .app-shell { padding:10px 14px max(66px,calc(48px + env(safe-area-inset-bottom))) }
+  .topbar { gap:6px }
+  .brand { flex:0 0 50px; min-width:50px }
+  .brand span { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap }
+  .brand img { width:46px; height:46px }
+  .top-actions { gap:6px; flex:1 1 auto }
+  .owner-link,.update-link { min-height:44px; padding:7px; border-radius:11px; font-size:13px }
+  .stars { min-width:50px; padding:6px 9px }
+  .language { flex-basis:46px; width:46px }
+  .welcome { padding-top:24px }
+  .welcome-copy { max-width:100% }
+  .welcome .eyebrow { max-width:245px; font-size:13px }
+  .welcome h1 { max-width:250px; font-size:clamp(39px,12vw,52px); line-height:.96 }
+  .intro { max-width:285px; margin-top:18px; font-size:17px; line-height:1.42 }
+  .hero-mascot { width:145px; right:-15px; top:38px; opacity:.34 }
+  .build-note { display:none }
+  .age-grid { margin-top:28px; gap:11px }
+  .age-card { min-height:122px; border-radius:21px; padding:15px; box-shadow:0 7px 0 #10365416 }
+  .age-card .emoji { font-size:32px }
+  .age-card strong { font-size:24px }
+  .age-card small { max-width:100%; font-size:13px }
+  .game { padding-top:12px }
+  .progress-row { font-size:14px }
+  .progress-track { margin-bottom:12px }
+  .riddle-card { border-radius:25px; padding:14px }
+  .riddle-top { align-items:flex-start }
+  .case-tag { padding:7px 10px }
+  .speak { width:48px; height:48px }
+  .riddle-visual { min-height:62px; margin:3px; font-size:58px }
+  .listen-hint { margin-top:2px; font-size:11px }
+  .riddle-card h2 { margin-top:6px; font-size:clamp(24px,7.5vw,32px) }
+  .options { margin-top:15px; gap:8px }
   .options { grid-template-columns:1fr }
-  .option { min-height:64px; display:flex; align-items:center; gap:12px; text-align:left; padding-left:17px }
-  .option .choice-emoji { font-size:32px }
+  .option { min-height:60px; display:flex; align-items:center; gap:12px; text-align:left; padding:8px 14px }
+  .option .choice-emoji { font-size:30px }
+}
+
+@media (max-width:370px) {
+  .owner-link,.update-link { padding-inline:7px; font-size:13px }
+  .stars { min-width:46px }
+  .language { flex-basis:44px; width:44px }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important }
 }

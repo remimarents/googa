@@ -25,21 +25,22 @@ $paymentState = (string)($_GET['payment'] ?? '');
 <!doctype html>
 <html lang="so">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Googa – marin la sugayo</title>
 <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
 <style>
-.gate{max-width:760px;margin:7vh auto;background:#fffdf7;border-radius:32px;padding:30px;box-shadow:0 18px 45px #10365422}
+.gate{width:min(100% - 28px,760px);margin:clamp(14px,5vh,44px) auto;background:#fffdf7;border-radius:30px;padding:clamp(20px,4vw,30px);box-shadow:var(--shadow)}
+.gate>img{display:block;width:112px;height:112px;object-fit:contain}.gate h1{margin:2px 0 4px;font:800 clamp(34px,7vw,48px)/1.02 'Baloo 2',Nunito,system-ui,sans-serif}.gate>p{line-height:1.45}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
 .card{padding:18px;border-radius:20px;background:#e5f7f7;font-weight:800}
-.card b{display:block;font:800 31px 'Baloo 2'}
-.cta{display:inline-block;border:0;border-radius:16px;background:#0b8691;color:#fff;padding:15px 22px;font-weight:800;font-size:17px;text-decoration:none;cursor:pointer}
+.card b{display:block;font:800 31px 'Baloo 2',Nunito,system-ui,sans-serif}
+.cta{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:0;border-radius:16px;background:#087f89;color:#fff;padding:13px 18px;font-weight:800;font-size:16px;text-decoration:none;cursor:pointer}
 .sub{color:#5b7185}
 .meta{margin-top:16px;padding:12px 14px;border-radius:16px;background:#fff5cb;font-weight:800}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .actions form{margin:0}
-.ghost{display:inline-block;border-radius:16px;background:#103654;color:#fff;padding:15px 22px;font-weight:800;text-decoration:none}
-@media (max-width:700px){.grid{grid-template-columns:1fr}}
+.ghost{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border-radius:16px;background:#103654;color:#fff;padding:13px 18px;font-weight:800;text-decoration:none}
+@media (max-width:700px){.gate{width:min(100% - 20px,760px);margin:10px auto;border-radius:24px;padding:17px 16px}.gate>img{width:82px;height:82px;margin:auto}.gate .eyebrow{text-align:center}.gate h1{text-align:center;font-size:34px}.gate>.sub{text-align:center;margin-top:5px}.gate>p{font-size:14px}.grid{grid-template-columns:1fr 1fr;gap:9px;margin:15px 0}.card{padding:12px 10px}.card b{font-size:27px}.actions{display:grid;grid-template-columns:1fr;margin-top:14px}.actions form,.actions button,.actions a{width:100%}.meta{font-size:13px}}
 </style>
 <main class="gate">
   <img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa" width="150">

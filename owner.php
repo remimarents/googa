@@ -5,6 +5,7 @@ session_name('googa');
 session_start();
 
 require_once __DIR__ . '/lib/store.php';
+require_once __DIR__ . '/lib/version.php';
 
 $context = googa_session_context();
 googa_require_owner($context);
@@ -79,16 +80,17 @@ function googa_form_date(?string $iso): string
 ?><!doctype html>
 <html lang="no">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Googa – eierdashbord</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
 <style>
-.owner-shell{width:min(1100px,100%);margin:0 auto;padding:20px}
+.owner-shell{width:min(1100px,100%);margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left))}
 .owner-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.owner-header h1{margin:2px 0 0;font:800 clamp(32px,5vw,46px)/1.03 'Baloo 2',Nunito,system-ui,sans-serif;letter-spacing:-.02em}.owner-header .muted{margin:6px 0 0}
 .owner-back{font-weight:800;color:#103654;text-decoration:none}
 .owner-grid{display:grid;grid-template-columns:1.2fr .9fr;gap:18px;margin-top:18px}
 .panel{background:#fffdf7;border-radius:26px;padding:20px;box-shadow:0 16px 35px #1036541b}
-.panel h2{margin:0 0 14px;font:800 28px 'Baloo 2';color:#103654}
+.panel h2{margin:0 0 14px;font:800 28px 'Baloo 2',Nunito,system-ui,sans-serif;color:#103654}
 .table{width:100%;border-collapse:collapse}
 .table th,.table td{padding:10px 8px;border-bottom:1px solid #e5edf4;text-align:left;vertical-align:top}
 .table th{font-size:13px;text-transform:uppercase;color:#5b7185}
@@ -98,7 +100,7 @@ function googa_form_date(?string $iso): string
 .pill.no{background:#ffe0dc}
 .quick{display:flex;gap:6px;flex-wrap:wrap}
 .quick form{margin:0}
-.quick button,.save{border:0;border-radius:12px;background:#103654;color:#fff;padding:8px 12px;font-weight:800}
+.quick button,.save{min-height:44px;border:0;border-radius:12px;background:#103654;color:#fff;padding:8px 12px;font-weight:800}
 .quick .alt{background:#0b8691}
 .quick .muted{background:#8ca0b3;color:#fff}
 .field{display:grid;gap:6px;margin-bottom:12px}
@@ -106,6 +108,7 @@ function googa_form_date(?string $iso): string
 .field textarea{min-height:84px;resize:vertical}
 .message{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#e5f8ec;font-weight:800}
 @media (max-width:900px){.owner-grid{grid-template-columns:1fr}}
+@media (max-width:620px){.owner-shell{padding-top:14px}.owner-header{align-items:flex-start}.owner-header h1{font-size:34px}.owner-header .quick{width:100%;justify-content:space-between}.owner-back{min-height:44px;display:inline-flex;align-items:center}.owner-grid{margin-top:12px}.panel{padding:16px;border-radius:22px}.table thead{display:none}.table,.table tbody,.table tr,.table td{display:block;width:100%}.table tbody{display:grid;gap:12px}.table tr{padding:12px;border:1px solid #d8e5eb;border-radius:16px;background:#fff}.table td{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;padding:7px 0;border:0;overflow-wrap:anywhere}.table td::before{content:attr(data-label);color:#526b80;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.table td:first-child a{display:inline-flex;align-items:center;min-height:40px}.table td:last-child{grid-template-columns:1fr;padding-top:10px;border-top:1px solid #e5edf4}.table td:last-child::before{margin-bottom:2px}.table .quick{gap:8px}.table .quick button{min-width:54px}.field input,.field select,.field textarea{min-height:48px}.save{width:100%}}
 </style>
 <main class="owner-shell">
   <div class="owner-header">
@@ -136,14 +139,14 @@ function googa_form_date(?string $iso): string
         <tbody>
           <?php foreach ($users as $email => $user): $access = googa_access_state($user, 'paid'); ?>
           <tr>
-            <td>
+            <td data-label="E-post">
               <a href="?email=<?= urlencode($email) ?>"><?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?></a><br>
               <small><?= htmlspecialchars((string)($user['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?></small>
             </td>
-            <td><span class="pill <?= ($user['role'] ?? 'user') === 'owner' ? 'owner' : '' ?>"><?= htmlspecialchars((string)($user['role'] ?? 'user'), ENT_QUOTES, 'UTF-8') ?></span></td>
-            <td><span class="pill <?= $access['allowed'] ? 'ok' : 'no' ?>"><?= htmlspecialchars($access['label'], ENT_QUOTES, 'UTF-8') ?></span></td>
-            <td><?= (int)($user['discount_percent'] ?? 0) ?>%</td>
-            <td>
+            <td data-label="Rolle"><span class="pill <?= ($user['role'] ?? 'user') === 'owner' ? 'owner' : '' ?>"><?= htmlspecialchars((string)($user['role'] ?? 'user'), ENT_QUOTES, 'UTF-8') ?></span></td>
+            <td data-label="Tilgang"><span class="pill <?= $access['allowed'] ? 'ok' : 'no' ?>"><?= htmlspecialchars($access['label'], ENT_QUOTES, 'UTF-8') ?></span></td>
+            <td data-label="Rabatt"><?= (int)($user['discount_percent'] ?? 0) ?>%</td>
+            <td data-label="Hurtigvalg">
               <div class="quick">
                 <?php foreach ([10,25,50] as $percent): ?>
                 <form method="post">

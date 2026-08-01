@@ -11,6 +11,10 @@ header('Cache-Control: no-store, max-age=0');
 
 $action = (string)($_GET['action'] ?? '');
 $token = trim((string)($_GET['t'] ?? ''));
+$plan = (string)($_GET['plan'] ?? '');
+if (!in_array($plan, ['trial', 'monthly'], true)) {
+    $plan = '';
+}
 if (!in_array($action, ['create', 'poll'], true)) {
     http_response_code(400);
     echo json_encode(['error' => 'Unknown action']);
@@ -43,6 +47,11 @@ if ($action === 'poll' && ($data['status'] ?? '') === 'approved') {
     if (!empty($used['ok'])) {
         $_SESSION['googa_email'] = googa_normalize_email((string)($data['email'] ?? ''));
         $_SESSION['googa_name'] = (string)($data['identity'] ?? '');
+        if ($plan !== '') {
+            $_SESSION['googa_checkout_choice'] = $plan;
+        } else {
+            unset($_SESSION['googa_checkout_choice']);
+        }
         unset($_SESSION['googa_mode']);
         unset($_SESSION['googa_family_owner'], $_SESSION['googa_family_device']);
         $store = googa_load_data();

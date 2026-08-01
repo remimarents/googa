@@ -39,11 +39,30 @@ async function inspect(page, name) {
     hasTouch: true,
   });
   const page = await context.newPage();
+  if (process.env.GOOGA_MOCK_QR === '1') {
+    await page.route('**/api/auth.php?**', async (route) => {
+      const url = new URL(route.request().url());
+      const action = url.searchParams.get('action');
+      await route.fulfill({
+        contentType: 'application/json',
+        body: JSON.stringify(action === 'create'
+          ? { token: 'test-token', scanUrl: 'https://example.com/googa-login', state: 'pending' }
+          : { state: 'pending' }),
+      });
+    });
+  }
 
   await page.goto(`${base}?logout=1`);
   await inspect(page, 'login');
-  await page.getByRole('button', { name: 'Ku gal QR-koodh' }).click();
+  const selectedPlanPoll = page.waitForRequest((request) => {
+    const url = new URL(request.url());
+    return url.pathname.endsWith('/api/auth.php')
+      && url.searchParams.get('action') === 'poll'
+      && url.searchParams.get('plan') === 'trial';
+  });
+  await page.locator('.price-choice[data-kind="trial"]').click();
   await page.locator('#code canvas').waitFor();
+  await selectedPlanPoll;
   const qrUrl = await page.locator('#manualLink').getAttribute('href');
   await page.waitForTimeout(3200);
   if (await page.locator('#manualLink').getAttribute('href') !== qrUrl) {
@@ -71,7 +90,7 @@ async function inspect(page, name) {
   await page.goto(base);
   page.once('dialog', (dialog) => dialog.accept());
   await page.locator('#logoutDot').click({ clickCount: 3, delay: 100 });
-  await page.getByRole('button', { name: 'Ku gal QR-koodh' }).waitFor();
+  await page.getByRole('button', { name: 'Ama ku gal QR-koodh' }).waitFor();
   console.log(JSON.stringify({ name: 'logout-flow', ok: true }));
 
   await browser.close();

@@ -21,6 +21,14 @@ if (empty($_SESSION['googa_payment_csrf'])) {
 }
 $paymentCsrf = $_SESSION['googa_payment_csrf'];
 $paymentState = (string)($_GET['payment'] ?? '');
+$choice = (string)($_GET['choice'] ?? '');
+if (!in_array($choice, ['trial', 'monthly'], true)) {
+    $choice = '';
+}
+$autoCheckout = $choice !== '' && hash_equals((string)($_SESSION['googa_checkout_choice'] ?? ''), $choice);
+if ($autoCheckout) {
+    unset($_SESSION['googa_checkout_choice']);
+}
 ?>
 <!doctype html>
 <html lang="so">
@@ -65,12 +73,12 @@ $paymentState = (string)($_GET['payment'] ?? '');
     <?php if ($discount > 0): ?> · Qiimo-dhimis: <?= $discount ?>%<?php endif; ?>
   </p>
   <div class="actions">
-    <form method="post" action="checkout.php">
+    <form method="post" action="checkout.php" id="trialCheckout">
       <input type="hidden" name="csrf" value="<?= htmlspecialchars($paymentCsrf, ENT_QUOTES, 'UTF-8') ?>">
       <input type="hidden" name="kind" value="trial">
       <button class="cta" type="submit">Ku bilow tijaabada · kr 5</button>
     </form>
-    <form method="post" action="checkout.php">
+    <form method="post" action="checkout.php" id="monthlyCheckout">
       <input type="hidden" name="csrf" value="<?= htmlspecialchars($paymentCsrf, ENT_QUOTES, 'UTF-8') ?>">
       <input type="hidden" name="kind" value="monthly">
       <button class="cta" type="submit">Ku bilow rukhsadda · kr 50/bishii</button>
@@ -83,4 +91,5 @@ $paymentState = (string)($_GET['payment'] ?? '');
   <?php if ($paymentState === 'processing'): ?><p class="meta">Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood.</p><?php endif; ?>
   <?php if ($paymentState === 'portal-error'): ?><p class="meta">Maareynta rukhsadda lama furi karin hadda.</p><?php endif; ?>
 </main>
+<?php if ($autoCheckout): ?><script>document.getElementById(<?= json_encode($choice === 'trial' ? 'trialCheckout' : 'monthlyCheckout') ?>).requestSubmit();</script><?php endif; ?>
 </html>

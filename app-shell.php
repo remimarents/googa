@@ -8,6 +8,7 @@ $portalAvailable = !empty($context['user']['stripe']['customer_id']);
 $familyAvailable = empty($context['family_device']) && !empty($context['access']['allowed']);
 $showLogout = googa_normalize_email((string)($context['email'] ?? '')) === GOOGA_PRIVATE_LOGOUT_EMAIL;
 $storiesAvailable = GOOGA_STORIES_PUBLIC || ($context['role'] ?? '') === 'owner';
+$cultureTestAvailable = ($context['role'] ?? '') === 'owner';
 ?>
 <!doctype html>
 <html lang="so">
@@ -49,6 +50,12 @@ $storiesAvailable = GOOGA_STORIES_PUBLIC || ($context['role'] ?? '') === 'owner'
         <a class="story-launch" href="stories.php">
           <span class="story-launch-art" aria-hidden="true"><img src="<?= htmlspecialchars(googa_asset_url('assets/stories/diin-dawaco.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><img src="<?= htmlspecialchars(googa_asset_url('assets/stories/wiil-waal.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""></span>
           <span class="story-launch-copy"><small><?= GOOGA_STORIES_PUBLIC ? 'SHEEKOOYIN' : 'EIERFORHÅNDSVISNING' ?></small><strong data-so="Sheeko ku baro Af-Soomaaliga" data-no="Lær somali gjennom historier">Sheeko ku baro Af-Soomaaliga</strong><span data-so="Dhegeyso, taabo oo faham — afar sheeko oo da' kasta loo habeeyey." data-no="Lytt, trykk og forstå – fire historier tilpasset hver aldersgruppe.">Dhegeyso, taabo oo faham — afar sheeko oo da' kasta loo habeeyey.</span><b><i data-so="Fur sheekooyinka" data-no="Åpne historiene">Fur sheekooyinka</i> →</b></span>
+        </a>
+        <?php endif; ?>
+        <?php if ($cultureTestAvailable): ?>
+        <a class="culture-test-launch" href="culture-test.php">
+          <span class="culture-test-launch-art" aria-hidden="true"><i>🇳🇴</i><b>↔</b><i>🇸🇴</i></span>
+          <span><small>EIERFORHÅNDSVISNING · VOKSNE</small><strong>Laba dal, hal sheeko</strong><em>Mellom to hjem – ditt norsk-somaliske kulturkompass</em><b>Åpne testen →</b></span>
         </a>
         <?php endif; ?>
       </section>

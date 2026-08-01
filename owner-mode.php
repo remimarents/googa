@@ -1,13 +1,27 @@
 <?php
 declare(strict_types=1);
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_name('googa');
+    session_start();
+}
+
 require_once __DIR__ . '/lib/store.php';
 require_once __DIR__ . '/lib/version.php';
 
 $context = googa_session_context();
 googa_require_owner($context);
 
+if (empty($_SESSION['googa_owner_mode_csrf'])) {
+    $_SESSION['googa_owner_mode_csrf'] = bin2hex(random_bytes(24));
+}
+$csrf = (string)$_SESSION['googa_owner_mode_csrf'];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!hash_equals($csrf, (string)($_POST['csrf'] ?? ''))) {
+        http_response_code(400);
+        exit('Ugyldig forespørsel.');
+    }
     $mode = (string)($_POST['mode'] ?? '');
     if (in_array($mode, ['demo', 'paid'], true)) {
         $_SESSION['googa_mode'] = $mode;
@@ -40,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p class="muted"><?= htmlspecialchars($context['email'], ENT_QUOTES, 'UTF-8') ?></p>
   <div class="owner-grid">
     <form method="post">
+      <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>">
       <input type="hidden" name="mode" value="demo">
       <button class="owner-card demo" type="submit">
         <strong>Demobruker</strong>
@@ -48,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </button>
     </form>
     <form method="post">
+      <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>">
       <input type="hidden" name="mode" value="paid">
       <button class="owner-card paid" type="submit">
         <strong>Månedlig bruker</strong>

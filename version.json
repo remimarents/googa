@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.01.22",
-  "updatedAt": "2026-08-01T22:47:00Z",
-  "notes": "Logout controls visible only to the primary owner"
+  "version": "2026.08.01.23",
+  "updatedAt": "2026-08-01T22:55:00Z",
+  "notes": "Direct owner mode switching keeps the authenticated Googa session"
 }

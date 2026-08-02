@@ -36,6 +36,7 @@ if (empty($_SESSION['googa_payment_csrf'])) {
     <title>Googa – Safarka Erayada</title>
     <link rel="stylesheet" href="styles.css?v=<?= rawurlencode($assetVersion) ?>">
     <link rel="stylesheet" href="wheel.css?v=<?= rawurlencode($assetVersion) ?>">
+    <link rel="stylesheet" href="rewards.css?v=<?= rawurlencode($assetVersion) ?>">
     <link rel="stylesheet" href="../pwa-update.css?v=<?= rawurlencode($assetVersion) ?>">
   </head>
   <body>
@@ -45,6 +46,7 @@ if (empty($_SESSION['googa_payment_csrf'])) {
     <script src="somaliweb-provisional.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="word-lists.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="levels.js?v=<?= rawurlencode($assetVersion) ?>"></script>
+    <script src="rewards.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="app.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="../pwa-update.js?v=<?= rawurlencode($assetVersion) ?>"></script>
   </body>

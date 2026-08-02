@@ -48,7 +48,6 @@ $assetVersion = googa_app_version();
         <div class="culture-visual" aria-hidden="true"><div class="culture-country norway"><span>🇳🇴</span><small>NORWAY</small></div><div class="culture-person"><span>👩🏾</span><i></i></div><div class="culture-country somalia"><span>🇸🇴</span><small>SOOMAALIYA</small></div><div class="culture-bridge-line"></div></div>
       </div>
       <aside class="culture-note"><span>i</span><p id="cultureDisclaimer">Tani waa tijaabo madadaalo iyo is-milicsi ah. Ma cabbirayso inta aad Soomaali ama Noorwiiji dhab ahaan u tahay.</p><button class="culture-speak" type="button" data-speak-button data-speak-so="Tani waa tijaabo madadaalo iyo is-milicsi ah oo loogu talagalay dadka waaweyn. Ma cabbirayso inta aad Soomaali ama Noorwiiji dhab ahaan u tahay. Jawaabaha iyo natiijadu qalabkaaga ayey ku sii jiraan." aria-label="Dhegeyso sharaxaadda"></button></aside>
-      <p class="culture-review">Utkast · Somalisk tekst skal kvalitetssikres av pedagog før publisering.</p>
       <p class="culture-review"><a href="contact.php?topic=Bariis%20p%C3%A5%20Grandis">💬 Send melding til Arab →</a></p>
     </section>
 
@@ -73,7 +72,6 @@ $assetVersion = googa_app_version();
       <div class="culture-share-buttons"><button class="culture-primary" id="cultureShare" type="button">La wadaag natiijada</button><button class="culture-secondary" id="cultureDownload" type="button">Kaydi kaarka</button></div>
       <section class="culture-commerce"><p class="culture-kicker">QAADO BUUNDADA QOYSKA</p><h2>Googa la tijaabi qoyskaaga</h2><p>Halxiraalo, cod Af-Soomaali ah iyo ciyaar qoyska oo dhan ah.</p><a class="culture-buy" href="./?buy=trial"><span><small>2 maalmood oo tijaabo ah</small><b>Ku bilow kr 5</b><em>Kadib kr 50 bishii · jooji wakhti kasta</em></span><strong>→</strong></a><div class="culture-more-offers"><a href="gift.php">🎁 Hadiyad sii qoys</a><a href="./#annual">★ Kr 499 sanadkii</a></div></section>
       <div class="culture-result-buttons"><button class="culture-primary" id="cultureRestart" type="button">Mar kale samee</button><a class="culture-secondary" href="./">Ku noqo Googa</a></div>
-      <p class="culture-review">Utkast · Ikke normert eller psykometrisk validert.</p>
     </section>
   </main>
   <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>

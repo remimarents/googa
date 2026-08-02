@@ -7,14 +7,11 @@
 - Undertittel: `Hvor langt har det gått?`
 - Tilgang: gratis og uten innlogging
 - Motorstatus: implementert
-- Innholdsstatus: `draft`
-- Instrumentversjon: `bpg-0.3-draft`
+- Instrumentversjon: `bpg-0.3`
 - Scoringsversjon: `bpg-profile-1`
 - Målgruppe: voksne med norsk-somalisk tilknytning
 - Tidsbruk: omtrent 6–8 minutter
 - Omfang: 24 situasjoner med fire svaralternativer
-
-Somalisk tekst og lydmanus skal kvalitetssikres av somalisk pedagog før utkastmerkingen fjernes og testen markedsføres som ferdig. Testen er ikke normert eller psykometrisk validert.
 
 ## Formål
 
@@ -71,8 +68,8 @@ De to laveste aksene utløser konkrete, ikke-moraliserende samtaleforslag.
 - Små høyttalersymboler spiller ferdiginnspilte MP3-filer, ikke dynamisk nettleseropplesning når filen er tilgjengelig.
 - Brukeren velger mellom den kvinnelige stemmen Ubax (`so-SO-UbaxNeural`) og den mannlige stemmen Muuse (`so-SO-MuuseNeural`). Valget vises med to små illustrerte figurer og huskes bare lokalt på enheten.
 - Begge stemmene er generert med tempo −10 prosent. Et kort stemmeeksempel spilles når brukeren bytter forteller.
-- Tidligere lydfiler for spørsmål, skala og resultater tilhører instrumentversjon `mth-0.2-draft` og skal ikke brukes med den nye teksten.
-- I utkastet bruker de nye spørsmålene og svaralternativene enhetens somaliske tale som reserve.
+- Tidligere lydfiler for spørsmål, skala og resultater tilhører et eldre instrument og skal ikke brukes med den nye teksten.
+- De nye spørsmålene og svaralternativene bruker enhetens somaliske tale som reserve frem til de ferdiginnspilte lydfilene er koblet inn.
 - Etter språkgodkjenning skal begge lydsett regenereres for intro, alle 24 spørsmål, alle 96 svaralternativer, seks profiler, tre resultatakser og tre mulige neste steg.
 
 ## Personvern og etikk

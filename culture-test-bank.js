@@ -1,5 +1,5 @@
 window.GOOGA_CULTURE_TEST = {
-  version: 'bpg-0.3-draft',
+  version: 'bpg-0.3',
   scoringVersion: 'bpg-profile-1',
   titleSo: 'Bariis på Grandis?!',
   titleNo: 'Bariis på Grandis?!',

@@ -50,6 +50,7 @@
 
   function renderScene() {
     const scene = activeStory.scenes[sceneIndex];
+    $('readerImage').src = scene.image || activeStory.image;
     $('readerTitle').textContent = t(activeStory.title, activeStory.titleNo);
     $('readerSubtitle').textContent = t(activeStory.subtitle, activeStory.subtitleNo);
     $('readerSupport').textContent = t(activeStory.support, activeStory.supportNo);

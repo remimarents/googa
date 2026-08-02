@@ -11,6 +11,7 @@ window.GOOGA_STORIES = [
         so: 'Maalin qorrax leh, Diin wuxuu ku socday geed weyn hoostiisa. Dawaco ayaa u timid.',
         no: 'En solrik dag gikk Skilpadden under et stort tre. Reven kom bort til ham.',
         audio: 'audio/stories/diin-dawaco-scene-1.mp3',
+        image: 'assets/stories/diin-dawaco-scene-1.png',
         words: [
           {so:'Diin',no:'skilpadde',icon:'🐢',audio:'audio/stories/diin-dawaco-word-diin.mp3'},
           {so:'Dawaco',no:'rev',icon:'🦊',audio:'audio/stories/diin-dawaco-word-dawaco.mp3'},
@@ -21,6 +22,7 @@ window.GOOGA_STORIES = [
         so: 'Dawaco waxay tiri: “Aan tartanno!” Diin wuu qoslay. Wuxuu ogaa inuusan degdeg ahayn.',
         no: 'Reven sa: «La oss løpe om kapp!» Skilpadden lo. Han visste at han ikke var rask.',
         audio: 'audio/stories/diin-dawaco-scene-2.mp3',
+        image: 'assets/stories/diin-dawaco-scene-2.png',
         words: [
           {so:'tartanno',no:'konkurrere',icon:'🏁',audio:'audio/stories/diin-dawaco-word-tartanno.mp3'},
           {so:'qoslay',no:'lo',icon:'😄',audio:'audio/stories/diin-dawaco-word-qoslay.mp3'}
@@ -30,6 +32,7 @@ window.GOOGA_STORIES = [
         so: 'Diin si tartiib ah ayuu u socday, mana uusan joogsan. Dawaco way daashay. Diin wuxuu gaaray geedkii.',
         no: 'Skilpadden gikk sakte, men stoppet aldri. Reven ble sliten. Skilpadden kom fram til treet.',
         audio: 'audio/stories/diin-dawaco-scene-3.mp3',
+        image: 'assets/stories/diin-dawaco-scene-3.png',
         words: [
           {so:'tartiib',no:'sakte',icon:'🐾',audio:'audio/stories/diin-dawaco-word-tartiib.mp3'},
           {so:'joogsan',no:'stoppe',icon:'✋',audio:'audio/stories/diin-dawaco-word-joogsan.mp3'}
@@ -53,6 +56,7 @@ window.GOOGA_STORIES = [
         so: 'Wiil Waal wuxuu isugu yeeray raggii degaanka. Wuxuu weydiiyey halxiraale: “Ii keena qaybta idaha ee dadka mideyn karta ama kala diri karta.”',
         no: 'Wiil Waal kalte sammen mennene i området. Han ga dem en gåte: «Ta med den delen av sauen som kan samle mennesker eller splitte dem.»',
         audio:'audio/stories/wiil-waal-scene-1.mp3',
+        image:'assets/stories/wiil-waal-scene-1.png',
         words:[
           {so:'halxiraale',no:'gåte',icon:'❓',audio:'audio/stories/wiil-waal-word-halxiraale.mp3'},
           {so:'ido',no:'sau',icon:'🐑',audio:'audio/stories/wiil-waal-word-ido.mp3'},
@@ -63,6 +67,7 @@ window.GOOGA_STORIES = [
         so: 'Nin sabool ah ayaa gurigiisii ku noqday isagoo walwalsan. Gabadhiisii ayaa dhegeysatay, dabadeedna waxay tiri: “Aabbe, feeraha u gee.”',
         no: 'En fattig mann gikk bekymret hjem. Datteren lyttet og sa: «Far, ta med ribbeina.»',
         audio:'audio/stories/wiil-waal-scene-2.mp3',
+        image:'assets/stories/wiil-waal-scene-2.png',
         words:[
           {so:'gabadhiisii',no:'datteren hans',icon:'👧🏾',audio:'audio/stories/wiil-waal-word-gabadh.mp3'},
           {so:'dhegeysatay',no:'lyttet',icon:'👂',audio:'audio/stories/wiil-waal-word-dhegeyso.mp3'},
@@ -73,6 +78,7 @@ window.GOOGA_STORIES = [
         so: 'Gabadhu waxay sharaxday: “Haddii si caddaalad ah loo qaybsado, cuntadu dadka way mideysaa. Haddii hunguri yimaado, way kala dirtaa.” Wiil Waal wuxuu gartay inay gabadhu xigmadda lahayd.',
         no: 'Jenta forklarte: «Når maten deles rettferdig, samler den mennesker. Når grådigheten tar over, splitter den dem.» Wiil Waal forsto at jenta hadde funnet visdommen i gåten.',
         audio:'audio/stories/wiil-waal-scene-3.mp3',
+        image:'assets/stories/wiil-waal-scene-3.png',
         words:[
           {so:'caddaalad',no:'rettferdighet',icon:'⚖️',audio:'audio/stories/wiil-waal-word-caddaalad.mp3'},
           {so:'hunguri',no:'grådighet',icon:'🙌',audio:'audio/stories/wiil-waal-word-hunguri.mp3'},
@@ -97,6 +103,7 @@ window.GOOGA_STORIES = [
         so:'Habeen mugdi ah, Cigaal Shidaad wuxuu u baxay inuu reerkiisa u raadiyo meel cusub. Waddadu way aamusnayd, iftiinkuna aad buu u yaraa.',
         no:'En mørk natt dro Cigaal Shidaad ut for å finne et nytt sted til familien. Veien var stille, og det var nesten ikke lys.',
         audio:'audio/stories/cigaal-shidaad-scene-1.mp3',
+        image:'assets/stories/cigaal-shidaad-scene-1.png',
         words:[
           {so:'habeen',no:'natt',icon:'🌙',audio:'audio/stories/cigaal-shidaad-word-habeen.mp3'},
           {so:'mugdi',no:'mørke',icon:'🌑',audio:'audio/stories/cigaal-shidaad-word-mugdi.mp3'},
@@ -107,6 +114,7 @@ window.GOOGA_STORIES = [
         so:'Wuxuu arkay wax madow oo dhulka ka soo baxay. Maskaxdiisu waxay ka dhigtay libaax weyn. Cigaal meel ayuu ku hakaday, cabsi darteedna habeenkii oo dhan wuu sugay.',
         no:'Han så noe mørkt som stakk opp fra bakken. I tankene hans ble det til en stor løve. Cigaal stanset og ventet hele natten fordi han var redd.',
         audio:'audio/stories/cigaal-shidaad-scene-2.mp3',
+        image:'assets/stories/cigaal-shidaad-scene-2.png',
         words:[
           {so:'libaax',no:'løve',icon:'🦁',audio:'audio/stories/cigaal-shidaad-word-libaax.mp3'},
           {so:'cabsi',no:'frykt',icon:'😨',audio:'audio/stories/cigaal-shidaad-word-cabsi.mp3'},
@@ -117,6 +125,7 @@ window.GOOGA_STORIES = [
         so:'Markii waagu baryay, Cigaal wuxuu arkay inuusan libaaxu jirin. Waxa uu ka baqayay wuxuu ahaa kurtun geed. Wuxuu qosol ku bartay in muuqaalka iyo xaqiiqadu mararka qaarkood kala duwan yihiin.',
         no:'Da morgenen kom, så Cigaal at det ikke fantes noen løve. Det han hadde fryktet, var en trestubbe. Med et smil lærte han at inntrykk og virkelighet noen ganger er forskjellige.',
         audio:'audio/stories/cigaal-shidaad-scene-3.mp3',
+        image:'assets/stories/cigaal-shidaad-scene-3.png',
         words:[
           {so:'waagu',no:'daggryet',icon:'🌅',audio:'audio/stories/cigaal-shidaad-word-waagu.mp3'},
           {so:'kurtun',no:'trestubbe',icon:'🪵',audio:'audio/stories/cigaal-shidaad-word-kurtun.mp3'},

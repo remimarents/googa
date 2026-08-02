@@ -18,6 +18,7 @@ $assetVersion = googa_app_version();
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-test.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-commerce.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-coupons.css'), ENT_QUOTES, 'UTF-8') ?>">
   <style>.culture-more-offers{grid-template-columns:repeat(2,1fr)}</style>
 </head>
 <body class="culture-test-page">
@@ -70,6 +71,23 @@ $assetVersion = googa_app_version();
       <section class="culture-actions"><p class="culture-kicker">TALLAABOOYINKA XIGA</p><h2>Labadaada buundo ee xiga</h2><div id="cultureActions"></div></section>
       <section class="culture-share" id="cultureShareCard"><div class="share-brand"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA · BARIIS PÅ GRANDIS?!</span></div><p>Natiijadayda</p><h2 id="cultureShareTitle"></h2><div id="cultureShareAxes"></div><footer><span>🍚</span><b>Laba dhaqan. Hal nolol. Isku-darkaaga gaarka ah.</b><span>🍕</span></footer></section>
       <div class="culture-share-buttons"><button class="culture-primary" id="cultureShare" type="button">La wadaag natiijada</button><button class="culture-secondary" id="cultureDownload" type="button">Kaydi kaarka</button></div>
+      <section class="culture-coupon-demo" aria-labelledby="couponDemoTitle">
+        <p class="culture-kicker">TILBUD SOM KOMMER</p>
+        <h2 id="couponDemoTitle">Mat å prøve</h2>
+        <p class="coupon-lead">To eksempeltilbud. Ekte kuponger kommer snart.</p>
+        <div class="coupon-grid">
+          <button class="coupon-card" type="button" data-coupon-demo aria-label="Vis eksempeltilbud fra Banaadir Bord">
+            <img src="<?= htmlspecialchars(googa_asset_url('assets/coupons/banaadir-bord-samosa.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Sprøstekte samosaer med te">
+            <span class="coupon-example">EKSEMPEL</span>
+            <span class="coupon-copy"><small>Banaadir Bord · Oslo</small><strong>2 samosa for 1</strong><em>Vis kupong <b>→</b></em></span>
+          </button>
+          <button class="coupon-card" type="button" data-coupon-demo aria-label="Vis eksempeltilbud fra Hodan Mat">
+            <img src="<?= htmlspecialchars(googa_asset_url('assets/coupons/hodan-mat-rice.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Grillet kylling med krydret ris">
+            <span class="coupon-example">EKSEMPEL</span>
+            <span class="coupon-copy"><small>Hodan Mat · Oslo</small><strong>Gratis drikke til maten</strong><em>Vis kupong <b>→</b></em></span>
+          </button>
+        </div>
+      </section>
       <section class="culture-commerce"><p class="culture-kicker">QAADO BUUNDADA QOYSKA</p><h2>Googa la tijaabi qoyskaaga</h2><p>Halxiraalo, cod Af-Soomaali ah iyo ciyaar qoyska oo dhan ah.</p><a class="culture-buy" href="./?buy=trial"><span><small>2 maalmood oo tijaabo ah</small><b>Ku bilow kr 5</b><em>Kadib kr 50 bishii · jooji wakhti kasta</em></span><strong>→</strong></a><div class="culture-more-offers"><a href="gift.php">🎁 Hadiyad sii qoys</a><a href="./#annual">★ Kr 499 sanadkii</a></div></section>
       <div class="culture-result-buttons"><button class="culture-primary" id="cultureRestart" type="button">Mar kale samee</button><a class="culture-secondary" href="./">Ku noqo Googa</a></div>
     </section>
@@ -77,5 +95,7 @@ $assetVersion = googa_app_version();
   <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-test-bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-test.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <dialog class="coupon-dialog" id="couponDialog" aria-labelledby="couponDialogTitle"><form method="dialog"><span class="coupon-dialog-icon" aria-hidden="true">🍽️</span><h2 id="couponDialogTitle">Dette er bare et eksempel</h2><p>Vi finner nå restauranter som vil gi deg gode tilbud. Snart kan du bruke en ekte kupong her.</p><button class="culture-primary" type="submit">Skjønner</button></form></dialog>
+  <script src="<?= htmlspecialchars(googa_asset_url('culture-coupons.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 </body>
 </html>

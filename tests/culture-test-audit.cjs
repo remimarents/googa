@@ -47,6 +47,21 @@ async function inspect(page, label) {
     if (!await page.locator('#cultureResult').isVisible()) throw new Error('Result did not render');
     if (await page.locator('.culture-axes article').count() !== 3) throw new Error('Three axes missing');
     if (await page.locator('#cultureActions article').count() !== 2) throw new Error('Two next steps missing');
+    if (await page.locator('.culture-share-action').count() !== 6) throw new Error('Expected six result sharing actions');
+    for (const id of ['cultureShare','cultureShareFacebook','cultureShareEmail','cultureShareMessage','cultureShareQr','cultureDownload']) {
+      if (!await page.locator(`#${id}`).isVisible()) throw new Error(`${id} sharing action missing`);
+    }
+    const shareLinks = await page.evaluate(() => window.GOOGA_CULTURE_TEST_ENGINE.shareLinks());
+    if (!shareLinks.facebook.startsWith('https://www.facebook.com/sharer/')) throw new Error('Facebook sharing URL missing');
+    if (!shareLinks.email.startsWith('mailto:') || !decodeURIComponent(shareLinks.email).includes('Styrelederen for shaah og kaffe')) throw new Error('Email sharing copy missing result title');
+    if (!shareLinks.message.startsWith('sms:') || !decodeURIComponent(shareLinks.message).includes('Styrelederen for shaah og kaffe')) throw new Error('iMessage sharing copy missing result title');
+    await page.locator('#cultureShareQr').click();
+    if (!await page.locator('#cultureQrModal').isVisible()) throw new Error('QR sharing dialog did not open');
+    await page.locator('#cultureQrCode canvas').waitFor({ state:'visible' });
+    const qrSize = await page.locator('#cultureQrCode canvas').evaluate(canvas => ({ width:canvas.width,height:canvas.height }));
+    if (qrSize.width < 200 || qrSize.height < 200) throw new Error('QR sharing image is too small');
+    await page.locator('.culture-qr-close').click();
+    if (await page.locator('#cultureQrModal').isVisible()) throw new Error('QR sharing dialog did not close');
     const result = await inspect(page, `${viewport.name}-result`);
     if (result.speakers < 6) throw new Error('Result audio controls missing');
     const engine = await page.evaluate(() => window.GOOGA_CULTURE_TEST_ENGINE.scoreAnswers(window.GOOGA_CULTURE_TEST.questions.map(() => 'c')));

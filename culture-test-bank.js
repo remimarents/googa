@@ -168,12 +168,12 @@ window.GOOGA_CULTURE_TEST = {
     ]}
   ],
   profiles: [
-    { key:'fusion', icon:'🍚🍕', so:'Bariis på Grandis', no:'Bariis på Grandis', summarySo:'Labada dhinac si dabiici ah ayaad isugu dartaa — mararka qaar xitaa isla saxanka.', summaryNo:'Du blander begge sider ganske naturlig – av og til på samme tallerken.' },
-    { key:'bridge', icon:'🥟🧤', so:'Sambuus dugnad-ka', no:'Sambuus på dugnad', summarySo:'Waxaad jeceshahay inaad dadka, erayada iyo caadooyinka isku xidho.', summaryNo:'Du liker å koble mennesker, ord og vaner på tvers.' },
-    { key:'heritage', icon:'🍚🌿', so:'Bariisku wuu taagan yahay', no:'Bariisen står støtt', summarySo:'Afka, qoyska iyo dhaqanka Soomaalidu meel adag ayay kaa joogaan.', summaryNo:'Språk, familie og somalisk kultur står sterkt hos deg.' },
-    { key:'norway', icon:'🍕🇳🇴', so:'Grandis dhinaca yaal', no:'Grandis ved siden av', summarySo:'Nolosha Norway si fiican ayaad u taqaan, adigoon khasab ku ahayn inaad wax kale ka tagto.', summaryNo:'Du har god norsk hverdagsradar uten at det bestemmer hele historien din.' },
-    { key:'balanced', icon:'🫖☕', so:'Shaah iyo qaxwo', no:'Shaah og kaffe', summarySo:'Waxaad leedahay isku-dar adiga kuu gaar ah, xaalad kastana si gaar ah ayaad ula qabsataa.', summaryNo:'Du har din egen blanding og skifter naturlig etter situasjonen.' },
-    { key:'explorer', icon:'🧭', so:'Dhadhamiye xiiso leh', no:'Nysgjerrig smaksprøver', summarySo:'Waxaad bilowday sahanka; tallaabo yar ayaa kuu furi karta sheekooyin badan.', summaryNo:'Du er i utforskermodus, og små steg kan åpne mange nye samtaler.' }
+    { key:'fusion', icon:'🍚🍕', so:'Wasiirka Bariis på Grandis', no:'Ministeren for Bariis på Grandis', summarySo:'Saxankaagu baasaboorka ma weydiiyo — labada dhinac si dabiici ah ayuu isugu daraa.', summaryNo:'Tallerkenen din spør ikke etter pass – begge sider møtes helt naturlig.' },
+    { key:'bridge', icon:'🥟🧤', so:'Safiirka Sambuuska iyo Dugnaadka', no:'Ambassadøren for sambuus og dugnad', summarySo:'Waxaad isku keentaa dad, erayo iyo caadooyin — sambuusna kulanka wuu fududeeyaa.', summaryNo:'Du kobler folk, ord og vaner – og vet at sambuus gjør møtet lettere.' },
+    { key:'heritage', icon:'🍚🌿', so:'Taliyaha Dheriga Bariiska', no:'Sjefen for bariisgryta', summarySo:'Afka, qoyska iyo sheekooyinku meel adag ayay kaa joogaan. Dheriguna wuu ogyahay.', summaryNo:'Språk, familie og historier står sterkt hos deg. Gryta vet det allerede.' },
+    { key:'norway', icon:'🍕📲', so:'Agaasimaha Grandis iyo Vipps', no:'Direktøren for Grandis og Vipps', summarySo:'Nolosha Norway waad taqaan: waqtiga, Vipps iyo Grandis — laakiin sheekadu intaas kuma eka.', summaryNo:'Du kan norsk hverdag: klokka, Vipps og Grandis – men historien din er større enn det.' },
+    { key:'balanced', icon:'🫖☕', so:'Guddoomiyaha Shaaha iyo Kafeega', no:'Styrelederen for shaah og kaffe', summarySo:'Waxaad taqaan goorta shaah la shubo iyo goorta kafeega la qaato. Kulankuna adiguu ku sugayaa.', summaryNo:'Du vet når det trengs shaah og når det holder med kaffe. Møtet venter på deg.' },
+    { key:'explorer', icon:'🧭🧊', so:'Baaraha Qaboojiyaha Labada Dal', no:'Kjøleskapsdetektiven mellom to land', summarySo:'Waxaad hadda baadhaysaa waxa qaboojiyaha iyo sheekooyinka qoyska ku jira. Raadad badan baa jira.', summaryNo:'Du undersøker fortsatt hva som finnes i kjøleskapet og familiehistorien. Det er mange spor.' }
   ],
   resultIntroSo:'Natiijadu ma aha xukun aqoonsigaaga. Waxay kaliya muujinaysaa jawaabaha aad dooratay maanta — iyo halka kaftan, su’aal ama wada hadal cusub kaa bilaabmi karo.',
   resultIntroNo:'Resultatet er ikke en fasit på identiteten din. Det viser bare hva svarene dine pekte mot i dag – og hvor en spøk, et spørsmål eller en ny samtale kan begynne.',

@@ -18,6 +18,7 @@ $assetVersion = googa_app_version();
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-test.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-commerce.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-sharing.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-coupons.css'), ENT_QUOTES, 'UTF-8') ?>">
   <style>.culture-more-offers{grid-template-columns:repeat(2,1fr)}</style>
 </head>

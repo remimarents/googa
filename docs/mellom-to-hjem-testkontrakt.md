@@ -41,24 +41,26 @@ Hver akse normaliseres mot den høyeste tilgjengelige poengsummen på samme akse
 
 Profilreglene er redaksjonelle og ikke normbaserte:
 
-- Bariis på Grandis: minst 55 på begge kulturaksene og minst 60 på brobyggeraksen
-- Sambuus på dugnad: brobyggeraksen er høyest og minst 55, uten at fusion-regelen er nådd
-- Bariisen står støtt: somalisk rotfeste ligger minst 15 poeng over norsk hverdagsradar
-- Grandis ved siden av: norsk hverdagsradar ligger minst 15 poeng over somalisk rotfeste
-- Shaah og kaffe: jevn eller blandet profil som ikke treffer reglene over
-- Nysgjerrig smaksprøver: gjennomsnitt under 35
+- Ministeren for Bariis på Grandis: minst 55 på begge kulturaksene og minst 60 på brobyggeraksen
+- Ambassadøren for sambuus og dugnad: brobyggeraksen er høyest og minst 55, uten at fusion-regelen er nådd
+- Sjefen for bariisgryta: somalisk rotfeste ligger minst 15 poeng over norsk hverdagsradar
+- Direktøren for Grandis og Vipps: norsk hverdagsradar ligger minst 15 poeng over somalisk rotfeste
+- Styrelederen for shaah og kaffe: jevn eller blandet profil som ikke treffer reglene over
+- Kjøleskapsdetektiven mellom to land: gjennomsnitt under 35
 
 De to laveste aksene utløser konkrete, ikke-moraliserende samtaleforslag.
+
+Resultatet presenteres som en humoristisk utmerkelse med situasjons- og mathumor. Brukeren kan dele resultatkortet gjennom enhetens delingsark, Facebook, e-post eller iMessage, lagre bildekortet eller vise en QR-kode som åpner den offentlige testen. QR-lenken inneholder ingen svar eller prosenter.
 
 ### Testvektorer
 
 | Vektor | Svarmønster | Forventning |
 |---|---|---|
-| Lav | laveste samlede vektor per spørsmål | Nysgjerrig smaksprøver |
-| Høy bro | høyeste brobyggerverdi per spørsmål | Bariis på Grandis eller Sambuus på dugnad avhengig av kulturaksene |
-| Norsk tyngde | alternativer med høy norsk og lav somalisk verdi | Grandis ved siden av |
-| Somalisk tyngde | alternativer med høy somalisk og lav norsk verdi | Bariisen står støtt |
-| Balansert | alternerte valg med omtrent like kulturakser | Shaah og kaffe eller Bariis på Grandis |
+| Lav | laveste samlede vektor per spørsmål | Kjøleskapsdetektiven mellom to land |
+| Høy bro | høyeste brobyggerverdi per spørsmål | Ministeren for Bariis på Grandis eller Ambassadøren for sambuus og dugnad, avhengig av kulturaksene |
+| Norsk tyngde | alternativer med høy norsk og lav somalisk verdi | Direktøren for Grandis og Vipps |
+| Somalisk tyngde | alternativer med høy somalisk og lav norsk verdi | Sjefen for bariisgryta |
+| Balansert | alternerte valg med omtrent like kulturakser | Styrelederen for shaah og kaffe eller Ministeren for Bariis på Grandis |
 | Ubesvart siste spørsmål | 23 komplette svar | Ingen resultatberegning |
 
 ## Lyd og språkstøtte

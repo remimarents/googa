@@ -1,5 +1,10 @@
 <?php
 declare(strict_types=1);
+ob_start(static function (string $html): string {
+    $html = str_replace('href="mailto:sandramarents@gmail.com?subject=Jeg%20vil%20bli%20Googa-ambassad%C3%B8r"', 'href="ambassador.php"', $html);
+    $html = str_replace('data-so="Codso safiirnimo" data-no="Søk om å bli ambassadør"', 'data-so="Akhri oo codso" data-no="Les vilkårene og søk"', $html);
+    return str_replace('>Codso safiirnimo</a>', '>Akhri oo codso</a>', $html);
+});
 session_name('googa');session_start();require_once __DIR__ . '/lib/store.php';require_once __DIR__ . '/lib/version.php';
 $context=googa_session_context();googa_require_parent($context);$data=googa_load_data();$email=googa_normalize_email((string)$context['email']);$user=$data['users'][$email]??[];$ambassador=null;$ambassadorId='';
 foreach((array)($data['ambassadors']??[]) as $id=>$candidate){if(googa_normalize_email((string)($candidate['email']??''))===$email&&($candidate['status']??'')==='active'){$ambassador=$candidate;$ambassadorId=(string)$id;break;}}

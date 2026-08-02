@@ -39,3 +39,36 @@ function googa_send_gift_email(string $email, string $name, int $months, string 
     $headers = ['MIME-Version: 1.0','Content-Type: text/html; charset=UTF-8','From: Sandra Marents <noreply@ferdighet.no>','Reply-To: Sandra Marents <sandramarents@gmail.com>','X-Mailer: Googa'];
     return @mail($email, '=?UTF-8?B?' . base64_encode($subject) . '?=', $html, implode("\r\n", $headers), '-fnoreply@ferdighet.no');
 }
+
+function googa_mail_plain_text(string $html): string
+{
+    $text = preg_replace('/<\s*br\s*\/?>/i', "\n", $html) ?? $html;
+    $text = preg_replace('/<\/\s*(p|div|h[1-6]|li)\s*>/i', "\n", $text) ?? $text;
+    return trim(html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+}
+
+function googa_send_email_with_attachment(string $email, string $subject, string $html, string $attachmentData, string $filename): bool
+{
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $attachmentData === '') return false;
+    if (getenv('GOOGA_DISABLE_OUTBOUND_MAIL') === '1') return true;
+    $mixed = '=_Googa_' . bin2hex(random_bytes(16));
+    $alternative = '=_Googa_alt_' . bin2hex(random_bytes(16));
+    $safeFilename = preg_replace('/[^A-Za-z0-9._-]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $filename) ?: 'googa-avtale.pdf') ?: 'googa-avtale.pdf';
+    $body = '--' . $mixed . "\r\nContent-Type: multipart/alternative; boundary=\"" . $alternative . "\"\r\n\r\n"
+        . '--' . $alternative . "\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"
+        . quoted_printable_encode(googa_mail_plain_text($html)) . "\r\n\r\n"
+        . '--' . $alternative . "\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: quoted-printable\r\n\r\n"
+        . quoted_printable_encode($html) . "\r\n\r\n--" . $alternative . "--\r\n\r\n"
+        . '--' . $mixed . "\r\nContent-Type: application/pdf; name=\"" . $safeFilename . "\"\r\nContent-Disposition: attachment; filename=\"" . $safeFilename . "\"\r\nContent-Transfer-Encoding: base64\r\n\r\n"
+        . chunk_split(base64_encode($attachmentData)) . "\r\n--" . $mixed . "--\r\n";
+    $encodedSubject = function_exists('mb_encode_mimeheader') ? mb_encode_mimeheader($subject, 'UTF-8') : '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    $headers = [
+        'MIME-Version: 1.0',
+        'Content-Type: multipart/mixed; boundary="' . $mixed . '"',
+        'From: Sandra Marents <noreply@ferdighet.no>',
+        'Sender: Sandra Marents <noreply@ferdighet.no>',
+        'Reply-To: Sandra Marents <sandramarents@gmail.com>',
+        'X-Mailer: Googa',
+    ];
+    return @mail($email, $encodedSubject, $body, implode("\r\n", $headers), '-fnoreply@ferdighet.no');
+}

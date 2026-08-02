@@ -14,5 +14,14 @@
     "server_protected": true,
     "blocked_for_family_qr_devices": true,
     "ambassador_sales_visible_to_ambassador": "aggregate-only"
+  },
+  "ambassador_applications": {
+    "purpose": ["application", "identity-and-payout-control", "agreement-evidence"],
+    "identity_number": "encrypted-at-rest-outside-web-root; never placed in Stripe, email, URL, ordinary app JSON or logs",
+    "owner_ui": "last-four-characters-only",
+    "signing_token": "random, hash-only-at-rest, URL-fragment transport, expires-after-30-days, cleared-on-signature",
+    "document_integrity": "versioned frozen PDF with SHA-256 and preserved signed copy",
+    "retention": "review-required-before-public recruitment; define deletion after agreement and statutory documentation period",
+    "access": "parent application; owner-only review; no family-QR-device access"
   }
 }

@@ -27,10 +27,14 @@ const GOOGA_ORDREISE_LIFETIME_PRICE_ID = 'price_1Tzl8kBgfqMKZQayczXhHMGe';
 const GOOGA_ORDREISE_FREE_START_AT = '2026-09-01T00:00:00+02:00';
 const GOOGA_STRIPE_ENV_FILE = '/home/ferdighet/.googa-stripe.env';
 const GOOGA_FAMILY_SECRET_FILE = '/home/ferdighet/.googa-family.env';
+const GOOGA_AMBASSADOR_SECRET_FILE = '/home/ferdighet/.googa-ambassador.env';
+const GOOGA_AMBASSADOR_PRIVATE_DIR = '/home/ferdighet/.googa-ambassador';
 const GOOGA_PUBLIC_BASE_URL = 'https://ferdighet.no/googa';
 const GOOGA_AMBASSADOR_COMMISSION_PERCENT = 20;
 const GOOGA_AMBASSADOR_QUALIFY_DAYS = 30;
 const GOOGA_AMBASSADOR_COMMISSION_MONTHS = 12;
 const GOOGA_AMBASSADOR_HOLD_DAYS = 30;
+const GOOGA_AMBASSADOR_AGREEMENT_VERSION = 'GOOGA-AMB-NO-1.0';
+const GOOGA_AMBASSADOR_SIGNING_DAYS = 30;
 // Owners can always preview stories. Set to true only when the first story season is ready for subscribers.
 const GOOGA_STORIES_PUBLIC = false;

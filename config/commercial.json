@@ -1,7 +1,7 @@
 {
   "version": 1,
   "ambassadors": {
-    "creation": "owner-dashboard",
+    "creation": "qualified-parent-application-then-owner-approval",
     "qualification": "active-paid-customer-for-30-days",
     "customer_benefit": {
       "monthly": "50-percent-off-two-full-months",
@@ -11,8 +11,15 @@
     "commission_duration_months": 12,
     "hold_days": 30,
     "tracking": "server-validated-code-and-stripe-metadata",
-    "payout": "manual",
-    "parent_help_route": "/help.php#ambassador"
+    "commissionable_products": ["direct-family-monthly", "direct-family-annual"],
+    "excluded_products": ["NOK-5-intro", "organization-and-association-packages", "schools-libraries-municipalities-and-businesses", "gift-subscriptions", "ordreise", "add-ons", "manual-deals", "self-referrals"],
+    "payout": "manual-quarterly-after-30-day-hold",
+    "parent_help_route": "/ambassador.php",
+    "agreement": {
+      "version": "GOOGA-AMB-NO-1.0",
+      "signature": "personal-single-use-link-and-frozen-pdf",
+      "activation": "separate-owner-approval-after-complete-signature"
+    }
   },
   "organizations": {
     "delivery": "manual",

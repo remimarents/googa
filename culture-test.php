@@ -9,9 +9,9 @@ $assetVersion = googa_app_version();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#123b59">
-  <title>Googa – Laba dal, hal sheeko</title>
+  <title>Googa – Bariis på Grandis</title>
   <meta name="description" content="Gratis kulturkompass for voksne mellom Norge og Somalia. Ingen innlogging – svarene blir på enheten din.">
-  <meta property="og:type" content="website"><meta property="og:site_name" content="Googa"><meta property="og:title" content="Laba dal, hal sheeko – hvor ligger ditt kulturkompass?"><meta property="og:description" content="Ta Googas gratis test for voksne. Ingen innlogging, og svarene blir på enheten din."><meta property="og:url" content="https://ferdighet.no/googa/culture-test.php"><meta property="og:image" content="https://ferdighet.no/googa/assets/culture-test-share.png">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="Googa"><meta property="og:title" content="Bariis på Grandis – gratis kulturkompass"><meta property="og:description" content="Ta Googas gratis kulturkompass for voksne. Ingen innlogging, og svarene blir på enheten din."><meta property="og:url" content="https://ferdighet.no/googa/culture-test.php"><meta property="og:image" content="https://ferdighet.no/googa/assets/culture-test-share.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -38,8 +38,8 @@ $assetVersion = googa_app_version();
     <section class="culture-intro" id="cultureIntro">
       <div class="culture-hero">
         <div class="culture-hero-copy">
-          <p class="culture-kicker">LABA DAL · HAL SHEEKO</p>
-          <h1 id="cultureTitle">Laba dal, hal sheeko</h1>
+          <p class="culture-kicker">GRATIS KULTURKOMPASS</p>
+          <h1 id="cultureTitle">Bariis på Grandis</h1>
           <p class="culture-subtitle" id="cultureSubtitle">Tilmaamahaaga dhaqan ee Soomaali iyo Noorweey</p>
           <div class="culture-thesis"><span aria-hidden="true">↔</span><p id="cultureThesis">Uma baahnid inaad kala doorato labadaada hoy. Aqoonta aad ka hesho midkood waxay kaa caawin kartaa inaad si fiican u fahanto kan kale.</p><button class="culture-speak" type="button" data-speak-button data-speak-so="Uma baahnid inaad kala doorato labadaada hoy. Aqoonta aad ka hesho midkood waxay kaa caawin kartaa inaad si fiican u fahanto kan kale." data-speak-audio="audio/culture-test/intro.mp3" aria-label="Dhegeyso hordhaca"></button></div>
           <div class="culture-facts"><span>◷ <b>6–8</b> daqiiqo</span><span>✓ <b>24</b> su’aalood</span><span>⌁ qalabkaaga oo keliya</span></div>

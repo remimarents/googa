@@ -56,7 +56,7 @@ $cultureTestAvailable = ($context['role'] ?? '') === 'owner';
         <?php if ($cultureTestAvailable): ?>
         <a class="culture-test-launch" href="culture-test.php">
           <span class="culture-test-launch-art" aria-hidden="true"><i>🇳🇴</i><b>↔</b><i>🇸🇴</i></span>
-          <span><small>EIERFORHÅNDSVISNING · VOKSNE</small><strong>Laba dal, hal sheeko</strong><em>Mellom to hjem – ditt norsk-somaliske kulturkompass</em><b>Åpne testen →</b></span>
+          <span><small>GRATIS · VOKSNE</small><strong>Bariis på Grandis</strong><em>Gratis norsk-somalisk kulturkompass</em><b>Åpne Kulturkompasset →</b></span>
         </a>
         <?php endif; ?>
       </section>

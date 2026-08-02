@@ -1,7 +1,7 @@
 window.GOOGA_CULTURE_TEST = {
   version: 'mth-0.2-draft',
-  titleSo: 'Laba dal, hal sheeko',
-  titleNo: 'Mellom to hjem',
+  titleSo: 'Bariis på Grandis',
+  titleNo: 'Bariis på Grandis',
   subtitleSo: 'Tilmaamahaaga dhaqan ee Soomaali iyo Noorweey',
   subtitleNo: 'Ditt norsk-somaliske kulturkompass',
   introSo: 'Uma baahnid inaad kala doorato labadaada hoy. Aqoonta aad ka hesho midkood waxay kaa caawin kartaa inaad si fiican u fahanto kan kale.',

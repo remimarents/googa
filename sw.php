@@ -79,6 +79,7 @@ self.addEventListener('fetch', event => {
     || url.pathname.endsWith('/family-social.php')
     || url.pathname.endsWith('/family-social-api.php')
     || url.pathname.endsWith('/correction-api.php')
+    || url.pathname.endsWith('/asset-replace.php')
     || url.pathname.endsWith('/owner-corrections.php')
     || url.pathname.endsWith('/family-join.php')
     || url.pathname.endsWith('/family-pending.php')

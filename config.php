@@ -29,6 +29,7 @@ const GOOGA_STRIPE_ENV_FILE = '/home/ferdighet/.googa-stripe.env';
 const GOOGA_FAMILY_SECRET_FILE = '/home/ferdighet/.googa-family.env';
 const GOOGA_AMBASSADOR_SECRET_FILE = '/home/ferdighet/.googa-ambassador.env';
 const GOOGA_AMBASSADOR_PRIVATE_DIR = '/home/ferdighet/.googa-ambassador';
+const GOOGA_ASSET_BACKUP_DIR = '/home/ferdighet/.googa-asset-backups';
 const GOOGA_PUBLIC_BASE_URL = 'https://ferdighet.no/googa';
 const GOOGA_AMBASSADOR_COMMISSION_PERCENT = 20;
 const GOOGA_AMBASSADOR_QUALIFY_DAYS = 30;

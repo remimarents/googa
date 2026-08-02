@@ -102,9 +102,9 @@ function googa_ambassador_document(array $application): array
             ['title'=>'7. Avregning og skatt','text'=>'Tilgjengelig provisjon avregnes manuelt og normalt kvartalsvis. Ambassadøren er selv ansvarlig for å oppgi korrekte betalingsopplysninger og for egne skatte-, avgifts- og rapporteringsforpliktelser. Googa kan be om nødvendig dokumentasjon før utbetaling.'],
             ['title'=>'8. Markedsføring og merkevare','text'=>'All omtale som kan gi provisjon skal merkes tydelig som reklame eller annonse. Opplysninger om pris, innhold og vilkår skal være riktige og oppdaterte. Ambassadøren kan bruke godkjent Googa-materiell, men kan ikke endre logoen, registrere forvekselbare domener eller gi inntrykk av å være ansatt eller offisiell talsperson. Markedsføring skal ikke rettes uforsvarlig mot barn.'],
             ['title'=>'9. Personvern og konfidensialitet','text'=>'Partene skal beskytte personopplysninger, tilgangsdata, ikke-offentlig økonomiinformasjon og annet fortrolig materiale. Ambassadøren skal ikke samle inn eller sende kunders betalingsopplysninger til Googa. ID-nummeret i søknaden brukes til identitets- og oppgjørskontroll, lagres kryptert og er bare tilgjengelig for særskilt autorisert eierkontroll.'],
-            ['title'=>'10. Varighet, suspensjon og opphør','text'=>'Avtalen gjelder fra Googa har godkjent en komplett elektronisk signatur og aktivert koden. Begge parter kan si opp avtalen skriftlig med 30 dagers varsel. Googa kan suspendere eller avslutte ordningen straks ved svindel, villedende markedsføring, vesentlig avtalebrudd eller sikkerhetsrisiko. Nye salg stanser ved opphør; allerede opptjent og kontrollert provisjon avregnes etter ordinære regler.'],
+            ['title'=>'10. Varighet, suspensjon og opphør','text'=>'Avtalen trer i kraft når Ambassadøren har fullført den elektroniske signeringen og Googas automatiske kontroll har bekreftet en komplett signatur, uendret dokumentkontrollsum og fortsatt kvalifisert betalt kundestatus. Ambassadørkoden aktiveres da automatisk. Ved en midlertidig teknisk feil er signaturen fortsatt gyldig, og aktiveringen forsøkes automatisk på nytt. Begge parter kan si opp avtalen skriftlig med 30 dagers varsel. Googa kan suspendere eller avslutte ordningen straks ved svindel, villedende markedsføring, vesentlig avtalebrudd eller sikkerhetsrisiko. Nye salg stanser ved opphør; allerede opptjent og kontrollert provisjon avregnes etter ordinære regler.'],
             ['title'=>'11. Endringer, lovvalg og tvist','text'=>'Vesentlige endringer i provisjonssats, provisjonsgrunnlag eller plikter varsles skriftlig og gjelder bare fremover. Fortsatt deltakelse etter oppgitt ikrafttredelsesdato innebærer aksept; dersom Ambassadøren ikke aksepterer, kan avtalen sies opp før datoen. Avtalen er underlagt norsk rett. Uenighet skal først søkes løst i dialog og ellers behandles av ordinære norske domstoler.'],
-            ['title'=>'12. Elektronisk signering','text'=>'Avtalen signeres med en personlig engangslenke sendt til oppgitt e-post. Signeringen knyttes til den frosne dokumentversjonen og kontrollsummen, signatarens navn, e-post, tidspunkt og minimerte tekniske kontrollopplysninger. Dette er en enkel elektronisk signatur, ikke BankID eller kvalifisert elektronisk signatur. Googa aktiverer ikke ambassadørkoden før separat eiergodkjenning.'],
+            ['title'=>'12. Elektronisk signering','text'=>'Avtalen signeres med en personlig engangslenke sendt til oppgitt e-post. Det å åpne lenken er ikke en signatur. Avtalen signeres først når Ambassadøren har lest avtalen, skrevet sitt fulle navn, bekreftet vilkårene og aktivt trykket på signeringsknappen. Signeringen knyttes til den frosne dokumentversjonen og kontrollsummen, signatarens navn, e-post, tidspunkt og minimerte tekniske kontrollopplysninger. Dette er en enkel elektronisk signatur, ikke BankID eller kvalifisert elektronisk signatur. Etter fullført signering og automatisk serverkontroll opprettes avtalen og ambassadørkoden aktiveres uten manuell eiergodkjenning.'],
         ],
     ];
 }
@@ -164,7 +164,7 @@ function googa_ambassador_create_application(array $user, string $name, string $
     $token=rtrim(strtr(base64_encode(random_bytes(36)),'+/','-_'),'=');$now=googa_now();$id='gaa_'.bin2hex(random_bytes(12));
     $app=['id'=>$id,'status'=>'sent','account_email'=>$accountEmail,'email'=>$email,'name'=>$name,'identity_last4'=>substr($identity,-4),'identity_encrypted'=>googa_ambassador_encrypt_id($identity),'created_at'=>$now,'sent_at'=>$now,'token_hash'=>hash('sha256',$token),'token_expires_at'=>(new DateTimeImmutable($now))->modify('+'.GOOGA_AMBASSADOR_SIGNING_DAYS.' days')->format(DATE_ATOM),'events'=>[['type'=>'created','at'=>$now]]];
     $app['document']=googa_ambassador_document($app);$app['document_hash']=googa_ambassador_document_hash($app['document']);$issued=googa_ambassador_write_pdf($id,'issued',googa_ambassador_pdf($app,false));$app['issued_pdf_path']=$issued['path'];$app['issued_pdf_hash']=$issued['sha256'];
-    googa_ambassador_store_transaction(function(array &$data)use($app){foreach($data['applications'] as $existing){if(googa_normalize_email((string)($existing['account_email']??''))===$app['account_email']&&in_array((string)($existing['status']??''),['sent','viewed','signed'],true))throw new RuntimeException('Du har allerede en søknad under behandling.');}$data['applications'][$app['id']]=$app;});
+    googa_ambassador_store_transaction(function(array &$data)use($app){foreach($data['applications'] as $existing){if(googa_normalize_email((string)($existing['account_email']??''))===$app['account_email']&&in_array((string)($existing['status']??''),['sent','viewed','signed','activating','activation_pending','active'],true))throw new RuntimeException('Du har allerede en søknad eller en aktiv ambassadøravtale.');}$data['applications'][$app['id']]=$app;});
     return ['application'=>$app,'token'=>$token];
 }
 
@@ -176,29 +176,36 @@ function googa_ambassador_find_by_token(array $data,string $token): ?array
 
 function googa_ambassador_public_application(array $app): array
 {
-    return ['id'=>$app['id'],'status'=>$app['status'],'name'=>$app['name'],'email'=>$app['email'],'version'=>$app['document']['version'],'document'=>$app['document'],'document_hash'=>$app['document_hash'],'created_at'=>$app['created_at'],'viewed_at'=>$app['viewed_at']??null,'signed_at'=>$app['signed_at']??null,'signed_name'=>$app['signed_name']??null];
+    return ['id'=>$app['id'],'status'=>$app['status'],'name'=>$app['name'],'email'=>$app['email'],'version'=>$app['document']['version'],'document'=>$app['document'],'document_hash'=>$app['document_hash'],'created_at'=>$app['created_at'],'viewed_at'=>$app['viewed_at']??null,'signed_at'=>$app['signed_at']??null,'signed_name'=>$app['signed_name']??null,'ambassador_code'=>$app['ambassador_code']??null,'activation_message'=>$app['activation_message']??null];
 }
 
 function googa_ambassador_open(string $token): array
 {
-    return googa_ambassador_store_transaction(function(array &$data)use($token){$found=googa_ambassador_find_by_token($data,$token);if(!$found)throw new RuntimeException('Signeringslenken er ugyldig.');$app=$found['application'];if(!in_array($app['status'],['signed','approved'],true)&&strtotime((string)$app['token_expires_at'])<time())throw new RuntimeException('Signeringslenken er utløpt.');if($app['status']==='sent'){$app['status']='viewed';$app['viewed_at']=googa_now();$app['events'][]=['type'=>'viewed','at'=>$app['viewed_at']];$data['applications'][$found['id']]=$app;}return googa_ambassador_public_application($app);});
+    return googa_ambassador_store_transaction(function(array &$data)use($token){$found=googa_ambassador_find_by_token($data,$token);if(!$found)throw new RuntimeException('Signeringslenken er ugyldig.');$app=$found['application'];if(!in_array($app['status'],['signed','activating','activation_pending','active'],true)&&strtotime((string)$app['token_expires_at'])<time())throw new RuntimeException('Signeringslenken er utløpt.');if($app['status']==='sent'){$app['status']='viewed';$app['viewed_at']=googa_now();$app['events'][]=['type'=>'viewed','at'=>$app['viewed_at']];$data['applications'][$found['id']]=$app;}return googa_ambassador_public_application($app);});
 }
 
 function googa_ambassador_sign(string $token,string $name,bool $accepted,bool $adult): array
 {
     $result=googa_ambassador_store_transaction(function(array &$data)use($token,$name,$accepted,$adult){$found=googa_ambassador_find_by_token($data,$token);if(!$found)throw new RuntimeException('Signeringslenken er ugyldig.');$app=$found['application'];if(strtotime((string)$app['token_expires_at'])<time())throw new RuntimeException('Signeringslenken er utløpt.');$name=trim(preg_replace('/\s+/u',' ',$name)??'');if(mb_strlen($name)<3||!$accepted||!$adult)throw new RuntimeException('Skriv navnet ditt og bekreft begge punktene.');$now=googa_now();$app['status']='signed';$app['signed_at']=$now;$app['signed_name']=mb_substr($name,0,120);$app['signing_ip_hash']=hash('sha256',$app['id'].'|'.($_SERVER['REMOTE_ADDR']??''));$app['signing_user_agent_hash']=hash('sha256',(string)($_SERVER['HTTP_USER_AGENT']??''));$app['signature_receipt_hash']=hash('sha256',implode('|',[$app['document_hash'],$app['signed_name'],$app['email'],$now]));$app['token_used_at']=$now;$app['token_hash']=null;$app['events'][]=['type'=>'signed','at'=>$now];$signed=googa_ambassador_write_pdf($app['id'],'signed',googa_ambassador_pdf($app,true));$app['signed_pdf_path']=$signed['path'];$app['signed_pdf_hash']=$signed['sha256'];$data['applications'][$found['id']]=$app;return $app;});
-    googa_send_ambassador_signed_email($result);return googa_ambassador_public_application($result);
+    googa_send_ambassador_signed_email($result);
+    try {
+        $activated = googa_ambassador_activate_signed((string)$result['id']);
+        return googa_ambassador_public_application($activated);
+    } catch (Throwable $error) {
+        error_log('Googa ambassador automatic activation pending for ' . (string)$result['id'] . ': ' . $error->getMessage());
+        return googa_ambassador_public_application(googa_ambassador_mark_activation_pending((string)$result['id']));
+    }
 }
 
 function googa_send_ambassador_signing_email(array $app,string $token): bool
 {
-    $link=GOOGA_PUBLIC_BASE_URL.'/ambassador-sign.php#t='.rawurlencode($token);$safeLink=htmlspecialchars($link,ENT_QUOTES,'UTF-8');$safeName=htmlspecialchars((string)$app['name'],ENT_QUOTES,'UTF-8');$html='<!doctype html><html lang="no"><body style="margin:0;background:#e8f7f8;font-family:Arial,sans-serif;color:#103654"><main style="max-width:620px;margin:28px auto;background:#fffdf7;border-radius:24px;padding:30px"><p style="font-weight:bold;color:#087f89">GOOGA AMBASSADØR</p><h1>Hei '.$safeName.' – avtalen er klar</h1><p>Takk for at du ønsker å anbefale Googa til andre familier. Les den vedlagte avtalen og signer med den personlige lenken.</p><p><a href="'.$safeLink.'" style="display:inline-block;background:#087f89;color:white;text-decoration:none;padding:15px 22px;border-radius:14px;font-weight:bold">Les og signer avtalen</a></p><p>Lenken er personlig og gyldig i '.GOOGA_AMBASSADOR_SIGNING_DAYS.' dager. Den må ikke videresendes. Koden aktiveres etter at avtalen er signert og godkjent av en Googa-eier.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></main></body></html>';
+    $link=GOOGA_PUBLIC_BASE_URL.'/ambassador-sign.php#t='.rawurlencode($token);$safeLink=htmlspecialchars($link,ENT_QUOTES,'UTF-8');$safeName=htmlspecialchars((string)$app['name'],ENT_QUOTES,'UTF-8');$html='<!doctype html><html lang="no"><body style="margin:0;background:#e8f7f8;font-family:Arial,sans-serif;color:#103654"><main style="max-width:620px;margin:28px auto;background:#fffdf7;border-radius:24px;padding:30px"><p style="font-weight:bold;color:#087f89">GOOGA AMBASSADØR</p><h1>Hei '.$safeName.' – avtalen er klar</h1><p>Takk for at du ønsker å anbefale Googa til andre familier. Les den vedlagte avtalen og signer med den personlige lenken.</p><p><a href="'.$safeLink.'" style="display:inline-block;background:#087f89;color:white;text-decoration:none;padding:15px 22px;border-radius:14px;font-weight:bold">Les og signer avtalen</a></p><p>Lenken er personlig og gyldig i '.GOOGA_AMBASSADOR_SIGNING_DAYS.' dager. Den må ikke videresendes. Når signeringen er fullført og den automatiske kontrollen er godkjent, trer avtalen i kraft og koden aktiveres automatisk.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></main></body></html>';
     return googa_send_email_with_attachment((string)$app['email'],'Googa ambassadøravtale – til signering',$html,(string)file_get_contents($app['issued_pdf_path']),'Googa-ambassadoravtale-'.$app['id'].'.pdf');
 }
 
 function googa_send_ambassador_signed_email(array $app): void
 {
-    $pdf=(string)file_get_contents((string)$app['signed_pdf_path']);$html='<!doctype html><html lang="no"><body style="font-family:Arial,sans-serif;color:#103654"><h1>Avtalen er signert</h1><p>Hei '.htmlspecialchars((string)$app['name'],ENT_QUOTES,'UTF-8').'. Vi har mottatt signaturen din. En Googa-eier kontrollerer søknaden og aktiverer koden etter godkjenning.</p><p>Signert kopi ligger vedlagt.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></body></html>';
+    $pdf=(string)file_get_contents((string)$app['signed_pdf_path']);$html='<!doctype html><html lang="no"><body style="font-family:Arial,sans-serif;color:#103654"><h1>Avtalen er signert</h1><p>Hei '.htmlspecialchars((string)$app['name'],ENT_QUOTES,'UTF-8').'. Vi har mottatt signaturen din. Avtalen trer i kraft og ambassadørkoden aktiveres automatisk når serverkontrollen er fullført. Du får straks en egen e-post med koden.</p><p>Signert kopi ligger vedlagt.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></body></html>';
     googa_send_email_with_attachment((string)$app['email'],'Googa ambassadøravtale – signert kopi',$html,$pdf,'Googa-ambassadoravtale-signert-'.$app['id'].'.pdf');
     googa_send_email_with_attachment('sandramarents@gmail.com','Ny signert Googa-ambassadørsøknad',$html,$pdf,'Googa-ambassadoravtale-signert-'.$app['id'].'.pdf');
 }
@@ -206,13 +213,13 @@ function googa_send_ambassador_signed_email(array $app): void
 function googa_send_ambassador_approved_email(array $app, array $ambassador): bool
 {
     $link = GOOGA_PUBLIC_BASE_URL . '/?amb=' . rawurlencode((string)$ambassador['code']);
-    $html = '<!doctype html><html lang="no"><body style="margin:0;background:#e8f7f8;font-family:Arial,sans-serif;color:#103654"><main style="max-width:620px;margin:28px auto;background:#fffdf7;border-radius:24px;padding:30px"><p style="font-weight:bold;color:#087f89">GOOGA AMBASSADØR</p><h1>Du er godkjent 🎉</h1><p>Hei ' . htmlspecialchars((string)$app['name'], ENT_QUOTES, 'UTF-8') . '. Ambassadørkoden din er nå aktiv:</p><p style="font-size:28px;font-weight:bold;letter-spacing:.08em">' . htmlspecialchars((string)$ambassador['code'], ENT_QUOTES, 'UTF-8') . '</p><p><a href="' . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . '" style="display:inline-block;background:#087f89;color:#fff;text-decoration:none;padding:14px 20px;border-radius:14px;font-weight:bold">Åpne og del ambassadørlenken</a></p><p>Husk å merke innholdet tydelig som reklame når du kan få provisjon.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></main></body></html>';
+    $html = '<!doctype html><html lang="no"><body style="margin:0;background:#e8f7f8;font-family:Arial,sans-serif;color:#103654"><main style="max-width:620px;margin:28px auto;background:#fffdf7;border-radius:24px;padding:30px"><p style="font-weight:bold;color:#087f89">GOOGA AMBASSADØR</p><h1>Avtalen er aktiv 🎉</h1><p>Hei ' . htmlspecialchars((string)$app['name'], ENT_QUOTES, 'UTF-8') . '. Den automatiske kontrollen er fullført, avtalen har trådt i kraft og ambassadørkoden din er aktiv:</p><p style="font-size:28px;font-weight:bold;letter-spacing:.08em">' . htmlspecialchars((string)$ambassador['code'], ENT_QUOTES, 'UTF-8') . '</p><p><a href="' . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . '" style="display:inline-block;background:#087f89;color:#fff;text-decoration:none;padding:14px 20px;border-radius:14px;font-weight:bold">Åpne og del ambassadørlenken</a></p><p>Husk å merke innholdet tydelig som reklame når du kan få provisjon.</p><p>Vennlig hilsen<br><b>Sandra Marents</b><br>Googa</p></main></body></html>';
     return googa_send_email_with_attachment((string)$app['email'], 'Googa-ambassadøren din er aktiv', $html, (string)file_get_contents((string)$app['signed_pdf_path']), 'Googa-ambassadoravtale-signert-'.$app['id'].'.pdf');
 }
 
 function googa_ambassador_pdf_for_token(string $token): string
 {
-    $data=googa_ambassador_read_store();$found=googa_ambassador_find_by_token($data,$token);if(!$found)throw new RuntimeException('Fant ikke avtalen.');$app=$found['application'];$path=in_array((string)$app['status'],['signed','approved'],true)?(string)($app['signed_pdf_path']??''):(string)($app['issued_pdf_path']??'');if($path===''||!is_file($path))throw new RuntimeException('Avtalefilen mangler.');return (string)file_get_contents($path);
+    $data=googa_ambassador_read_store();$found=googa_ambassador_find_by_token($data,$token);if(!$found)throw new RuntimeException('Fant ikke avtalen.');$app=$found['application'];$path=in_array((string)$app['status'],['signed','activating','activation_pending','active','approved'],true)?(string)($app['signed_pdf_path']??''):(string)($app['issued_pdf_path']??'');if($path===''||!is_file($path))throw new RuntimeException('Avtalefilen mangler.');return (string)file_get_contents($path);
 }
 
 function googa_ambassador_applications(): array
@@ -235,25 +242,139 @@ function googa_ambassador_suggest_code(array $application): string
     $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $first) ?: 'GOOGA';
     $base = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $ascii) ?? 'GOOGA');
     $base = substr($base !== '' ? $base : 'GOOGA', 0, 10);
-    return $base . substr(hash('sha256', (string)($application['id'] ?? '')), 0, 2);
+    return $base . substr(strtoupper(hash('sha256', (string)($application['id'] ?? ''))), 0, 4);
 }
 
-function googa_ambassador_mark_approved(string $applicationId, array $ambassador, string $ownerEmail): void
+function googa_ambassador_mark_activation_pending(string $applicationId): array
 {
-    googa_ambassador_store_transaction(function(array &$data) use ($applicationId, $ambassador, $ownerEmail) {
+    return googa_ambassador_store_transaction(function(array &$data) use ($applicationId) {
         $app = $data['applications'][$applicationId] ?? null;
-        if (!is_array($app) || (string)($app['status'] ?? '') !== 'signed') throw new RuntimeException('Søknaden er ikke klar for godkjenning.');
-        $app['status'] = 'approved'; $app['approved_at'] = googa_now(); $app['approved_by'] = googa_normalize_email($ownerEmail); $app['ambassador_id'] = (string)$ambassador['id']; $app['ambassador_code'] = (string)$ambassador['code'];
-        $app['events'][] = ['type' => 'approved', 'at' => $app['approved_at'], 'by' => $app['approved_by']];
+        if (!is_array($app)) throw new RuntimeException('Fant ikke ambassadøravtalen.');
+        if (in_array((string)($app['status'] ?? ''), ['active','approved'], true)) return $app;
+        $app['status'] = 'activation_pending';
+        $app['activation_message'] = 'Signaturen er gyldig. Automatisk aktivering forsøkes på nytt.';
+        $app['activation_next_attempt_at'] = (new DateTimeImmutable(googa_now()))->modify('+5 minutes')->format(DATE_ATOM);
+        $app['events'][] = ['type' => 'activation_pending', 'at' => googa_now()];
+        $data['applications'][$applicationId] = $app;
+        return $app;
+    });
+}
+
+function googa_ambassador_record_activation_email(string $applicationId, bool $sent): void
+{
+    googa_ambassador_store_transaction(function(array &$data) use ($applicationId, $sent) {
+        $app = $data['applications'][$applicationId] ?? null;
+        if (!is_array($app)) return;
+        $app['activation_email_sent'] = $sent;
+        $app['activation_email_last_attempt_at'] = googa_now();
+        $app['events'][] = ['type' => $sent ? 'activation_email_sent' : 'activation_email_failed', 'at' => googa_now()];
         $data['applications'][$applicationId] = $app;
     });
+}
+
+function googa_ambassador_activate_signed(string $applicationId): array
+{
+    require_once __DIR__ . '/stripe.php';
+    $app = googa_ambassador_store_transaction(function(array &$store) use ($applicationId) {
+        $candidate = $store['applications'][$applicationId] ?? null;
+        if (!is_array($candidate)) throw new RuntimeException('Fant ikke ambassadøravtalen.');
+        if (in_array((string)($candidate['status'] ?? ''), ['active','approved'], true)) return $candidate;
+        if (!in_array((string)($candidate['status'] ?? ''), ['signed','activating','activation_pending'], true)) throw new RuntimeException('Avtalen er ikke ferdig signert.');
+        if (empty($candidate['signed_at']) || empty($candidate['signed_name']) || empty($candidate['signature_receipt_hash'])) throw new RuntimeException('Signaturbeviset er ufullstendig.');
+        if (!hash_equals((string)$candidate['document_hash'], googa_ambassador_document_hash((array)$candidate['document']))) throw new RuntimeException('Avtaledokumentet har endret seg.');
+        $signedPath = (string)($candidate['signed_pdf_path'] ?? '');
+        if ($signedPath === '' || !is_file($signedPath) || !hash_equals((string)($candidate['signed_pdf_hash'] ?? ''), hash_file('sha256', $signedPath))) throw new RuntimeException('Den signerte PDF-en kunne ikke valideres.');
+        $candidate['status'] = 'activating';
+        $candidate['activation_started_at'] = googa_now();
+        $candidate['activation_attempts'] = (int)($candidate['activation_attempts'] ?? 0) + 1;
+        $candidate['activation_message'] = 'Automatisk kontroll og aktivering pågår.';
+        $candidate['events'][] = ['type' => 'activation_started', 'at' => $candidate['activation_started_at']];
+        $store['applications'][$applicationId] = $candidate;
+        return $candidate;
+    });
+
+    $data = googa_load_data();
+    $accountEmail = googa_normalize_email((string)($app['account_email'] ?? ''));
+    if (!isset($data['users'][$accountEmail]) || !googa_ambassador_user_eligible((array)$data['users'][$accountEmail])) throw new RuntimeException('Kunden oppfyller ikke lenger vilkåret om et aktivt kvalifisert abonnement.');
+
+    $ambassador = null;
+    foreach ((array)($data['ambassadors'] ?? []) as $id => $existing) {
+        if (!is_array($existing)) continue;
+        $sameAgreement = (string)($existing['agreement_id'] ?? '') === $applicationId;
+        $sameActiveEmail = googa_normalize_email((string)($existing['email'] ?? '')) === $accountEmail && (string)($existing['status'] ?? '') === 'active';
+        if ($sameAgreement || $sameActiveEmail) {
+            $existing['id'] = (string)$id;
+            $ambassador = $existing;
+            break;
+        }
+    }
+    if (!is_array($ambassador)) {
+        $baseCode = googa_ambassador_suggest_code($app);
+        $code = $baseCode;
+        $used = array_map(static fn($item) => strtoupper((string)($item['code'] ?? '')), array_filter((array)($data['ambassadors'] ?? []), 'is_array'));
+        for ($suffix = 4; in_array($code, $used, true); $suffix += 2) {
+            $code = substr($baseCode, 0, 10) . substr(strtoupper(hash('sha256', $applicationId)), 0, min($suffix, 20));
+            if ($suffix > 20) throw new RuntimeException('Kunne ikke opprette en unik ambassadørkode.');
+        }
+        $ambassador = googa_stripe_create_ambassador($data, $accountEmail, $code, $applicationId);
+        $ambassador['agreement_id'] = $applicationId;
+        $ambassador['agreement_version'] = (string)($app['document']['version'] ?? '');
+        $ambassador['agreement_hash'] = (string)($app['document_hash'] ?? '');
+        $data['ambassadors'][(string)$ambassador['id']] = $ambassador;
+        googa_save_data($data);
+    }
+
+    $active = googa_ambassador_store_transaction(function(array &$store) use ($applicationId, $ambassador) {
+        $candidate = $store['applications'][$applicationId] ?? null;
+        if (!is_array($candidate)) throw new RuntimeException('Fant ikke ambassadøravtalen.');
+        $candidate['status'] = 'active';
+        $candidate['activated_at'] = $candidate['activated_at'] ?? googa_now();
+        $candidate['activated_by'] = 'automatic-server-validation';
+        $candidate['ambassador_id'] = (string)$ambassador['id'];
+        $candidate['ambassador_code'] = (string)$ambassador['code'];
+        $candidate['activation_message'] = 'Avtalen er aktiv og ambassadørkoden er klar.';
+        $candidate['activation_next_attempt_at'] = null;
+        $candidate['events'][] = ['type' => 'activated_automatically', 'at' => googa_now()];
+        $store['applications'][$applicationId] = $candidate;
+        return $candidate;
+    });
+    if (empty($active['activation_email_sent'])) {
+        $sent = googa_send_ambassador_approved_email($active, $ambassador);
+        googa_ambassador_record_activation_email($applicationId, $sent);
+        $active['activation_email_sent'] = $sent;
+    }
+    return $active;
+}
+
+function googa_ambassador_retry_automatic_activations(): array
+{
+    $counts = ['checked' => 0, 'activated' => 0, 'pending' => 0, 'email_retried' => 0];
+    foreach (googa_ambassador_applications() as $app) {
+        $status = (string)($app['status'] ?? '');
+        $due = strtotime((string)($app['activation_next_attempt_at'] ?? '')) ?: 0;
+        $stale = strtotime((string)($app['activation_started_at'] ?? '')) ?: 0;
+        $shouldActivate = $status === 'signed' || ($status === 'activation_pending' && $due <= time()) || ($status === 'activating' && $stale <= time() - 300);
+        $shouldRetryEmail = in_array($status, ['active','approved'], true) && empty($app['activation_email_sent']);
+        if (!$shouldActivate && !$shouldRetryEmail) continue;
+        $counts['checked']++;
+        try {
+            $activated = googa_ambassador_activate_signed((string)$app['id']);
+            if ($shouldActivate) $counts['activated']++;
+            if ($shouldRetryEmail && !empty($activated['activation_email_sent'])) $counts['email_retried']++;
+        } catch (Throwable $error) {
+            error_log('Googa ambassador retry pending for ' . (string)$app['id'] . ': ' . $error->getMessage());
+            googa_ambassador_mark_activation_pending((string)$app['id']);
+            $counts['pending']++;
+        }
+    }
+    return $counts;
 }
 
 function googa_ambassador_owner_pdf(string $applicationId): string
 {
     $app = googa_ambassador_application_by_id($applicationId);
     if (!$app) throw new RuntimeException('Fant ikke avtalen.');
-    $path = in_array((string)($app['status'] ?? ''), ['signed','approved'], true) ? (string)($app['signed_pdf_path'] ?? '') : (string)($app['issued_pdf_path'] ?? '');
+    $path = in_array((string)($app['status'] ?? ''), ['signed','activating','activation_pending','active','approved'], true) ? (string)($app['signed_pdf_path'] ?? '') : (string)($app['issued_pdf_path'] ?? '');
     if ($path === '' || !is_file($path)) throw new RuntimeException('Avtalefilen mangler.');
     return (string)file_get_contents($path);
 }

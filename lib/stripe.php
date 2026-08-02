@@ -17,7 +17,7 @@ function googa_stripe_config(): array
     return $config;
 }
 
-function googa_stripe_request(string $method, string $path, array $params = []): array
+function googa_stripe_request(string $method, string $path, array $params = [], ?string $idempotencyKey = null): array
 {
     $config = googa_stripe_config();
     $url = 'https://api.stripe.com/v1/' . ltrim($path, '/');
@@ -28,12 +28,16 @@ function googa_stripe_request(string $method, string $path, array $params = []):
     if ($curl === false) {
         throw new RuntimeException('Unable to start Stripe request.');
     }
+    $headers = ['Stripe-Version: 2025-04-30.basil'];
+    if ($idempotencyKey !== null && trim($idempotencyKey) !== '') {
+        $headers[] = 'Idempotency-Key: ' . substr(preg_replace('/[^A-Za-z0-9_.-]/', '-', $idempotencyKey) ?? '', 0, 255);
+    }
     $options = [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_USERPWD => $config['STRIPE_API_KEY'] . ':',
         CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
         CURLOPT_TIMEOUT => 20,
-        CURLOPT_HTTPHEADER => ['Stripe-Version: 2025-04-30.basil'],
+        CURLOPT_HTTPHEADER => $headers,
     ];
     if ($method === 'POST') {
         $options[CURLOPT_POST] = true;
@@ -342,7 +346,7 @@ function googa_stripe_backfill_first_paid_at(array &$data, string $email): ?stri
     return $firstPaidAt;
 }
 
-function googa_stripe_create_ambassador(array &$data, string $email, string $code): array
+function googa_stripe_create_ambassador(array &$data, string $email, string $code, string $idempotencySeed = ''): array
 {
     $email = googa_normalize_email($email);
     $code = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $code) ?? '');
@@ -354,6 +358,7 @@ function googa_stripe_create_ambassador(array &$data, string $email, string $cod
         if (strtoupper((string)($existing['code'] ?? '')) === $code) throw new RuntimeException('Koden finnes allerede.');
         if (googa_normalize_email((string)($existing['email'] ?? '')) === $email && ($existing['status'] ?? '') === 'active') throw new RuntimeException('Kunden er allerede ambassadør.');
     }
+    $seed = $idempotencySeed !== '' ? hash('sha256', $idempotencySeed) : bin2hex(random_bytes(16));
     $monthlyCoupon = googa_stripe_request('POST', 'coupons', [
         'percent_off' => 50,
         'duration' => 'repeating',
@@ -362,7 +367,7 @@ function googa_stripe_create_ambassador(array &$data, string $email, string $cod
         'applies_to[products][0]' => GOOGA_PRODUCT_ID,
         'metadata[googa_ambassador_email]' => $email,
         'metadata[googa_ambassador_code]' => $code,
-    ]);
+    ], 'googa-ambassador-monthly-' . $seed);
     $annualCoupon = googa_stripe_request('POST', 'coupons', [
         'amount_off' => 5000,
         'currency' => 'nok',
@@ -371,7 +376,7 @@ function googa_stripe_create_ambassador(array &$data, string $email, string $cod
         'applies_to[products][0]' => GOOGA_PRODUCT_ID,
         'metadata[googa_ambassador_email]' => $email,
         'metadata[googa_ambassador_code]' => $code,
-    ]);
+    ], 'googa-ambassador-annual-' . $seed);
     return [
         'id' => bin2hex(random_bytes(10)), 'email' => $email, 'name' => (string)($user['name'] ?: $email), 'code' => $code,
         'status' => 'active', 'monthly_coupon_id' => (string)$monthlyCoupon['id'], 'annual_coupon_id' => (string)$annualCoupon['id'],

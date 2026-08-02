@@ -1,5 +1,5 @@
 {
-  "version": "2026.08.02.14",
-  "updatedAt": "2026-08-02T10:30:00Z",
-  "notes": "Story illustrations plus ambassador application, frozen PDF agreement, electronic signature and owner approval"
+  "version": "2026.08.02.16",
+  "updatedAt": "2026-08-02T12:30:00Z",
+  "notes": "Story illustrations, expanded Caraweelo reader and fully automatic ambassador activation after electronic signature, with safe retry"
 }

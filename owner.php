@@ -27,24 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit('Invalid request');
     }
     $action = (string)($_POST['action'] ?? '');
-    if ($action === 'approve-ambassador-application') {
-        try {
-            $applicationId = (string)($_POST['application_id'] ?? '');
-            $application = googa_ambassador_application_by_id($applicationId);
-            if (!is_array($application) || ($application['status'] ?? '') !== 'signed') throw new RuntimeException('Søknaden er ikke signert eller finnes ikke.');
-            $accountEmail = googa_normalize_email((string)($application['account_email'] ?? ''));
-            if (!isset($data['users'][$accountEmail]) || !googa_ambassador_user_eligible($data['users'][$accountEmail])) throw new RuntimeException('Kunden oppfyller ikke lenger kravet om aktivt betalt abonnement.');
-            $ambassador = googa_stripe_create_ambassador($data, $accountEmail, (string)($_POST['ambassador_code'] ?? ''));
-            $ambassador['agreement_id'] = $applicationId;
-            $ambassador['agreement_version'] = (string)($application['document']['version'] ?? '');
-            $ambassador['agreement_hash'] = (string)($application['document_hash'] ?? '');
-            $data['ambassadors'][(string)$ambassador['id']] = $ambassador;
-            googa_save_data($data);
-            googa_ambassador_mark_approved($applicationId, $ambassador, (string)($context['email'] ?? ''));
-            $activationSent = googa_send_ambassador_approved_email($application, $ambassador);
-            $message = 'Signert søknad godkjent og ambassadørkoden aktivert.' . ($activationSent ? ' Aktiveringse-post sendt.' : ' Aktiveringse-posten kunne ikke sendes.');
-        } catch (Throwable $error) { $message = 'Kunne ikke godkjenne søknaden: ' . $error->getMessage(); }
-    }
     if ($action === 'create-ambassador') {
         try {
             $ambassador = googa_stripe_create_ambassador($data, (string)($_POST['ambassador_email'] ?? ''), (string)($_POST['ambassador_code'] ?? ''));
@@ -284,15 +266,15 @@ function googa_form_date(?string $iso): string
   </div>
   <section class="panel" style="margin-top:18px">
     <h2>Ambassadørsøknader og signering</h2>
-    <p>Søkerne sender inn fødsels-/ID-nummer kryptert. Panelet viser bare de fire siste tegnene. Aktivering er sperret til avtalen er elektronisk signert og kundens betalte abonnement fortsatt er kvalifisert.</p>
+    <p>Søkerne sender inn fødsels-/ID-nummer kryptert. Panelet viser bare de fire siste tegnene. Etter fullført signatur validerer serveren dokumentet og kundestatusen og aktiverer koden automatisk. Midlertidige feil prøves på nytt hvert femte minutt.</p>
     <?php if (!$ambassadorApplications): ?><p class="muted">Ingen søknader ennå.</p><?php else: ?>
-    <table class="table"><thead><tr><th>Søker</th><th>Status</th><th>Avtale</th><th>Godkjenning</th></tr></thead><tbody>
+    <table class="table"><thead><tr><th>Søker</th><th>Status</th><th>Avtale</th><th>Automatisk aktivering</th></tr></thead><tbody>
     <?php foreach ($ambassadorApplications as $application): $appStatus=(string)($application['status']??''); ?>
       <tr>
         <td data-label="Søker"><strong><?= htmlspecialchars((string)($application['name']??''),ENT_QUOTES,'UTF-8') ?></strong><br><small><?= htmlspecialchars((string)($application['email']??''),ENT_QUOTES,'UTF-8') ?><br>ID slutter på <?= htmlspecialchars((string)($application['identity_last4']??''),ENT_QUOTES,'UTF-8') ?></small></td>
-        <td data-label="Status"><span class="pill<?= in_array($appStatus,['signed','approved'],true)?' ok':'' ?>"><?= htmlspecialchars($appStatus,ENT_QUOTES,'UTF-8') ?></span><br><small>Opprettet <?= htmlspecialchars(substr((string)($application['created_at']??''),0,10),ENT_QUOTES,'UTF-8') ?></small></td>
+        <td data-label="Status"><span class="pill<?= in_array($appStatus,['signed','activating','activation_pending','active','approved'],true)?' ok':'' ?>"><?= htmlspecialchars($appStatus,ENT_QUOTES,'UTF-8') ?></span><br><small>Opprettet <?= htmlspecialchars(substr((string)($application['created_at']??''),0,10),ENT_QUOTES,'UTF-8') ?></small></td>
         <td data-label="Avtale"><a class="owner-back" href="owner-ambassador-document.php?id=<?= rawurlencode((string)$application['id']) ?>" target="_blank" rel="noopener">Åpne PDF</a><br><small><?= htmlspecialchars((string)($application['document']['version']??''),ENT_QUOTES,'UTF-8') ?></small></td>
-        <td data-label="Godkjenning"><?php if($appStatus==='signed'): ?><form method="post"><input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf,ENT_QUOTES,'UTF-8') ?>"><input type="hidden" name="action" value="approve-ambassador-application"><input type="hidden" name="application_id" value="<?= htmlspecialchars((string)$application['id'],ENT_QUOTES,'UTF-8') ?>"><div class="field"><label>Kode</label><input name="ambassador_code" minlength="4" pattern="[A-Za-z0-9]+" value="<?= htmlspecialchars(googa_ambassador_suggest_code($application),ENT_QUOTES,'UTF-8') ?>" required></div><button class="save" type="submit">Godkjenn og aktiver</button></form><?php elseif($appStatus==='approved'): ?><strong><?= htmlspecialchars((string)($application['ambassador_code']??''),ENT_QUOTES,'UTF-8') ?></strong><?php else: ?><small>Venter på signatur</small><?php endif; ?></td>
+        <td data-label="Automatisk aktivering"><?php if(in_array($appStatus,['active','approved'],true)): ?><strong><?= htmlspecialchars((string)($application['ambassador_code']??''),ENT_QUOTES,'UTF-8') ?></strong><br><small>Aktivert automatisk</small><?php elseif(in_array($appStatus,['signed','activating','activation_pending'],true)): ?><small>Behandles automatisk. Ingen eierhandling kreves.</small><?php else: ?><small>Venter på signatur</small><?php endif; ?></td>
       </tr>
     <?php endforeach; ?></tbody></table><?php endif; ?>
   </section>

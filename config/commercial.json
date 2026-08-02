@@ -1,7 +1,7 @@
 {
   "version": 1,
   "ambassadors": {
-    "creation": "qualified-parent-application-then-owner-approval",
+    "creation": "qualified-parent-application-and-automatic-activation-after-signature",
     "qualification": "active-paid-customer-for-30-days",
     "customer_benefit": {
       "monthly": "50-percent-off-two-full-months",
@@ -16,10 +16,13 @@
     "payout": "manual-quarterly-after-30-day-hold",
     "parent_help_route": "/ambassador.php",
     "agreement": {
-      "version": "GOOGA-AMB-NO-1.0",
+      "version": "GOOGA-AMB-NO-1.1",
       "signature": "personal-single-use-link-and-frozen-pdf",
-      "activation": "separate-owner-approval-after-complete-signature"
-    }
+      "activation": "automatic-after-complete-signature-and-server-validation",
+      "manual_approval": false,
+      "retry": "every-five-minutes"
+    },
+    "playbook_exception": "Owner explicitly selected fully automatic activation for this low-risk direct-family referral program. Server validation checks paid eligibility, complete signature evidence, the frozen document hash and unique ambassador code; owner monitoring remains read-only."
   },
   "organizations": {
     "delivery": "manual",

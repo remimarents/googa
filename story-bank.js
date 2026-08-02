@@ -155,6 +155,7 @@ window.GOOGA_STORIES = [
         no:'Navnet Caraweelo lever i mange fortellinger som er overført mellom generasjoner. Noen husker henne som en mektig dronning som tok ledelsen i en tid da kvinner ikke uten videre ble hørt.',
         noteNo:'Caraweelo er en legendarisk skikkelse. Fortellingene om henne varierer mellom fortellere og områder.',
         audio:'audio/stories/caraweelo-scene-1.mp3',
+        image:'assets/stories/caraweelo-scene-1.png',
         words:[
           {so:'boqorad',no:'dronning',icon:'♛',audio:'audio/stories/caraweelo-word-boqorad.mp3'},
           {so:'hoggaan',no:'ledelse',icon:'🧭',audio:'audio/stories/caraweelo-word-hoggaan.mp3'},
@@ -166,6 +167,7 @@ window.GOOGA_STORIES = [
         no:'Andre forteller om Caraweelo som en hard hersker som skapte frykt. Det samme navnet kan derfor være et symbol på mot for én person og en advarsel om makt for en annen.',
         noteNo:'Muntlige fortellinger bevarer ikke bare hendelser. De bevarer også verdiene og konfliktene til dem som forteller.',
         audio:'audio/stories/caraweelo-scene-2.mp3',
+        image:'assets/stories/caraweelo-scene-2.png',
         words:[
           {so:'taliye',no:'hersker',icon:'🪶',audio:'audio/stories/caraweelo-word-taliye.mp3'},
           {so:'geesinimo',no:'mot',icon:'⭐',audio:'audio/stories/caraweelo-word-geesinimo.mp3'},
@@ -182,6 +184,56 @@ window.GOOGA_STORIES = [
           {so:'cashar',no:'lærdom',icon:'📖',audio:'audio/stories/caraweelo-word-cashar.mp3'},
           {so:'aragti',no:'perspektiv',icon:'👁️',audio:'audio/stories/caraweelo-word-aragti.mp3'}
         ]
+      },
+      {
+        so:'Sheeko kale waxay ku bilaabataa cabasho: rag badan ayaa isku haysta awoodda, dadka caadiga ahna codkooda lama maqlin. Halkaas ayay Caraweelo ku noqotaa astaan lagu weydiinayo cidda talisa iyo cidda la maqlayo.',
+        no:'En annen fortellertradisjon begynner med en klage: mange menn strides om makt, mens vanlige folk ikke blir hørt. Her blir Caraweelo et bilde som brukes til å spørre hvem som styrer, og hvem som får en stemme.',
+        noteNo:'Pedagogisk bearbeidelse: dette er en tematisk inngang til varianter i muntlig tradisjon, ikke en dokumentert enkeltversjon.',
+        words:[{so:'cod',no:'stemme',icon:'🗣️'},{so:'awood',no:'makt',icon:'⚖️'},{so:'dhegeysi',no:'å lytte',icon:'👂'}]
+      },
+      {
+        so:'Qaar waxay sheegaan inay go’aamo adag qaadatay si ay uga hortagto dulmi. Qaar kalena waxay ku adkaystaan in awood aan xad lahayn ay dhaawacdo dadka. Labada sheeko midna keligeed ma xirto doodda.',
+        no:'Noen forteller at hun tok strenge valg for å stanse urett. Andre understreker at makt uten grenser skader mennesker. Ingen av fortellingene avslutter diskusjonen alene.',
+        noteNo:'Muntlige fortellinger kan romme uenighet. Det er en del av materialets verdi.',
+        words:[{so:'dulmi',no:'urett',icon:'⚠️'},{so:'xad',no:'grense',icon:'↔️'},{so:'dood',no:'samtale',icon:'💬'}]
+      },
+      {
+        so:'Marka sheekadu u gudubto jiil kale, erayadu isma joogaan. Qofka xusuusta geesinimada ayaa xoogga saara hal dhacdo. Qofka ka baqa awoodda ayaa xusuusta dhacdo kale.',
+        no:'Når historien går videre til en ny generasjon, står ikke ordene stille. Den som husker mot, fremhever én hendelse. Den som frykter makt, husker en annen.',
+        noteNo:'Dette avsnittet forklarer hvordan muntlig overlevering virker; det legger ikke fram en ny historisk påstand.',
+        words:[{so:'jiil',no:'generasjon',icon:'🌱'},{so:'xusuus',no:'minne',icon:'🧠'},{so:'isbeddel',no:'forandring',icon:'🔄'}]
+      },
+      {
+        so:'Sidaas darteed, Caraweelo ma aha oo keliya qof sheeko ku jira. Magaceedu wuxuu noqdaa meel ay dadku ku kala cabbiraan geesinimo, cabsi, caddaalad iyo awood.',
+        no:'Derfor er Caraweelo ikke bare en person i en fortelling. Navnet blir et sted der mennesker prøver ut ideer om mot, frykt, rettferdighet og makt.',
+        words:[{so:'geesinimo',no:'mot',icon:'⭐'},{so:'cabsi',no:'frykt',icon:'🌑'},{so:'caddaalad',no:'rettferdighet',icon:'⚖️'}]
+      },
+      {
+        so:'Ardaydu waxay isku dayaan inay kala saaraan saddex waxyaalood: waxa sheekadu sheegto, waxa qofku ka fahmo, iyo waxa caddayn kale lagu ogaan karo. Saddexduba way muhiim yihiin, laakiin isku mid ma aha.',
+        no:'Leseren øver på å skille tre ting: hva fortellingen sier, hva en person tolker, og hva vi kan vite fra andre kilder. Alle tre er viktige, men de er ikke det samme.',
+        noteNo:'Dette er den sentrale kildekritiske øvelsen i fortellingen.',
+        words:[{so:'caddayn',no:'kildebelegg',icon:'📚'},{so:'fasiraad',no:'tolkning',icon:'🔍'},{so:'xaqiiqo',no:'faktum',icon:'✓'}]
+      },
+      {
+        so:'Marka laba qof ay isku sheeko u sheegaan si kala duwan, jawaabta degdegga ahi ma aha in mid la aamusiiyo. Su’aasha wanaagsan waa: maxaa kuu muujinaya sidaas? Xaggee ayaad ka maqashay?',
+        no:'Når to personer forteller den samme historien ulikt, er ikke den raske løsningen å tie den ene. Det gode spørsmålet er: Hva får deg til å se det slik? Hvor har du hørt det?',
+        words:[{so:'su’aal',no:'spørsmål',icon:'❓'},{so:'maqashay',no:'har hørt',icon:'👂'},{so:'ixtiraam',no:'respekt',icon:'🤝'}]
+      },
+      {
+        so:'Taasi macnaheedu ma aha in wax kasta oo la sheego ay isku miisaan yihiin. Waxay ka dhigan tahay in la dhegeysto si taxaddar leh, dabadeedna la kala garto xusuus, mala-awaal, iyo xog la hubin karo.',
+        no:'Det betyr ikke at alt som blir fortalt veier like tungt. Det betyr at vi lytter nøye, og deretter skiller mellom minne, forestilling og informasjon som kan undersøkes.',
+        words:[{so:'taxaddar',no:'omtanke',icon:'🧭'},{so:'mala-awaal',no:'forestilling',icon:'💭'},{so:'hubin',no:'å undersøke',icon:'🔎'}]
+      },
+      {
+        so:'Caraweelo waxay sidaas ku noqotaa albaab laga galo su’aal ka weyn: sidee ayay bulsho u xafiddaa wixii ay ka baqday, wixii ay ku faantay, iyo wixii ay weli ka doodayso?',
+        no:'Slik blir Caraweelo en dør inn til et større spørsmål: Hvordan bevarer et samfunn det det har fryktet, vært stolt av og fortsatt diskuterer?',
+        words:[{so:'bulsho',no:'samfunn',icon:'🏘️'},{so:'faanto',no:'stolthet',icon:'🌟'},{so:'xifdin',no:'å bevare',icon:'📜'}]
+      },
+      {
+        so:'Dhamaadka sheekada ma keenayo hal xukun oo ku saabsan Caraweelo. Wuxuu kaa codsanayaa inaad sheekada u qaadato si dhab ah: dhegeyso, weydii, oo ka fikir cidda hadlaysa iyo cidda ka maqan.',
+        no:'Slutten gir ikke én dom over Caraweelo. Den ber deg ta fortellingen på alvor: lytt, spør og tenk over hvem som taler – og hvem som mangler.',
+        noteNo:'Googa-versjon: pedagogisk bearbeidelse basert på somalisk muntlig tradisjon. Må gjennomgås av somalisk språkvasker før offentlig lansering.',
+        words:[{so:'dhegeyso',no:'lytt',icon:'👂'},{so:'ka fikir',no:'tenk over',icon:'💡'},{so:'maqan',no:'fraværende',icon:'◌'}]
       }
     ],
     activity:{

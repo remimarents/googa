@@ -2,6 +2,11 @@
 declare(strict_types=1);
 session_name('googa');
 session_start();
+ob_start(static fn(string $html): string => str_replace(
+    ['Kontakt Arab – Googa', 'Spør Arab', 'Har du et spørsmål, en rettelse eller et forslag til <b>Bariis på Grandis</b>? Send en melding her. Arab får den direkte, med Googa på kopi.', 'Tema', 'Språk eller oversettelse', 'Innhold eller kultur', 'Send til Arab', 'Arab sin e-postadresse vises ikke på nettstedet.'],
+    ['Send melding – Googa', '💬 Send melding', 'Skriv til Arab. Du kan spørre, si fra om noe eller komme med en idé.', 'Hva gjelder det?', 'Språk', 'Bariis på Grandis', 'Send', 'Arab leser meldingen.'],
+    $html
+));
 require_once __DIR__ . '/lib/contact.php';
 if (empty($_SESSION['googa_contact_csrf'])) $_SESSION['googa_contact_csrf'] = bin2hex(random_bytes(20));
 $ok = false; $error = ''; $name = ''; $email = ''; $topic = '';

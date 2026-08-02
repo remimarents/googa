@@ -340,6 +340,10 @@ function googa_family_data(array $user): array
     ];
 }
 
+function googa_family_social_data(array $user): array { $social=is_array(($user['family']['social']??null))?$user['family']['social']:[];return ['enabled'=>!empty($social['enabled']),'weekly_goal'=>max(1,min(30,(int)($social['weekly_goal']??5))),'week'=>(string)($social['week']??''),'completed_levels'=>array_values(array_filter((array)($social['completed_levels']??[]),'is_string')),'connections'=>array_values(array_filter((array)($social['connections']??[]),'is_array')),'invites'=>array_values(array_filter((array)($social['invites']??[]),'is_array'))]; }
+function googa_family_social_week(): string { return gmdate('o-W'); }
+function googa_family_social_normalize(array $social): array { if(($social['week']??'')!==googa_family_social_week()){$social['week']=googa_family_social_week();$social['completed_levels']=[];}$social['completed_levels']=array_values(array_unique(array_filter((array)($social['completed_levels']??[]),'is_string')));$social['connections']=array_values(array_filter((array)($social['connections']??[]),'is_array'));$social['invites']=array_values(array_filter((array)($social['invites']??[]),static fn(array $i):bool=>googa_is_future($i['expires_at']??null)));return $social; }
+
 function googa_family_secret(): string
 {
     static $secret = null;

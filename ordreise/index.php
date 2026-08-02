@@ -24,6 +24,8 @@ $assetVersion = googa_app_version();
 if (empty($_SESSION['googa_payment_csrf'])) {
     $_SESSION['googa_payment_csrf'] = bin2hex(random_bytes(24));
 }
+if (empty($_SESSION['googa_social_csrf'])) $_SESSION['googa_social_csrf'] = bin2hex(random_bytes(24));
+$social = googa_family_social_data(is_array($context['user'] ?? null) ? $context['user'] : []);
 ?>
 <!doctype html>
 <html lang="so">
@@ -41,7 +43,7 @@ if (empty($_SESSION['googa_payment_csrf'])) {
   </head>
   <body>
     <main id="app"></main>
-    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_CAN_PURCHASE=<?= $canPurchase ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_MONTHLY_RELEASE=<?= $monthlyRelease ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_PWA_UPDATE={version:<?= json_encode($assetVersion) ?>,versionUrl:'../version.php',reloadUrl:'./'};</script>
+    <script>window.GOOGA_ORDREISE_USER=<?= json_encode((string)$context['email'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_OWNER=<?= ($context['role'] ?? '') === 'owner' ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_PREMIUM=<?= $premium ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_CAN_PURCHASE=<?= $canPurchase ? 'true' : 'false' ?>;window.GOOGA_ORDREISE_MONTHLY_RELEASE=<?= $monthlyRelease ?>;window.GOOGA_ORDREISE_PAYMENT_CSRF=<?= json_encode((string)$_SESSION['googa_payment_csrf'], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_ORDREISE_PAYMENT=<?= json_encode((string)($_GET['payment'] ?? ''), JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_FAMILY_SOCIAL=<?= json_encode(['enabled'=>!empty($social['enabled']),'csrf'=>(string)$_SESSION['googa_social_csrf']], JSON_UNESCAPED_UNICODE) ?>;window.GOOGA_PWA_UPDATE={version:<?= json_encode($assetVersion) ?>,versionUrl:'../version.php',reloadUrl:'./'};</script>
     <script src="wordbank.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="somaliweb-provisional.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="word-lists.js?v=<?= rawurlencode($assetVersion) ?>"></script>

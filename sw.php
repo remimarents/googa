@@ -76,6 +76,8 @@ self.addEventListener('fetch', event => {
     || url.pathname.endsWith('/ambassador-sign.php')
     || url.pathname.endsWith('/family.php')
     || url.pathname.endsWith('/family-api.php')
+    || url.pathname.endsWith('/family-social.php')
+    || url.pathname.endsWith('/family-social-api.php')
     || url.pathname.endsWith('/family-join.php')
     || url.pathname.endsWith('/family-pending.php')
     || url.pathname.endsWith('/family-pending-status.php')

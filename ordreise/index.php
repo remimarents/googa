@@ -51,5 +51,6 @@ $social = googa_family_social_data(is_array($context['user'] ?? null) ? $context
     <script src="rewards.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="app.js?v=<?= rawurlencode($assetVersion) ?>"></script>
     <script src="../pwa-update.js?v=<?= rawurlencode($assetVersion) ?>"></script>
+    <?php require __DIR__ . '/../owner-corrections-init.php'; ?>
   </body>
 </html>

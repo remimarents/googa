@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
+session_name('googa'); session_start();
+require_once __DIR__ . '/lib/store.php';
 require_once __DIR__ . '/lib/version.php';
+$context = googa_session_context();
 $assetVersion = googa_app_version();
 ?><!doctype html>
 <html lang="so">
@@ -122,5 +125,6 @@ $assetVersion = googa_app_version();
   <script src="<?= htmlspecialchars(googa_asset_url('culture-test.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <dialog class="coupon-dialog" id="couponDialog" aria-labelledby="couponDialogTitle"><form method="dialog"><span class="coupon-dialog-icon" aria-hidden="true">🍽️</span><h2 id="couponDialogTitle">Fikrad ku saabsan dalab</h2><p>Googa weli heshiis lama laha makhaayadaha. Halkan waxaa lagu muujinayaa sida dalabku u shaqayn karo.</p><div class="coupon-prospects"><b>Meelaha aanu eegnay</b><ul><li><span>🍛</span><p><strong>Waaberi Restaurant</strong><small>Grønland · Oslo</small></p></li><li><span>🥘</span><p><strong>Safari Grill</strong><small>Grønland · Oslo</small></p></li></ul></div><p class="coupon-disclosure">Tani ma aha xayeysiis. Googa hadda heshiis lama laha meelahan.</p><button class="culture-primary" type="submit">Waan fahmay</button></form></dialog>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-coupons.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <?php require __DIR__ . '/owner-corrections-init.php'; ?>
 </body>
 </html>

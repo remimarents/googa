@@ -86,5 +86,6 @@ $cultureTestAvailable = ($context['role'] ?? '') === 'owner';
     <script src="<?= htmlspecialchars(googa_asset_url('bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
     <script src="<?= htmlspecialchars(googa_asset_url('app.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+    <?php require __DIR__ . '/owner-corrections-init.php'; ?>
   </body>
 </html>

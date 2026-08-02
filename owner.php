@@ -154,6 +154,8 @@ function googa_form_date(?string $iso): string
     <div class="quick">
       <a class="owner-back" href="./">Til appen</a>
       <a class="owner-back" href="owner-mode.php">Bytt modus</a>
+      <button class="owner-back" id="correctionToggle" type="button">Rett tekst</button>
+      <a class="owner-back" href="owner-corrections.php">Rettingskø</a>
     </div>
   </div>
   <?php if ($message !== ''): ?><p class="message"><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
@@ -291,4 +293,5 @@ function googa_form_date(?string $iso): string
     <?php if ($ambassadors): ?><table class="table"><thead><tr><th>Ambassadør</th><th>Kode og lenke</th><th>Salg</th><th>Provisjon</th><th>Oppgjør</th></tr></thead><tbody><?php foreach ($ambassadors as $ambassadorId => $ambassador): $ambCommissions=array_filter($commissions,static fn($c)=>($c['ambassador_id']??'')===$ambassadorId);$pending=0;$available=0;$paid=0;foreach($ambCommissions as $c){$amount=(int)($c['commission_ore']??0);if(($c['status']??'')==='paid')$paid+=$amount;elseif(strtotime((string)($c['available_at']??''))<=time())$available+=$amount;else$pending+=$amount;} ?><tr><td data-label="Ambassadør"><strong><?= htmlspecialchars((string)($ambassador['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong><br><small><?= htmlspecialchars((string)($ambassador['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?></small></td><td data-label="Kode og lenke"><strong><?= htmlspecialchars((string)($ambassador['code'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong><br><small><?= htmlspecialchars(GOOGA_PUBLIC_BASE_URL . '/?amb=' . rawurlencode((string)($ambassador['code'] ?? '')), ENT_QUOTES, 'UTF-8') ?></small></td><td data-label="Salg"><?= count($ambCommissions) ?></td><td data-label="Provisjon">Tilgjengelig kr <?= number_format($available/100,2,',',' ') ?><br><small>Venter kr <?= number_format($pending/100,2,',',' ') ?> · utbetalt kr <?= number_format($paid/100,2,',',' ') ?></small></td><td data-label="Oppgjør"><form method="post"><input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="action" value="mark-commissions-paid"><input type="hidden" name="ambassador_id" value="<?= htmlspecialchars((string)$ambassadorId, ENT_QUOTES, 'UTF-8') ?>"><button class="save" type="submit"<?= $available<=0?' disabled':'' ?>>Merk utbetalt</button></form></td></tr><?php endforeach; ?></tbody></table><?php endif; ?>
   </section>
 </main>
+<?php require __DIR__ . '/owner-corrections-init.php'; ?><script>document.getElementById('correctionToggle')?.addEventListener('click',()=>document.getElementById('googaCorrectionBadge')?.click());</script>
 </html>

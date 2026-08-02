@@ -97,5 +97,6 @@ $assetVersion = googa_app_version();
   <script src="<?= htmlspecialchars(googa_asset_url('story-bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('stories.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('pwa-update.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <?php require __DIR__ . '/owner-corrections-init.php'; ?>
 </body>
 </html>

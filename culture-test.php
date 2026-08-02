@@ -60,7 +60,7 @@ $assetVersion = googa_app_version();
         <p class="culture-question-no hidden" id="cultureQuestionNo"></p>
         <button class="culture-translate" id="cultureTranslate" type="button">🇳🇴 <span>Eeg af-Noorwiiji</span></button>
         <div class="culture-scale" id="cultureScale"></div>
-        <button class="culture-primary culture-finish hidden" id="cultureFinish" type="button">Arag natiijada</button>
+        <button class="culture-primary culture-finish hidden" id="cultureFinish" type="button" style="width:100%;margin-top:16px">Arag natiijada</button>
       </article>
     </section>
 

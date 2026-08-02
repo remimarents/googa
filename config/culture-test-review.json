@@ -1,0 +1,26 @@
+{
+  "instrument_version": "bpg-0.3-draft",
+  "bank_sha256": "ad24ff0448e65de58e06899b65e548733cc2aa009e66b07ce6520656bed3c6ea",
+  "reviewed_at": "2026-08-02T01:25:54Z",
+  "status": "passed-for-draft-preview",
+  "review_scope": [
+    "stable-and-unique-item-and-option-identifiers",
+    "complete-norwegian-and-somali-draft-copy",
+    "three-axis-score-vector-on-every-option",
+    "no-objective-right-answer-claimed",
+    "humor-targets-situations-and-food-not-ethnic-authenticity",
+    "no-clan-religion-party-preference-or-legal-status-items",
+    "no-auto-submit-on-final-answer",
+    "all-six-profile-rules-covered-by-frozen-test-vectors"
+  ],
+  "reviewed_items": [
+    "BPG-NO-01","BPG-NO-02","BPG-NO-03","BPG-NO-04","BPG-NO-05","BPG-NO-06","BPG-NO-07","BPG-NO-08",
+    "BPG-HI-01","BPG-HI-02","BPG-HI-03","BPG-HI-04","BPG-HI-05","BPG-HI-06","BPG-HI-07","BPG-HI-08",
+    "BPG-BR-01","BPG-BR-02","BPG-BR-03","BPG-BR-04","BPG-BR-05","BPG-BR-06","BPG-BR-07","BPG-BR-08"
+  ],
+  "release_blockers": [
+    "somali-pedagogue-language-and-cultural-review",
+    "regenerate-and-listen-to-all-ubax-and-muuse-audio-after-copy-lock",
+    "qualitative-pilot-with-five-to-ten-norwegian-somali-adults"
+  ]
+}

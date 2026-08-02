@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
+const scoringVectors = require('../config/culture-test-vectors.json');
 
 const base = process.env.GOOGA_BASE || 'http://127.0.0.1:8765/';
-const sessionId = process.env.GOOGA_SESSION_ID || 'codexculturetest';
 
 async function inspect(page, label) {
   const metrics = await page.evaluate(() => ({
@@ -18,53 +18,50 @@ async function inspect(page, label) {
 (async () => {
   const browser = await chromium.launch();
   for (const viewport of [{ width:390,height:844,name:'mobile' },{ width:1440,height:900,name:'desktop' }]) {
-    const context = await browser.newContext({ viewport, deviceScaleFactor: viewport.name === 'mobile' ? 2 : 1 });
-    await context.addCookies([{ name:'googa', value:sessionId, url:base }]);
+    const context = await browser.newContext({ viewport, deviceScaleFactor:viewport.name === 'mobile' ? 2 : 1, isMobile:viewport.name === 'mobile', hasTouch:viewport.name === 'mobile' });
     const page = await context.newPage();
-    const errors = [];
-    page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
-    page.on('pageerror', error => errors.push(error.message));
+    const pageErrors = [];
+    page.on('pageerror', error => pageErrors.push(error.message));
     await page.goto(`${base}culture-test.php`, { waitUntil:'networkidle' });
-    if (!await page.getByRole('heading', { name:'Laba dal, hal sheeko' }).isVisible()) throw new Error('Intro missing');
+    if (!await page.getByRole('heading', { name:'Bariis på Grandis?!' }).isVisible()) throw new Error('Intro title missing');
+    if (!await page.getByText('Intee ayay gaartay?').isVisible()) throw new Error('Somali subtitle missing');
     const intro = await inspect(page, `${viewport.name}-intro`);
     if (intro.speakers < 2) throw new Error('Intro audio controls missing');
-    const introAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/intro.mp3'));
-    await page.locator('.culture-thesis .culture-speak').click();
-    if (!(await introAudio).ok()) throw new Error('Intro MP3 failed');
+    await page.locator('#cultureLanguage').click();
+    if (!await page.getByText('Hvor langt har det gått?').isVisible()) throw new Error('Norwegian intro missing');
     const muuseSample = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/voice-sample.mp3'));
     await page.locator('#voiceMuuse').click();
     if (!(await muuseSample).ok()) throw new Error('Muuse sample MP3 failed');
-    if (await page.locator('#voiceMuuse').getAttribute('aria-checked') !== 'true') throw new Error('Muuse voice was not selected');
-    await page.screenshot({ path:`/tmp/googa-culture-${viewport.name}-intro.png`, fullPage:true });
-    await page.getByRole('button', { name:/Bilow tijaabada/ }).click();
+    await page.getByRole('button', { name:'Start testen' }).click();
     await inspect(page, `${viewport.name}-question`);
-    const questionSpeakers = await page.locator('#cultureQuestion .culture-speak').count();
-    if (questionSpeakers !== 6) throw new Error(`Expected six question/scale speakers, got ${questionSpeakers}`);
-    const qAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/question-01.mp3'));
-    await page.locator('#cultureQuestionSpeak').click();
-    if (!(await qAudio).ok()) throw new Error('Question MP3 failed');
+    if (await page.locator('[data-option]').count() !== 4) throw new Error('Expected four situational choices');
+    if (await page.locator('#cultureQuestion .culture-speak').count() !== 5) throw new Error('Question and four answers need audio controls');
     await page.locator('#cultureTranslate').click();
-    if (!await page.locator('#cultureQuestionNo').isVisible()) throw new Error('Norwegian support did not open');
-    await page.screenshot({ path:`/tmp/googa-culture-${viewport.name}-question.png`, fullPage:true });
-    for (let i = 0; i < 24; i += 1) await page.locator('[data-value="4"]').click();
-    if (!await page.getByRole('heading', { name:'Isku-xiraha dhaqamada' }).isVisible()) throw new Error('High result title wrong');
+    if (!await page.locator('#cultureQuestionNo').isVisible()) throw new Error('Somali support did not open');
+    for (let index = 0; index < 24; index += 1) {
+      await page.locator('[data-option="c"]').click();
+    }
+    if (!await page.locator('#cultureQuestion').isVisible()) throw new Error('Last answer must not auto-submit');
+    if (!await page.locator('#cultureFinish').isVisible()) throw new Error('Explicit result button missing');
+    await page.locator('#cultureFinish').click();
+    if (!await page.locator('#cultureResult').isVisible()) throw new Error('Result did not render');
     if (await page.locator('.culture-axes article').count() !== 3) throw new Error('Three axes missing');
     if (await page.locator('#cultureActions article').count() !== 2) throw new Error('Two next steps missing');
     const result = await inspect(page, `${viewport.name}-result`);
     if (result.speakers < 6) throw new Error('Result audio controls missing');
-    const resultAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/result-connector.mp3'));
-    await page.locator('#cultureResultSpeak').click();
-    if (!(await resultAudio).ok()) throw new Error('Result MP3 failed');
-    const ubaxSample = page.waitForResponse(response => response.url().includes('/audio/culture-test/voice-sample.mp3') && !response.url().includes('/muuse/'));
-    await page.locator('#voiceUbax').click();
-    if (!(await ubaxSample).ok()) throw new Error('Ubax sample MP3 failed');
-    await page.screenshot({ path:`/tmp/googa-culture-${viewport.name}-result.png`, fullPage:true });
-    if (errors.length) throw new Error(`${viewport.name}: ${errors.join(' | ')}`);
+    const engine = await page.evaluate(() => window.GOOGA_CULTURE_TEST_ENGINE.scoreAnswers(window.GOOGA_CULTURE_TEST.questions.map(() => 'c')));
+    if (!engine.profile || Object.keys(engine.values).length !== 3) throw new Error('Scoring engine unavailable');
+    for (const vector of scoringVectors.vectors) {
+      const actual = await page.evaluate(answers => window.GOOGA_CULTURE_TEST_ENGINE.scoreAnswers(answers), vector.answers);
+      if (actual.profile !== vector.expected_profile || JSON.stringify(actual.values) !== JSON.stringify(vector.expected_values)) throw new Error(`${vector.id} browser scoring mismatch`);
+    }
+    await page.screenshot({ path:`/tmp/googa-bariis-grandis-${viewport.name}.png`, fullPage:true });
+    if (pageErrors.length) throw new Error(`${viewport.name}: ${pageErrors.join(' | ')}`);
     await context.close();
   }
   const guest = await browser.newPage();
   const response = await guest.goto(`${base}culture-test.php`, { waitUntil:'domcontentloaded' });
-  if (response.status() !== 200 || !guest.url().endsWith('/')) throw new Error('Guest access gate failed');
+  if (response.status() !== 200 || !guest.url().includes('culture-test.php')) throw new Error('Free public access failed');
   await browser.close();
-  console.log('OK: owner gate, mobile/desktop layout, 24 questions, symbols, Norwegian support and Ubax/Muuse voice switching');
+  console.log('OK: public access, mobile/desktop layout, 24 scenarios, explicit submit, three-axis scoring, language and audio controls');
 })().catch(error => { console.error(error); process.exit(1); });

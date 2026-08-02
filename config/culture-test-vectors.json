@@ -1,0 +1,42 @@
+{
+  "instrument_version": "bpg-0.3-draft",
+  "scoring_version": "bpg-profile-1",
+  "vectors": [
+    {
+      "id": "balanced",
+      "answers": ["d","b","a","a","a","b","d","d","d","b","b","b","c","d","d","b","c","d","c","c","c","d","b","d"],
+      "expected_values": {"norway": 63, "heritage": 61, "bridge": 58},
+      "expected_profile": "balanced"
+    },
+    {
+      "id": "heritage",
+      "answers": ["b","d","a","b","d","b","b","a","d","d","a","a","c","a","a","a","c","b","d","a","a","d","c","b"],
+      "expected_values": {"norway": 49, "heritage": 65, "bridge": 54},
+      "expected_profile": "heritage"
+    },
+    {
+      "id": "norway",
+      "answers": ["a","a","d","d","c","a","a","a","b","d","a","b","b","a","d","c","a","c","c","c","b","c","b","d"],
+      "expected_values": {"norway": 72, "heritage": 50, "bridge": 51},
+      "expected_profile": "norway"
+    },
+    {
+      "id": "fusion",
+      "answers": ["b","d","d","c","a","b","b","d","d","b","b","d","c","b","b","d","b","b","c","c","d","c","d","d"],
+      "expected_values": {"norway": 73, "heritage": 65, "bridge": 74},
+      "expected_profile": "fusion"
+    },
+    {
+      "id": "explorer",
+      "answers": ["c","b","c","d","c","d","a","a","c","c","a","d","d","d","c","a","a","b","c","d","a","d","a","d"],
+      "expected_values": {"norway": 43, "heritage": 39, "bridge": 22},
+      "expected_profile": "explorer"
+    },
+    {
+      "id": "bridge",
+      "answers": ["b","a","d","b","d","b","a","c","c","d","d","c","d","c","b","c","d","d","a","c","a","d","c","b"],
+      "expected_values": {"norway": 58, "heritage": 58, "bridge": 58},
+      "expected_profile": "bridge"
+    }
+  ]
+}

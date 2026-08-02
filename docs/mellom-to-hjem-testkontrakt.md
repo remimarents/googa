@@ -1,46 +1,68 @@
-# Mellom to hjem – testkontrakt
+# Bariis på Grandis?! – testkontrakt
 
 ## Status
 
 - Produkt: Googa
-- Testnavn i appen: `Laba dal, hal sheeko`
-- Norsk arbeidstittel: `Mellom to hjem – ditt norsk-somaliske kulturkompass`
-- Tilgang: eierforhåndsvisning
+- Testnavn i appen: `Bariis på Grandis?!`
+- Undertittel: `Hvor langt har det gått?`
+- Tilgang: gratis og uten innlogging
 - Motorstatus: implementert
 - Innholdsstatus: `draft`
-- Instrumentversjon: `mth-0.2-draft`
+- Instrumentversjon: `bpg-0.3-draft`
+- Scoringsversjon: `bpg-profile-1`
 - Målgruppe: voksne med norsk-somalisk tilknytning
 - Tidsbruk: omtrent 6–8 minutter
-- Omfang: 24 påstander, fire per delområde
+- Omfang: 24 situasjoner med fire svaralternativer
 
-Somalisk tekst og lydmanus skal kvalitetssikres av somalisk pedagog før testen åpnes for abonnenter. Testen er ikke normert eller psykometrisk validert.
+Somalisk tekst og lydmanus skal kvalitetssikres av somalisk pedagog før utkastmerkingen fjernes og testen markedsføres som ferdig. Testen er ikke normert eller psykometrisk validert.
 
 ## Formål
 
-Testen er en frivillig refleksjonsprofil, ikke en vurdering av hvor «ekte» norsk eller somalisk noen er. Den skal vise hvordan norsk språk, samfunnskunnskap, kildekritikk og digitale verktøy kan åpne skriftlige kilder om Somalia, samtidig som somalisk språk, muntlig historie og kulturell kontekst gjør kildene lettere å forstå og utfordre.
+Testen er en frivillig, humoristisk refleksjonsprofil, ikke en vurdering av hvor «ekte» norsk eller somalisk noen er. Hverdagslige situasjoner gjør testen lett å dele, mens resultatet viser hvordan norsk hverdagskompetanse, somalisk språk og kultur og praktisk brobygging kan styrke hverandre.
 
 Kjernebudskap:
 
-> Du trenger ikke velge mellom dine to hjem. Kunnskap fra det ene kan hjelpe deg å forstå det andre.
+> Litt humor, to kulturer og et helt vanlig liv. Du trenger ikke velge – kunnskap om den ene siden kan gjøre den andre lettere å forstå.
 
-## Områder og scoring
+## Spørsmålsdekning
 
-| Område | Symbol | Påstander |
+| Situasjonsområde | Symbol | Spørsmål |
 |---|---:|---:|
-| Norsk samfunnskompetanse | 🧭 | MTH-NO-01–04 |
-| Somalisk kulturforankring | 🌿 | MTH-HI-01–04 |
-| Kilde- og digital kompetanse | 🔎 | MTH-RE-01–04 |
-| Somalia og verden | 🌍 | MTH-WO-01–04 |
-| Brobygging | 🌉 | MTH-BR-01–04 |
-| Videreføring | ✨ | MTH-VI-01–04 |
+| Norsk hverdagsliv | 🧤 | BPG-NO-01–08 |
+| Somaliske røtter | 🍚 | BPG-HI-01–08 |
+| Mellom to kulturer | 🌉 | BPG-BR-01–08 |
 
-Svarskalaen går fra 0 (`Stemmer ikke`) til 4 (`Stemmer helt`). Tre hovedakser vises i resultatet:
+## Profilscoring
 
-- Norge og verktøy: norsk samfunnskompetanse + kilde- og digital kompetanse
-- Somalia og kulturarv: somalisk kulturforankring + Somalia og verden
-- Bro i praksis: brobygging + videreføring
+Hvert svaralternativ har en eksplisitt vektor med 0–3 poeng på tre uavhengige akser:
 
-Resultatoverskriftene er redaksjonelle, ikke normbaserte: Nysgjerrig utforsker, Flere dører åpner seg, Aktiv brobygger og Kulturkobleren. De to laveste delområdene utløser konkrete, ikke-moraliserende forslag.
+- Norsk hverdagsradar: vaner, språk og norsk hverdagsliv
+- Somalisk rotfeste: språk, familie, historier og kultur
+- Brobyggerblikk: å koble, forklare og bruke begge sider
+
+Hver akse normaliseres mot den høyeste tilgjengelige poengsummen på samme akse. Resultatet viser derfor en profil, ikke en samlet rangering. Alternativrekkefølgen endrer ikke mappingen. Alle spørsmål må besvares; siste svar sender ikke testen automatisk, men åpner en egen resultatknapp.
+
+Profilreglene er redaksjonelle og ikke normbaserte:
+
+- Bariis på Grandis: minst 55 på begge kulturaksene og minst 60 på brobyggeraksen
+- Sambuus på dugnad: brobyggeraksen er høyest og minst 55, uten at fusion-regelen er nådd
+- Bariisen står støtt: somalisk rotfeste ligger minst 15 poeng over norsk hverdagsradar
+- Grandis ved siden av: norsk hverdagsradar ligger minst 15 poeng over somalisk rotfeste
+- Shaah og kaffe: jevn eller blandet profil som ikke treffer reglene over
+- Nysgjerrig smaksprøver: gjennomsnitt under 35
+
+De to laveste aksene utløser konkrete, ikke-moraliserende samtaleforslag.
+
+### Testvektorer
+
+| Vektor | Svarmønster | Forventning |
+|---|---|---|
+| Lav | laveste samlede vektor per spørsmål | Nysgjerrig smaksprøver |
+| Høy bro | høyeste brobyggerverdi per spørsmål | Bariis på Grandis eller Sambuus på dugnad avhengig av kulturaksene |
+| Norsk tyngde | alternativer med høy norsk og lav somalisk verdi | Grandis ved siden av |
+| Somalisk tyngde | alternativer med høy somalisk og lav norsk verdi | Bariisen står støtt |
+| Balansert | alternerte valg med omtrent like kulturakser | Shaah og kaffe eller Bariis på Grandis |
+| Ubesvart siste spørsmål | 23 komplette svar | Ingen resultatberegning |
 
 ## Lyd og språkstøtte
 
@@ -49,7 +71,9 @@ Resultatoverskriftene er redaksjonelle, ikke normbaserte: Nysgjerrig utforsker, 
 - Små høyttalersymboler spiller ferdiginnspilte MP3-filer, ikke dynamisk nettleseropplesning når filen er tilgjengelig.
 - Brukeren velger mellom den kvinnelige stemmen Ubax (`so-SO-UbaxNeural`) og den mannlige stemmen Muuse (`so-SO-MuuseNeural`). Valget vises med to små illustrerte figurer og huskes bare lokalt på enheten.
 - Begge stemmene er generert med tempo −10 prosent. Et kort stemmeeksempel spilles når brukeren bytter forteller.
-- Begge lydsett inneholder intro, personvernforklaring, alle 24 spørsmål, alle fem svaralternativer, fire resultatnivåer, tre resultatakser og seks mulige neste steg.
+- Tidligere lydfiler for spørsmål, skala og resultater tilhører instrumentversjon `mth-0.2-draft` og skal ikke brukes med den nye teksten.
+- I utkastet bruker de nye spørsmålene og svaralternativene enhetens somaliske tale som reserve.
+- Etter språkgodkjenning skal begge lydsett regenereres for intro, alle 24 spørsmål, alle 96 svaralternativer, seks profiler, tre resultatakser og tre mulige neste steg.
 
 ## Personvern og etikk
 
@@ -61,7 +85,7 @@ Resultatoverskriftene er redaksjonelle, ikke normbaserte: Nysgjerrig utforsker, 
 ## Releaseporter
 
 1. Språk- og kulturgjennomgang av alle påstander, svartekster, resultater og lydmanus.
-2. Regenerering og lytting av samtlige Ubax-klipp etter godkjent manus.
+2. Regenerering og lytting av samtlige Ubax- og Muuse-klipp etter godkjent manus.
 3. Fem til ti kvalitative piloter på tvers av alder, kjønn, migrasjonshistorie og språkferdighet.
 4. Revisjon av formuleringer som kan antyde at skriftlig kunnskap er mer verdifull enn muntlig kunnskap.
 5. Mobil-, tastatur-, lyd- og resultatprøve før offentlig lansering.

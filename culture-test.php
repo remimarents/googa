@@ -69,8 +69,19 @@ $assetVersion = googa_app_version();
       <p class="culture-result-intro" id="cultureResultIntro"></p>
       <div class="culture-axes" id="cultureAxes"></div>
       <section class="culture-actions"><p class="culture-kicker">TALLAABOOYINKA XIGA</p><h2>Labadaada buundo ee xiga</h2><div id="cultureActions"></div></section>
-      <section class="culture-share" id="cultureShareCard"><div class="share-brand"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA · BARIIS PÅ GRANDIS?!</span></div><p>Natiijadayda</p><h2 id="cultureShareTitle"></h2><div id="cultureShareAxes"></div><footer><span>🍚</span><b>Laba dhaqan. Hal nolol. Isku-darkaaga gaarka ah.</b><span>🍕</span></footer></section>
-      <div class="culture-share-buttons"><button class="culture-primary" id="cultureShare" type="button">La wadaag natiijada</button><button class="culture-secondary" id="cultureDownload" type="button">Kaydi kaarka</button></div>
+      <section class="culture-share" id="cultureShareCard"><div class="share-brand"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA · BARIIS PÅ GRANDIS?!</span></div><p id="cultureAwardLabel">BILADDAADA MAANTA</p><h2 id="cultureShareTitle"></h2><div id="cultureShareAxes"></div><footer><span>🍚</span><b>Laba dhaqan. Hal nolol. Isku-darkaaga gaarka ah.</b><span>🍕</span></footer></section>
+      <section class="culture-share-tools" aria-labelledby="cultureShareHeading">
+        <div><p class="culture-kicker">U DIR QOF AAD TAQAAN</p><h2 id="cultureShareHeading">Yaa ku xiga?</h2><p id="cultureShareHelp">La wadaag biladdaada, kadibna arag qofka qoyska ama saaxiibbada kaa duwan.</p></div>
+        <div class="culture-share-buttons">
+          <button class="culture-share-action share-native" id="cultureShare" type="button"><span>↗</span><b>La wadaag</b></button>
+          <button class="culture-share-action share-facebook" id="cultureShareFacebook" type="button"><span>f</span><b>Facebook</b></button>
+          <button class="culture-share-action share-email" id="cultureShareEmail" type="button"><span>✉</span><b>E-mail</b></button>
+          <button class="culture-share-action share-message" id="cultureShareMessage" type="button"><span>💬</span><b>iMessage</b></button>
+          <button class="culture-share-action share-qr" id="cultureShareQr" type="button"><span>▦</span><b>QR-koodh</b></button>
+          <button class="culture-share-action share-save" id="cultureDownload" type="button"><span>⇩</span><b>Kaydi kaarka</b></button>
+        </div>
+        <p class="culture-share-feedback" id="cultureShareFeedback" role="status" aria-live="polite"></p>
+      </section>
       <section class="culture-coupon-demo" aria-labelledby="couponDemoTitle">
         <p class="culture-kicker">TILBUD SOM KOMMER</p>
         <h2 id="couponDemoTitle">Mat å prøve</h2>
@@ -92,10 +103,23 @@ $assetVersion = googa_app_version();
       <div class="culture-result-buttons"><button class="culture-primary" id="cultureRestart" type="button">Mar kale samee</button><a class="culture-secondary" href="./">Ku noqo Googa</a></div>
     </section>
   </main>
+  <div class="culture-qr-modal hidden" id="cultureQrModal" role="dialog" aria-modal="true" aria-labelledby="cultureQrTitle">
+    <div class="culture-qr-backdrop" data-qr-close></div>
+    <section class="culture-qr-panel">
+      <button class="culture-qr-close" type="button" data-qr-close aria-label="Xir">×</button>
+      <img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="">
+      <p class="culture-kicker">BARIIS PÅ GRANDIS?!</p>
+      <h2 id="cultureQrTitle">Sawir oo tijaabi</h2>
+      <p id="cultureQrHelp">Saaxiibkaa ha sawiro QR-ka si uu tijaabada u bilaabo.</p>
+      <div class="culture-qr-code" id="cultureQrCode"></div>
+      <button class="culture-secondary" id="cultureCopyLink" type="button">Koobi garee linkiga</button>
+    </section>
+  </div>
   <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <script src="<?= htmlspecialchars(googa_asset_url('assets/vendor/qrcode.bundle.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-test-bank.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-test.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
-  <dialog class="coupon-dialog" id="couponDialog" aria-labelledby="couponDialogTitle"><form method="dialog"><span class="coupon-dialog-icon" aria-hidden="true">🍽️</span><h2 id="couponDialogTitle">Dette er bare et eksempel</h2><p>Vi finner nå restauranter som vil gi deg gode tilbud. Snart kan du bruke en ekte kupong her.</p><button class="culture-primary" type="submit">Skjønner</button></form></dialog>
+  <dialog class="coupon-dialog" id="couponDialog" aria-labelledby="couponDialogTitle"><form method="dialog"><span class="coupon-dialog-icon" aria-hidden="true">🍽️</span><h2 id="couponDialogTitle">Dette er bare et eksempel</h2><p>Vi har ikke avtale med restauranter ennå. Snart vil vi ha ekte kuponger her.</p><div class="coupon-prospects"><b>Steder vi har sett på</b><ul><li><span>🍛</span><p><strong>Waaberi Restaurant</strong><small>Grønland · Oslo</small></p></li><li><span>🥘</span><p><strong>Safari Grill</strong><small>Grønland · Oslo</small></p></li></ul></div><p class="coupon-disclosure">Dette er ikke reklame. Ingen av disse stedene har avtale med Googa nå.</p><button class="culture-primary" type="submit">Skjønner</button></form></dialog>
   <script src="<?= htmlspecialchars(googa_asset_url('culture-coupons.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 </body>
 </html>

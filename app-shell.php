@@ -32,13 +32,13 @@ $cultureTestAvailable = ($context['role'] ?? '') === 'owner';
     <main class="app-shell" aria-live="polite">
       <header class="topbar">
         <button class="brand" id="homeButton" aria-label="Googa home"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt="Googa detective" /><span>Googa</span></button>
-        <div class="top-actions"><a class="owner-link" href="ordreise/">Erayo</a><button class="update-link hidden" id="updateButton" type="button">Cusboonaysii</button><a class="owner-link hidden" id="ownerLink" href="owner.php">Eier</a><?php if ($familyAvailable): ?><a class="owner-link" href="family.php">Qoyska</a><?php endif; ?><?php if ($parentAvailable): ?><a class="owner-link" href="help.php">Caawimo</a><?php endif; ?><?php if ($portalAvailable && empty($context['family_device'])): ?><a class="owner-link" href="portal.php">Rukhsad</a><?php endif; ?><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
+        <div class="top-actions"><a class="owner-link" href="ordreise/">Erayo</a><button class="update-link hidden" id="updateButton" type="button">Cusboonaysii</button><a class="owner-link hidden" id="ownerLink" href="owner.php">Eier</a><?php if ($familyAvailable): ?><a class="owner-link" href="family.php">Qoyska</a><?php endif; ?><?php if ($parentAvailable): ?><a class="owner-link" href="help.php">Caawimo</a><?php endif; ?><?php if ($portalAvailable && empty($context['family_device'])): ?><a class="owner-link" href="portal.php">Xubinimada</a><?php endif; ?><span class="stars" id="stars">✦ 0</span><button class="language" id="languageToggle" title="Vis tekst på norsk" aria-label="Vis tekst på norsk">🇳🇴</button></div>
       </header>
 
       <section id="welcome" class="welcome">
         <div class="hero-card">
           <div class="welcome-copy">
-            <p class="eyebrow" data-so="Ciyaar · Ogaansho · Af-Soomaali" data-no="Lek · Oppdagelse · Somali">Ciyaar · Ogaansho · Af-Soomaali</p>
+            <p class="eyebrow" data-so="Ciyaar · Baadhitaan · Af-Soomaali" data-no="Lek · Oppdagelse · Somali">Ciyaar · Baadhitaan · Af-Soomaali</p>
             <h1 data-so="Maskaxda yar, sir weyn!" data-no="Lite hode, store mysterier!">Maskaxda yar, sir weyn!</h1>
             <p class="intro" data-so="Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-no="Velg alderen din. Googa har en gåte klar til deg i dag." data-speak-so="Ciyaar. Ogaansho. Af-Soomaali. Maskaxda yar, sir weyn! Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta." data-speak-audio="audio/ui/welcome.mp3">Dooro da'daada. Googa wuxuu kuu hayaa halxiraale maanta.</p>
             <p class="build-note" id="buildNote">v<?= htmlspecialchars($assetVersion, ENT_QUOTES, 'UTF-8') ?></p>

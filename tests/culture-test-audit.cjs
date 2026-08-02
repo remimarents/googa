@@ -36,6 +36,13 @@ async function inspect(page, label) {
     await inspect(page, `${viewport.name}-question`);
     if (await page.locator('[data-option]').count() !== 4) throw new Error('Expected four situational choices');
     if (await page.locator('#cultureQuestion .culture-speak').count() !== 5) throw new Error('Question and four answers need audio controls');
+    const questionAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/question-01.mp3'));
+    await page.locator('#cultureQuestionSpeak').click();
+    if (!(await questionAudio).ok()) throw new Error('Muuse question MP3 failed');
+    const answerAudio = page.waitForResponse(response => response.url().includes('/audio/culture-test/muuse/question-01-a.mp3'));
+    await page.locator('[data-option-speak="a"]').click();
+    if (!(await answerAudio).ok()) throw new Error('Muuse answer MP3 failed');
+    if (await page.locator('[data-option].selected').count()) throw new Error('Audio button must not select an answer');
     await page.locator('#cultureTranslate').click();
     if (!await page.locator('#cultureQuestionNo').isVisible()) throw new Error('Somali support did not open');
     for (let index = 0; index < 24; index += 1) {

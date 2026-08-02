@@ -35,7 +35,7 @@ if ($autoCheckout) {
 <html lang="so">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Googa – marin la sugayo</title>
+<title>Googa – gelitaanka</title>
 <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
 <style>
 .gate{width:min(100% - 28px,760px);margin:clamp(14px,5vh,44px) auto;background:#fffdf7;border-radius:30px;padding:clamp(20px,4vw,30px);box-shadow:var(--shadow)}
@@ -65,16 +65,16 @@ body{padding:max(10px,env(safe-area-inset-top)) 0 max(10px,env(safe-area-inset-b
   <p class="eyebrow">GOOGA</p>
   <h1 data-speak-so="Akoonkaaga waa la aqoonsaday." data-speak-audio="audio/ui/access-title.mp3">Akoonkaaga waa la aqoonsaday</h1>
   <p class="sub"><?= htmlspecialchars((string)$context['email'], ENT_QUOTES, 'UTF-8') ?></p>
-  <p data-speak-so="Waad soo gashay, laakiin koontadan weli ma leh marin firfircoon gudaha Googa. Ku bilow shan karoon si aad u hesho laba maalmood oo tijaabo ah.">
-    Waad soo gashay, laakiin koontadan weli ma leh marin firfircoon gudaha Googa.
+  <p data-speak-so="Waad soo gashay, laakiin akoonkan weli ma laha gelitaan shaqaynaya oo Googa ah. Ku bilow shan karoon si aad u hesho laba maalmood oo tijaabo ah.">
+    Waad soo gashay, laakiin akoonkan weli ma laha gelitaan shaqaynaya oo Googa ah.
     Ku bilow kr 5 si aad u hesho laba maalmood oo tijaabo ah.
   </p>
   <div class="grid single-offer">
-    <div class="card" data-speak-so="Googa maanta ku bilow shan karoon. Waxaad helaysaa laba maalmood oo tijaabo ah. Kadib rukhsaddu waa konton karoon bishii ilaa aad joojiso." data-speak-audio="audio/ui/plan-trial.mp3"><span>Googa maanta bilow</span><b>kr 5</b><small>2 maalmood oo tijaabo ah. Kadib kr 50 bishii ilaa aad joojiso.</small></div>
+    <div class="card" data-speak-so="Googa maanta ku bilow shan karoon. Waxaad helaysaa laba maalmood oo tijaabo ah. Kadib xubinimadu waa konton karoon bishii ilaa aad joojiso." data-speak-audio="audio/ui/plan-trial.mp3"><span>Googa maanta bilow</span><b>kr 5</b><small>2 maalmood oo tijaabo ah. Kadib kr 50 bishii ilaa aad joojiso.</small></div>
   </div>
-  <a class="ordreise-free" href="ordreise/help.php"><span>★</span><strong>Ordreise på af-soomaali</strong><small>10 gratis nivåer fra neste måned</small><b>Les mer →</b></a>
-  <p data-speak-so="Tijaabadu waxay ku kacaysaa shan karoon hadda, ka dibna rukhsaddu waa konton karoon bishii ilaa aad joojiso. Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka." data-speak-audio="audio/ui/access-offer.mp3">
-    Tijaabadu waxay ku kacaysaa kr 5 hadda, ka dibna rukhsaddu waa kr 50 bishii ilaa aad joojiso.
+  <a class="ordreise-free" href="ordreise/help.php"><span>★</span><strong>Ordreise oo Af-Soomaali ah</strong><small>10 heer oo bilaash ah bisha dambe</small><b>Faahfaahin →</b></a>
+  <p data-speak-so="Tijaabadu waxay hadda ku kacaysaa shan karoon. Kadib xubinimadu waa konton karoon bishii ilaa aad joojiso. Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa Googa." data-speak-audio="audio/ui/access-offer.mp3">
+    Tijaabadu waxay hadda ku kacaysaa kr 5. Kadib xubinimadu waa kr 50 bishii ilaa aad joojiso.
     Marka lacag-bixinta la xaqiijiyo, waxaad si toos ah u geli doontaa app-ka.
     Bare Af-Soomaali ah ayaa si joogto ah ugu dari doona halxiraalo cusub, ciyaaro cusub iyo waxyaabo kale si app-ku bil kasta u yeesho wax cusub.
   </p>
@@ -88,13 +88,13 @@ body{padding:max(10px,env(safe-area-inset-top)) 0 max(10px,env(safe-area-inset-b
       <input type="hidden" name="kind" value="trial">
       <button class="cta" type="submit">Ku bilow Googa · kr 5</button>
     </form>
-    <a class="cta secondary" href="./">Dib u hubi marin</a>
+    <a class="cta secondary" href="./">Dib u hubi gelitaanka</a>
     <?php if ($showLogout): ?><a class="ghost" href="./?logout=1">Ka bax</a><?php endif; ?>
   </div>
   <?php if ($paymentState === 'cancelled'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin." data-speak-audio="audio/ui/payment-cancelled.mp3">Lacag-bixinta waa la joojiyey. Wax lacag ah lama qaadin.</p><?php endif; ?>
   <?php if ($paymentState === 'error'): ?><p class="meta" data-speak-so="Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day." data-speak-audio="audio/ui/payment-error.mp3">Lacag-bixinta lama bilaabi karin hadda. Fadlan mar kale isku day.</p><?php endif; ?>
-  <?php if ($paymentState === 'processing'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood." data-speak-audio="audio/ui/payment-processing.mp3">Lacag-bixinta waa la xaqiijinayaa. Dib u hubi marin daqiiqad yar gudahood.</p><?php endif; ?>
-  <?php if ($paymentState === 'portal-error'): ?><p class="meta" data-speak-so="Maareynta rukhsadda lama furi karin hadda." data-speak-audio="audio/ui/portal-error.mp3">Maareynta rukhsadda lama furi karin hadda.</p><?php endif; ?>
+  <?php if ($paymentState === 'processing'): ?><p class="meta" data-speak-so="Lacag-bixinta waa la xaqiijinayaa. Wax yar kadib dib u hubi gelitaanka." data-speak-audio="audio/ui/payment-processing.mp3">Lacag-bixinta waa la xaqiijinayaa. Wax yar kadib dib u hubi gelitaanka.</p><?php endif; ?>
+  <?php if ($paymentState === 'portal-error'): ?><p class="meta" data-speak-so="Maareynta xubinimada lama furi karo hadda." data-speak-audio="audio/ui/portal-error.mp3">Maareynta xubinimada lama furi karo hadda.</p><?php endif; ?>
 </main>
 <script src="<?= htmlspecialchars(googa_asset_url('assets/read-aloud.js'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php if ($autoCheckout): ?><script>document.getElementById('trialCheckout').requestSubmit();</script><?php endif; ?>

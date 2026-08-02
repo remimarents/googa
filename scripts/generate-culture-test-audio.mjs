@@ -32,14 +32,15 @@ if (!test?.questions?.length) throw new Error('No culture test bank found.');
 const clips = new Map([
   ['voice-sample.mp3', selectedVoice.sample],
   ['intro.mp3', test.introSo],
-  ['disclaimer.mp3', test.disclaimerSo],
-  ['axis-tools.mp3', 'Norway iyo qalabka. Bulshada, luqadda iyo isticmaalka ilaha.'],
-  ['axis-heritage.mp3', 'Soomaaliya iyo hidaha. Dhaqan nool, luqad iyo fahamka bulshada.'],
-  ['axis-practice.mp3', 'Buundada ficilka. Isku xir, baar oo gudbi.']
+  ['disclaimer.mp3', test.disclaimerSo]
 ]);
-test.questions.forEach((question, index) => clips.set(`question-${String(index + 1).padStart(2, '0')}.mp3`, question.so));
-test.scale.forEach(item => clips.set(`scale-${item.value}.mp3`, item.so));
-test.resultLevels.forEach(item => clips.set(`result-${item.key}.mp3`, `${item.so}. ${test.resultIntroSo}`));
+test.questions.forEach((question, index) => {
+  const number = String(index + 1).padStart(2, '0');
+  clips.set(`question-${number}.mp3`, question.so);
+  question.options.forEach(option => clips.set(`question-${number}-${option.id}.mp3`, option.so));
+});
+Object.entries(test.dimensions).forEach(([key, dimension]) => clips.set(`axis-${key}.mp3`, `${dimension.so}. ${dimension.copySo}.`));
+test.profiles.forEach(profile => clips.set(`profile-${profile.key}.mp3`, `${profile.so}. ${profile.summarySo}. ${test.resultIntroSo}`));
 Object.entries(test.actions).forEach(([key, action]) => clips.set(`action-${key}.mp3`, action.so));
 
 for (const [filename, text] of clips) {

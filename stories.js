@@ -55,8 +55,8 @@
     $('readerSubtitle').textContent = t(activeStory.subtitle, activeStory.subtitleNo);
     $('readerSupport').textContent = t(activeStory.support, activeStory.supportNo);
     $('tapHint').textContent = activeStory.age === '0'
-      ? t('Sawirka ama qoraalka taabo. Codka dhegeyso.','Trykk på bildet eller teksten og lytt.')
-      : t('Qoraalka taabo si aad u hesho tarjumid iyo erayo.','Trykk på teksten for oversettelse og ordforklaringer.');
+      ? t('Taabo sawirka ama qoraalka, dabadeed dhegeyso.','Trykk på bildet eller teksten og lytt.')
+      : t('Taabo qoraalka si aad u aragto tarjumaadda iyo macnaha erayada.','Trykk på teksten for oversettelse og ordforklaringer.');
     $('sceneLabel').textContent = `${t('Qayb','Del')} ${sceneIndex + 1} / ${activeStory.scenes.length}`;
     $('sceneProgress').style.width = `${((sceneIndex + 1) / activeStory.scenes.length) * 100}%`;
     const youngWords = activeStory.age === '0' ? `<div class="young-words">${scene.words.map((word,i) => `<button class="young-word" type="button" data-young-word="${i}"><b>${word.icon}</b><span>${word.so}</span></button>`).join('')}</div>` : '';
@@ -97,9 +97,9 @@
     $('supportTitle').textContent = activeStory.age === '0' ? t('Dhegeyso oo eeg','Lytt og se') : t('Macnaha qoraalka','Hjelp til teksten');
     $('supportOriginal').textContent = scene.so;
     $('supportNorwegian').textContent = scene.no;
-    $('supportNote').textContent = scene.noteNo || '';
-    $('supportNote').classList.toggle('hidden', !scene.noteNo);
-    $('wordHeading').textContent = activeStory.age === '0' ? t('Sawirka taabo','Trykk på et bilde') : t('Eray taabo oo dhegeyso','Trykk på et ord og lytt');
+    $('supportNote').textContent = '';
+    $('supportNote').classList.add('hidden');
+    $('wordHeading').textContent = activeStory.age === '0' ? t('Taabo sawirka','Trykk på et bilde') : t('Taabo eray oo dhegeyso','Trykk på et ord og lytt');
     $('wordChips').innerHTML = scene.words.map((word,i) => `<button class="word-chip" type="button" data-word="${i}"><b>${word.icon}</b><span>${word.so}</span></button>`).join('');
     $('wordResult').classList.add('hidden');
     $('sheetPlay').innerHTML = icon;

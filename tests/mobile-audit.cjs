@@ -25,7 +25,7 @@ async function inspect(page, name) {
   await page.goto(`${base}?logout=1`);
   const login = await inspect(page, 'login');
   if (login.readAloud < 5) throw new Error('Login is missing expected Somali read-aloud controls');
-  if (await page.locator('form[action="checkout.php"] .plan').count() !== 2) throw new Error('Stripe plan choices are missing');
+  if (await page.locator('form[action="checkout.php"] .plan').count() !== 1) throw new Error('The kr 5 Stripe offer is missing');
   const audioRequest = page.waitForResponse((response) => response.url().includes('/audio/ui/login-hero.mp3'));
   await page.locator('.lead .read-aloud').click();
   if (!(await audioRequest).ok()) throw new Error('Ubax login audio failed');

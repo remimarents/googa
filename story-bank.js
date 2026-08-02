@@ -1,5 +1,3 @@
-// Original MVP retellings based on Somali oral tradition.
-// Somali text must receive a final review from Googa's Somali language editor before public release.
 window.GOOGA_STORIES = [
   {
     id: 'diin-dawaco', age: '0', ageLabel: '0–6', accent: '#d9a31f', soft: '#fff0ad',
@@ -8,7 +6,7 @@ window.GOOGA_STORIES = [
     image: 'assets/stories/diin-dawaco.png', icon: '🐢', support: 'Sawir · Cod · Eray', supportNo: 'Bilde · Lyd · Ord',
     scenes: [
       {
-        so: 'Maalin qorrax leh, Diin wuxuu ku socday geed weyn hoostiisa. Dawaco ayaa u timid.',
+        so: 'Maalin qorrax leh, Diin wuxuu hoos marayay geed weyn. Dawacadu way u timid.',
         no: 'En solrik dag gikk Skilpadden under et stort tre. Reven kom bort til ham.',
         audio: 'audio/stories/diin-dawaco-scene-1.mp3',
         image: 'assets/stories/diin-dawaco-scene-1.png',
@@ -19,7 +17,7 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so: 'Dawaco waxay tiri: “Aan tartanno!” Diin wuu qoslay. Wuxuu ogaa inuusan degdeg ahayn.',
+        so: 'Dawacadu waxay tiri: “Aan tartanno!” Diin wuu qoslay. Wuxuu ogaa inuusan degdeg u socon karin.',
         no: 'Reven sa: «La oss løpe om kapp!» Skilpadden lo. Han visste at han ikke var rask.',
         audio: 'audio/stories/diin-dawaco-scene-2.mp3',
         image: 'assets/stories/diin-dawaco-scene-2.png',
@@ -29,7 +27,7 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so: 'Diin si tartiib ah ayuu u socday, mana uusan joogsan. Dawaco way daashay. Diin wuxuu gaaray geedkii.',
+        so: 'Diin si tartiib ah ayuu u socday, mana joogsan. Dawacadu way daashay. Diin wuxuu gaaray geedkii.',
         no: 'Skilpadden gikk sakte, men stoppet aldri. Reven ble sliten. Skilpadden kom fram til treet.',
         audio: 'audio/stories/diin-dawaco-scene-3.mp3',
         image: 'assets/stories/diin-dawaco-scene-3.png',
@@ -53,7 +51,7 @@ window.GOOGA_STORIES = [
     image: 'assets/stories/wiil-waal.png', icon: '💡', support: 'Tarjumid · Erayo · Halxiraale', supportNo: 'Oversettelse · Ord · Gåte',
     scenes: [
       {
-        so: 'Wiil Waal wuxuu isugu yeeray raggii degaanka. Wuxuu weydiiyey halxiraale: “Ii keena qaybta idaha ee dadka mideyn karta ama kala diri karta.”',
+        so: 'Wiil Waal wuxuu isugu yeeray raggii degaanka. Wuxuu weydiiyey halxiraale: “Ii keena qayb idaha ka mid ah oo dadka midayn karta ama kala diri karta.”',
         no: 'Wiil Waal kalte sammen mennene i området. Han ga dem en gåte: «Ta med den delen av sauen som kan samle mennesker eller splitte dem.»',
         audio:'audio/stories/wiil-waal-scene-1.mp3',
         image:'assets/stories/wiil-waal-scene-1.png',
@@ -75,7 +73,7 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so: 'Gabadhu waxay sharaxday: “Haddii si caddaalad ah loo qaybsado, cuntadu dadka way mideysaa. Haddii hunguri yimaado, way kala dirtaa.” Wiil Waal wuxuu gartay inay gabadhu xigmadda lahayd.',
+        so: 'Gabadhu waxay sharaxday: “Haddii si caddaalad ah loo qaybsado, cuntadu dadka way midaysaa. Haddii hunguri yimaado, way kala dirtaa.” Wiil Waal wuxuu gartay inay gabadhu xigmadda lahayd.',
         no: 'Jenta forklarte: «Når maten deles rettferdig, samler den mennesker. Når grådigheten tar over, splitter den dem.» Wiil Waal forsto at jenta hadde funnet visdommen i gåten.',
         audio:'audio/stories/wiil-waal-scene-3.mp3',
         image:'assets/stories/wiil-waal-scene-3.png',
@@ -111,7 +109,7 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so:'Wuxuu arkay wax madow oo dhulka ka soo baxay. Maskaxdiisu waxay ka dhigtay libaax weyn. Cigaal meel ayuu ku hakaday, cabsi darteedna habeenkii oo dhan wuu sugay.',
+        so:'Wuxuu arkay wax madow oo dhulka ka soo baxay. Maskaxdiisa, shaygii wuxuu isu beddelay libaax weyn. Cigaal wuu istaagay, cabsi darteedna habeenkii oo dhan wuu sugay.',
         no:'Han så noe mørkt som stakk opp fra bakken. I tankene hans ble det til en stor løve. Cigaal stanset og ventet hele natten fordi han var redd.',
         audio:'audio/stories/cigaal-shidaad-scene-2.mp3',
         image:'assets/stories/cigaal-shidaad-scene-2.png',
@@ -122,7 +120,7 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so:'Markii waagu baryay, Cigaal wuxuu arkay inuusan libaaxu jirin. Waxa uu ka baqayay wuxuu ahaa kurtun geed. Wuxuu qosol ku bartay in muuqaalka iyo xaqiiqadu mararka qaarkood kala duwan yihiin.',
+        so:'Markii waagu baryay, Cigaal wuxuu arkay inuusan libaaxu jirin. Waxa uu ka baqayay wuxuu ahaa kurtun geed. Isagoo qoslaya ayuu bartay in muuqaalka iyo xaqiiqadu mararka qaarkood kala duwan yihiin.',
         no:'Da morgenen kom, så Cigaal at det ikke fantes noen løve. Det han hadde fryktet, var en trestubbe. Med et smil lærte han at inntrykk og virkelighet noen ganger er forskjellige.',
         audio:'audio/stories/cigaal-shidaad-scene-3.mp3',
         image:'assets/stories/cigaal-shidaad-scene-3.png',
@@ -140,7 +138,7 @@ window.GOOGA_STORIES = [
         {so:'Kurtun walba waa libaax',no:'Alle trestubber er løver',icon:'🦁'},
         {so:'Habeenkii waxba lama barto',no:'Vi lærer ingenting om natten',icon:'🌙'}
       ],answer:'Cabsidu waxay beddeli kartaa waxa aan aragno',
-      successSo:'Waa sax. Cigaal wuxuu ka baqay sawir ay maskaxdiisu samaysay, ee ma ahayn libaax dhab ah.',
+      successSo:'Waa sax. Cigaal wuxuu ka baqay wax ay maskaxdiisu sawiratay, ee ma ahayn libaax dhab ah.',
       successNo:'Riktig. Cigaal ble redd for et bilde tankene hans skapte, ikke for en virkelig løve.'
     }
   },
@@ -151,9 +149,8 @@ window.GOOGA_STORIES = [
     image:'assets/stories/caraweelo.png',icon:'♛',support:'Tarjumid · Dhaqan · Milicsi',supportNo:'Oversettelse · Kultur · Refleksjon',
     scenes:[
       {
-        so:'Magaca Caraweelo wuxuu ku nool yahay sheekooyin badan oo jiilba jiil u gudbiyey. Qaar waxay ku xusuustaan boqorad awood badan oo hoggaan qaadatay xilli aan dumarka si fudud loo maqli jirin.',
+        so:'Magaca Caraweelo wuxuu ku nool yahay sheekooyin badan oo jiilba jiil loo soo gudbiyey. Qaar waxay ku xusuustaan boqorad awood badan oo hoggaan qaadatay xilli aan dumarka si fudud loo maqli jirin.',
         no:'Navnet Caraweelo lever i mange fortellinger som er overført mellom generasjoner. Noen husker henne som en mektig dronning som tok ledelsen i en tid da kvinner ikke uten videre ble hørt.',
-        noteNo:'Caraweelo er en legendarisk skikkelse. Fortellingene om henne varierer mellom fortellere og områder.',
         audio:'audio/stories/caraweelo-scene-1.mp3',
         image:'assets/stories/caraweelo-scene-1.png',
         words:[
@@ -163,9 +160,8 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so:'Qaar kale waxay Caraweelo uga sheekeeyaan sidii taliye adag oo cabsi dhalisay. Isla magacaas ayaa sidaas ku noqon kara astaan geesinimo u ah qof, halka qof kale uu uga arko digniin ku saabsan awoodda.',
+        so:'Qaar kale waxay Caraweelo uga sheekeeyaan inay ahayd taliye adag oo cabsi dhalisay. Isla magacaas ayaa qof u noqon kara astaan geesinimo, halka qof kalena uu uga arko digniin ku saabsan awoodda.',
         no:'Andre forteller om Caraweelo som en hard hersker som skapte frykt. Det samme navnet kan derfor være et symbol på mot for én person og en advarsel om makt for en annen.',
-        noteNo:'Muntlige fortellinger bevarer ikke bare hendelser. De bevarer også verdiene og konfliktene til dem som forteller.',
         audio:'audio/stories/caraweelo-scene-2.mp3',
         image:'assets/stories/caraweelo-scene-2.png',
         words:[
@@ -177,7 +173,6 @@ window.GOOGA_STORIES = [
       {
         so:'Marka aynu sheekada Caraweelo dhegeysanno, hal jawaab oo keliya ma raadinayno. Waxaynu weydiin karnaa: Yaa sheekada sheegay? Maxay doonayeen inay xusuustaan? Maxayse ahayd casharka ay jiilka dambe siinayeen?',
         no:'Når vi lytter til historien om Caraweelo, leter vi ikke bare etter ett svar. Vi kan spørre: Hvem fortalte historien? Hva ønsket de å huske? Og hvilken lærdom ville de gi neste generasjon?',
-        noteNo:'Denne MVP-en bruker Caraweelo til å vise kildekritikk og perspektiv, ikke til å slå fast én autoritativ versjon.',
         audio:'audio/stories/caraweelo-scene-3.mp3',
         image:'assets/stories/caraweelo-chapter-3.png',
         words:[
@@ -187,47 +182,43 @@ window.GOOGA_STORIES = [
         ]
       },
       {
-        so:'Sheeko kale waxay ku bilaabataa cabasho: rag badan ayaa isku haysta awoodda, dadka caadiga ahna codkooda lama maqlin. Halkaas ayay Caraweelo ku noqotaa astaan lagu weydiinayo cidda talisa iyo cidda la maqlayo.',
+        so:'Sheeko kale waxay ku bilaabataa cabasho: rag badan ayaa awoodda isku haysta, dadka caadiga ahna codkooda lama maqlin. Halkaas ayay Caraweelo ku noqotaa astaan lagu weydiinayo cidda talisa iyo cidda la maqlayo.',
         no:'En annen fortellertradisjon begynner med en klage: mange menn strides om makt, mens vanlige folk ikke blir hørt. Her blir Caraweelo et bilde som brukes til å spørre hvem som styrer, og hvem som får en stemme.',
-        noteNo:'Pedagogisk bearbeidelse: dette er en tematisk inngang til varianter i muntlig tradisjon, ikke en dokumentert enkeltversjon.',
         image:'assets/stories/caraweelo-chapter-3.png',
         words:[{so:'cod',no:'stemme',icon:'🗣️'},{so:'awood',no:'makt',icon:'⚖️'},{so:'dhegeysi',no:'å lytte',icon:'👂'}]
       },
       {
-        so:'Qaar waxay sheegaan inay go’aamo adag qaadatay si ay uga hortagto dulmi. Qaar kalena waxay ku adkaystaan in awood aan xad lahayn ay dhaawacdo dadka. Labada sheeko midna keligeed ma xirto doodda.',
+        so:'Qaar waxay sheegaan inay go’aamo adag qaadatay si ay uga hortagto dulmi. Qaar kalena waxay ku adkaystaan in awood aan xad lahayn ay dadka dhaawacdo. Midkoodna keligeed doodda ma soo afjarayso.',
         no:'Noen forteller at hun tok strenge valg for å stanse urett. Andre understreker at makt uten grenser skader mennesker. Ingen av fortellingene avslutter diskusjonen alene.',
-        noteNo:'Muntlige fortellinger kan romme uenighet. Det er en del av materialets verdi.',
         image:'assets/stories/caraweelo-chapter-4.png',
         words:[{so:'dulmi',no:'urett',icon:'⚠️'},{so:'xad',no:'grense',icon:'↔️'},{so:'dood',no:'samtale',icon:'💬'}]
       },
       {
-        so:'Marka sheekadu u gudubto jiil kale, erayadu isma joogaan. Qofka xusuusta geesinimada ayaa xoogga saara hal dhacdo. Qofka ka baqa awoodda ayaa xusuusta dhacdo kale.',
+        so:'Marka sheekadu u gudubto jiil kale, erayadu sidii hore uma sii ahaanayaan. Qofka xusuusta geesinimada ayaa xoogga saara hal dhacdo. Qofka ka baqa awoodda ayaa xusuusta dhacdo kale.',
         no:'Når historien går videre til en ny generasjon, står ikke ordene stille. Den som husker mot, fremhever én hendelse. Den som frykter makt, husker en annen.',
-        noteNo:'Dette avsnittet forklarer hvordan muntlig overlevering virker; det legger ikke fram en ny historisk påstand.',
         image:'assets/stories/caraweelo-chapter-4.png',
         words:[{so:'jiil',no:'generasjon',icon:'🌱'},{so:'xusuus',no:'minne',icon:'🧠'},{so:'isbeddel',no:'forandring',icon:'🔄'}]
       },
       {
-        so:'Sidaas darteed, Caraweelo ma aha oo keliya qof sheeko ku jira. Magaceedu wuxuu noqdaa meel ay dadku ku kala cabbiraan geesinimo, cabsi, caddaalad iyo awood.',
+        so:'Sidaas darteed, Caraweelo ma aha oo keliya qof sheeko ku jira. Magaceedu wuxuu noqdaa astaan ay dadku ku miisaamaan geesinimo, cabsi, caddaalad iyo awood.',
         no:'Derfor er Caraweelo ikke bare en person i en fortelling. Navnet blir et sted der mennesker prøver ut ideer om mot, frykt, rettferdighet og makt.',
         image:'assets/stories/caraweelo-chapter-5.png',
         words:[{so:'geesinimo',no:'mot',icon:'⭐'},{so:'cabsi',no:'frykt',icon:'🌑'},{so:'caddaalad',no:'rettferdighet',icon:'⚖️'}]
       },
       {
-        so:'Ardaydu waxay isku dayaan inay kala saaraan saddex waxyaalood: waxa sheekadu sheegto, waxa qofku ka fahmo, iyo waxa caddayn kale lagu ogaan karo. Saddexduba way muhiim yihiin, laakiin isku mid ma aha.',
+        so:'Akhristuhu wuxuu isku dayayaa inuu kala saaro saddex waxyaalood: waxa sheekadu sheegto, waxa qofku ka fahmo, iyo waxa caddayn kale lagu ogaan karo. Saddexduba waa muhiim, laakiin isku mid ma aha.',
         no:'Leseren øver på å skille tre ting: hva fortellingen sier, hva en person tolker, og hva vi kan vite fra andre kilder. Alle tre er viktige, men de er ikke det samme.',
-        noteNo:'Dette er den sentrale kildekritiske øvelsen i fortellingen.',
         image:'assets/stories/caraweelo-chapter-5.png',
         words:[{so:'caddayn',no:'kildebelegg',icon:'📚'},{so:'fasiraad',no:'tolkning',icon:'🔍'},{so:'xaqiiqo',no:'faktum',icon:'✓'}]
       },
       {
-        so:'Marka laba qof ay isku sheeko u sheegaan si kala duwan, jawaabta degdegga ahi ma aha in mid la aamusiiyo. Su’aasha wanaagsan waa: maxaa kuu muujinaya sidaas? Xaggee ayaad ka maqashay?',
+        so:'Marka laba qof ay isku sheeko u sheegaan si kala duwan, jawaabta degdegga ahi ma aha in mid la aamusiiyo. Su’aasha wanaagsan waa: maxaa sidaas kuu tusaya? Xaggee ayaad ka maqashay?',
         no:'Når to personer forteller den samme historien ulikt, er ikke den raske løsningen å tie den ene. Det gode spørsmålet er: Hva får deg til å se det slik? Hvor har du hørt det?',
         image:'assets/stories/caraweelo-chapter-6.png',
         words:[{so:'su’aal',no:'spørsmål',icon:'❓'},{so:'maqashay',no:'har hørt',icon:'👂'},{so:'ixtiraam',no:'respekt',icon:'🤝'}]
       },
       {
-        so:'Taasi macnaheedu ma aha in wax kasta oo la sheego ay isku miisaan yihiin. Waxay ka dhigan tahay in la dhegeysto si taxaddar leh, dabadeedna la kala garto xusuus, mala-awaal, iyo xog la hubin karo.',
+        so:'Taasi macnaheedu ma aha in wax kasta oo la sheego ay isku miisaan yihiin. Waxay ka dhigan tahay in si taxaddar leh loo dhegeysto, dabadeedna la kala garto xusuus, mala-awaal iyo xog la hubin karo.',
         no:'Det betyr ikke at alt som blir fortalt veier like tungt. Det betyr at vi lytter nøye, og deretter skiller mellom minne, forestilling og informasjon som kan undersøkes.',
         image:'assets/stories/caraweelo-chapter-6.png',
         words:[{so:'taxaddar',no:'omtanke',icon:'🧭'},{so:'mala-awaal',no:'forestilling',icon:'💭'},{so:'hubin',no:'å undersøke',icon:'🔎'}]
@@ -239,9 +230,8 @@ window.GOOGA_STORIES = [
         words:[{so:'bulsho',no:'samfunn',icon:'🏘️'},{so:'faanto',no:'stolthet',icon:'🌟'},{so:'xifdin',no:'å bevare',icon:'📜'}]
       },
       {
-        so:'Dhamaadka sheekada ma keenayo hal xukun oo ku saabsan Caraweelo. Wuxuu kaa codsanayaa inaad sheekada u qaadato si dhab ah: dhegeyso, weydii, oo ka fikir cidda hadlaysa iyo cidda ka maqan.',
+        so:'Dhammaadka sheekadu ma keenayo hal xukun oo ku saabsan Caraweelo. Sheekadu waxay kaa codsanaysaa inaad si dhab ah u qaadato: dhegeyso, weydii, oo ka fikir cidda hadlaysa iyo cidda ka maqan.',
         no:'Slutten gir ikke én dom over Caraweelo. Den ber deg ta fortellingen på alvor: lytt, spør og tenk over hvem som taler – og hvem som mangler.',
-        noteNo:'Googa-versjon: pedagogisk bearbeidelse basert på somalisk muntlig tradisjon. Må gjennomgås av somalisk språkvasker før offentlig lansering.',
         image:'assets/stories/caraweelo-chapter-6.png',
         words:[{so:'dhegeyso',no:'lytt',icon:'👂'},{so:'ka fikir',no:'tenk over',icon:'💡'},{so:'maqan',no:'fraværende',icon:'◌'}]
       }

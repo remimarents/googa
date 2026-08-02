@@ -26,8 +26,8 @@ if (!Array.isArray(stories) || !stories.length) throw new Error('No GOOGA_STORIE
 const clips = new Map();
 for (const story of stories) {
   for (const scene of story.scenes) {
-    clips.set(basename(scene.audio), scene.so);
-    for (const word of scene.words) clips.set(basename(word.audio), word.so);
+    if (scene.audio) clips.set(basename(scene.audio), scene.so);
+    for (const word of scene.words) if (word.audio) clips.set(basename(word.audio), word.so);
   }
 }
 

@@ -1,0 +1,23 @@
+<?php
+declare(strict_types=1);
+session_name('googa');
+session_start();
+require_once __DIR__ . '/lib/contact.php';
+if (empty($_SESSION['googa_contact_csrf'])) $_SESSION['googa_contact_csrf'] = bin2hex(random_bytes(20));
+$ok = false; $error = ''; $name = ''; $email = ''; $topic = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = trim((string)($_POST['name'] ?? ''));
+    $email = trim((string)($_POST['email'] ?? ''));
+    $topic = trim((string)($_POST['topic'] ?? ''));
+    $topic = preg_replace('/[^\pL\pN .,&()\/-]/u', '', $topic) ?? '';
+    $message = trim((string)($_POST['message'] ?? ''));
+    $trap = trim((string)($_POST['company'] ?? ''));
+    $valid = hash_equals((string)$_SESSION['googa_contact_csrf'], (string)($_POST['csrf'] ?? ''))
+        && $trap === '' && mb_strlen($name) >= 2 && filter_var($email, FILTER_VALIDATE_EMAIL)
+        && mb_strlen($message) >= 10 && mb_strlen($message) <= 4000;
+    if (!$valid) $error = 'Sjekk navn, e-post og melding, og prøv igjen.';
+    elseif (!empty($_SESSION['googa_contact_last']) && time() - (int)$_SESSION['googa_contact_last'] < 60) $error = 'Vent litt før du sender en ny melding.';
+    elseif (googa_contact_send($name, $email, $topic, $message)) { $_SESSION['googa_contact_last'] = time(); $ok = true; }
+    else $error = 'Meldingen kunne ikke sendes akkurat nå. Prøv igjen senere.';
+}
+?><!doctype html><html lang="no"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Kontakt Arab – Googa</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet"><style>body{margin:0;padding:18px;background:linear-gradient(145deg,#effbfa,#fff4d5);font-family:Nunito;color:#123b59}.shell{width:min(680px,100%);margin:auto;padding:25px;border-radius:28px;background:#fffdf7;box-shadow:0 18px 44px #123b5915}.back{color:#123b59;font-weight:900;text-decoration:none}.badge{display:inline-flex;margin-top:20px;padding:6px 11px;border-radius:99px;background:#e3f5ef;color:#16704e;font-size:11px;font-weight:900;letter-spacing:.08em}h1{margin:8px 0;font:800 clamp(38px,7vw,56px)/1 'Baloo 2',sans-serif}p{color:#526b80;line-height:1.5}.field{display:grid;gap:6px;margin:14px 0}.field label{font-weight:900}.field input,.field textarea,.field select{box-sizing:border-box;width:100%;border:1px solid #cbdcdf;border-radius:13px;padding:12px;font:inherit}.field textarea{min-height:150px;resize:vertical}.send{width:100%;min-height:50px;border:0;border-radius:14px;background:#087f89;color:#fff;font:900 16px Nunito;cursor:pointer}.notice{padding:13px;border-radius:14px;background:#e3f5ef;font-weight:800}.error{background:#ffe4df}.trap{position:absolute;left:-9999px}.fine{font-size:12px}</style></head><body><main class="shell"><a class="back" href="culture-test.php">← Tilbake til Bariis på Grandis</a><span class="badge">KONTAKT</span><h1>Spør Arab</h1><p>Har du et spørsmål, en rettelse eller et forslag til <b>Bariis på Grandis</b>? Send en melding her. Arab får den direkte, med Googa på kopi.</p><?php if($ok):?><p class="notice">Takk — meldingen er sendt.</p><?php else:?><form method="post"><input type="hidden" name="csrf" value="<?=htmlspecialchars((string)$_SESSION['googa_contact_csrf'],ENT_QUOTES,'UTF-8')?>"><div class="trap" aria-hidden="true"><label>Company<input name="company" tabindex="-1" autocomplete="off"></label></div><div class="field"><label for="name">Navn</label><input id="name" name="name" required maxlength="120" value="<?=htmlspecialchars($name,ENT_QUOTES,'UTF-8')?>"></div><div class="field"><label for="email">E-post</label><input id="email" name="email" type="email" required maxlength="254" value="<?=htmlspecialchars($email,ENT_QUOTES,'UTF-8')?>"></div><div class="field"><label for="topic">Tema</label><select id="topic" name="topic"><option><?=htmlspecialchars($topic !== '' ? $topic : 'Bariis på Grandis',ENT_QUOTES,'UTF-8')?></option><option>Språk eller oversettelse</option><option>Innhold eller kultur</option><option>Annet</option></select></div><div class="field"><label for="message">Melding</label><textarea id="message" name="message" required minlength="10" maxlength="4000"></textarea></div><?php if($error):?><p class="notice error"><?=htmlspecialchars($error,ENT_QUOTES,'UTF-8')?></p><?php endif;?><button class="send" type="submit">Send til Arab</button></form><?php endif;?><p class="fine">Arab sin e-postadresse vises ikke på nettstedet.</p></main></body></html>

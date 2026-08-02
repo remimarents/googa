@@ -49,6 +49,7 @@ $assetVersion = googa_app_version();
       </div>
       <aside class="culture-note"><span>i</span><p id="cultureDisclaimer">Kani waa is-milicsi loogu talagalay dadka waaweyn. Ma cabbirayo inta aad Soomaali ama Noorwiiji dhab ahaan u tahay, mana qiimeynayo fikirkaaga siyaasadeed. Jawaabahaagu qalabkaaga ayey ku sii jiraan.</p><button class="culture-speak" type="button" data-speak-button data-speak-so="Kani waa is-milicsi loogu talagalay dadka waaweyn. Ma cabbirayo inta aad Soomaali ama Noorwiiji dhab ahaan u tahay, mana qiimeynayo fikirkaaga siyaasadeed. Jawaabahaagu qalabkaaga ayey ku sii jiraan." data-speak-audio="audio/culture-test/disclaimer.mp3" aria-label="Dhegeyso sharaxaadda"></button></aside>
       <p class="culture-review">Utkast · Somalisk tekst skal kvalitetssikres av pedagog før publisering.</p>
+      <p class="culture-review"><a href="contact.php?topic=Bariis%20p%C3%A5%20Grandis">Spør Arab om språk, innhold eller Bariis på Grandis →</a></p>
     </section>
 
     <section class="culture-question hidden" id="cultureQuestion">

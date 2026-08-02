@@ -2,10 +2,17 @@
   "version": 1,
   "ambassadors": {
     "creation": "owner-dashboard",
-    "discount_duration_months": 3,
-    "allowed_discount_percent": [10, 15, 20, 25],
-    "tracking": "unique-stripe-promotion-code",
-    "public_help_route": "/help.php#ambassador"
+    "qualification": "active-paid-customer-for-30-days",
+    "customer_benefit": {
+      "monthly": "50-percent-off-two-full-months",
+      "annual": "NOK-50-off-first-year"
+    },
+    "commission_percent": 20,
+    "commission_duration_months": 12,
+    "hold_days": 30,
+    "tracking": "server-validated-code-and-stripe-metadata",
+    "payout": "manual",
+    "parent_help_route": "/help.php#ambassador"
   },
   "organizations": {
     "delivery": "manual",

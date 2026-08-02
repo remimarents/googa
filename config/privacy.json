@@ -9,5 +9,10 @@
     "analytics_allowed": ["test_started", "test_completed", "share_used", "offer_opened", "checkout_started", "purchase_completed"],
     "analytics_forbidden": ["raw_answers", "dimension_scores", "result_level", "ethnicity_inference"]
   },
-  "dpia": "screening-required-before-new-server-side-storage-or-profile-analytics"
+  "dpia": "screening-required-before-new-server-side-storage-or-profile-analytics",
+  "parent_area": {
+    "server_protected": true,
+    "blocked_for_family_qr_devices": true,
+    "ambassador_sales_visible_to_ambassador": "aggregate-only"
+  }
 }

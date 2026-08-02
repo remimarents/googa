@@ -23,6 +23,7 @@ try {
     $session = googa_stripe_create_checkout($user, $kind, [
         'recipient_email' => (string)($_POST['recipient_email'] ?? ''),
         'recipient_name' => (string)($_POST['recipient_name'] ?? ''),
+        'ambassador_code' => (string)($_SESSION['googa_ambassador_code'] ?? ''),
     ]);
     $url = (string)($session['url'] ?? '');
     if ($url === '') {

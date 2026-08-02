@@ -25,6 +25,10 @@ try {
             $subscription = googa_stripe_request('GET', 'subscriptions/' . rawurlencode($subscriptionId));
             $changed = googa_stripe_apply_subscription($data, $subscription);
         }
+        if ($type === 'invoice.paid') {
+            $changed = googa_stripe_record_first_paid($data, $object) || $changed;
+            $changed = googa_stripe_record_commission($data, $object) || $changed;
+        }
     }
     if ($changed) {
         googa_save_data($data);

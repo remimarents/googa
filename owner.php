@@ -28,20 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = (string)($_POST['action'] ?? '');
     if ($action === 'create-ambassador') {
         try {
-            $promo = googa_stripe_create_ambassador((string)($_POST['ambassador_name'] ?? ''), (string)($_POST['ambassador_code'] ?? ''), (int)($_POST['ambassador_percent'] ?? 20));
-            $data['ambassadors'][(string)$promo['id']] = [
-                'name' => trim((string)($_POST['ambassador_name'] ?? '')),
-                'code' => (string)($promo['code'] ?? ''),
-                'percent' => max(1, min(50, (int)($_POST['ambassador_percent'] ?? 20))),
-                'promotion_code_id' => (string)$promo['id'],
-                'coupon_id' => (string)(($promo['coupon']['id'] ?? $promo['coupon'] ?? '')),
-                'created_at' => googa_now(),
-            ];
+            $ambassador = googa_stripe_create_ambassador($data, (string)($_POST['ambassador_email'] ?? ''), (string)($_POST['ambassador_code'] ?? ''));
+            $data['ambassadors'][(string)$ambassador['id']] = $ambassador;
             googa_save_data($data);
-            $message = 'Ambassadørkode opprettet i Stripe.';
+            $message = 'Ambassadør aktivert. Kunden får kr 50 fordel, og provisjonen er 20 % i 12 måneder.';
         } catch (Throwable $error) {
             $message = 'Kunne ikke opprette kode: ' . $error->getMessage();
         }
+    }
+    if ($action === 'mark-commissions-paid') {
+        $ambassadorId = (string)($_POST['ambassador_id'] ?? '');
+        $count = 0;
+        foreach ((array)($data['commissions'] ?? []) as $invoiceId => $commission) {
+            if (($commission['ambassador_id'] ?? '') !== $ambassadorId || ($commission['status'] ?? '') !== 'pending' || (strtotime((string)($commission['available_at'] ?? '')) ?: PHP_INT_MAX) > time()) continue;
+            $data['commissions'][$invoiceId]['status'] = 'paid';
+            $data['commissions'][$invoiceId]['payout_at'] = googa_now();
+            $count++;
+        }
+        googa_save_data($data);
+        $message = $count . ' provisjonsposter merket som utbetalt.';
     }
     $email = googa_normalize_email((string)($_POST['email'] ?? ''));
     if ($email !== '') {
@@ -87,6 +92,8 @@ $selectedEmail = googa_normalize_email((string)($_GET['email'] ?? ''));
 $selected = $selectedEmail !== '' && isset($users[$selectedEmail]) ? $users[$selectedEmail] : googa_default_user('');
 $selectedStripe = is_array($selected['stripe'] ?? null) ? $selected['stripe'] : [];
 $ambassadors = is_array($data['ambassadors'] ?? null) ? $data['ambassadors'] : [];
+$commissions = is_array($data['commissions'] ?? null) ? $data['commissions'] : [];
+$paidCustomers = array_filter($users, 'googa_has_paid_subscription');
 
 function googa_form_date(?string $iso): string
 {
@@ -255,16 +262,16 @@ function googa_form_date(?string $iso): string
     </section>
   </div>
   <section class="panel" style="margin-top:18px">
-    <h2>Ambassadører og sporbare rabattkoder</h2>
-    <p>Hver kode gir avtalt rabatt på Googa de tre første månedene. Stripe teller innløsningene; opprett bare koder etter at vilkår er avtalt.</p>
+    <h2>Ambassadørsalg og provisjon</h2>
+    <p>Ambassadøren må være betalende kunde i minst 30 dager. Kunden sparer kr 25 i to måneder eller kr 50 på første årsbetaling. Ambassadøren opptjener 20 % i 12 måneder, med 30 dagers ventetid.</p>
     <form method="post" class="ambassador-form">
       <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="action" value="create-ambassador">
-      <div class="field"><label for="ambassador_name">Navn</label><input id="ambassador_name" name="ambassador_name" required></div>
+      <div class="field"><label for="ambassador_email">Betalende kunde</label><select id="ambassador_email" name="ambassador_email" required><option value="">Velg kunde</option><?php foreach ($paidCustomers as $customerEmail => $customer): ?><option value="<?= htmlspecialchars($customerEmail, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars((string)($customer['name'] ?: $customerEmail), ENT_QUOTES, 'UTF-8') ?> · <?= htmlspecialchars($customerEmail, ENT_QUOTES, 'UTF-8') ?></option><?php endforeach; ?></select></div>
       <div class="field"><label for="ambassador_code">Kode</label><input id="ambassador_code" name="ambassador_code" minlength="4" pattern="[A-Za-z0-9]+" placeholder="NAVN20" required></div>
-      <div class="field"><label for="ambassador_percent">Rabatt</label><select id="ambassador_percent" name="ambassador_percent"><?php foreach ([10,15,20,25] as $percent): ?><option value="<?= $percent ?>"<?= $percent === 20 ? ' selected' : '' ?>><?= $percent ?>%</option><?php endforeach; ?></select></div>
-      <button class="save" type="submit">Opprett i Stripe</button>
+      <button class="save" type="submit">Aktiver ambassadør</button>
     </form>
-    <?php if ($ambassadors): ?><table class="table"><thead><tr><th>Navn</th><th>Kode</th><th>Rabatt</th><th>Stripe-ID</th></tr></thead><tbody><?php foreach ($ambassadors as $ambassador): ?><tr><td data-label="Navn"><?= htmlspecialchars((string)($ambassador['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td><td data-label="Kode"><strong><?= htmlspecialchars((string)($ambassador['code'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong></td><td data-label="Rabatt"><?= (int)($ambassador['percent'] ?? 0) ?>% · 3 mnd</td><td data-label="Stripe-ID"><small><?= htmlspecialchars((string)($ambassador['promotion_code_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?></small></td></tr><?php endforeach; ?></tbody></table><?php endif; ?>
+    <p><a class="owner-back" href="owner-ambassador-report.php">Last ned årsrapport som CSV</a></p>
+    <?php if ($ambassadors): ?><table class="table"><thead><tr><th>Ambassadør</th><th>Kode og lenke</th><th>Salg</th><th>Provisjon</th><th>Oppgjør</th></tr></thead><tbody><?php foreach ($ambassadors as $ambassadorId => $ambassador): $ambCommissions=array_filter($commissions,static fn($c)=>($c['ambassador_id']??'')===$ambassadorId);$pending=0;$available=0;$paid=0;foreach($ambCommissions as $c){$amount=(int)($c['commission_ore']??0);if(($c['status']??'')==='paid')$paid+=$amount;elseif(strtotime((string)($c['available_at']??''))<=time())$available+=$amount;else$pending+=$amount;} ?><tr><td data-label="Ambassadør"><strong><?= htmlspecialchars((string)($ambassador['name'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong><br><small><?= htmlspecialchars((string)($ambassador['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?></small></td><td data-label="Kode og lenke"><strong><?= htmlspecialchars((string)($ambassador['code'] ?? ''), ENT_QUOTES, 'UTF-8') ?></strong><br><small><?= htmlspecialchars(GOOGA_PUBLIC_BASE_URL . '/?amb=' . rawurlencode((string)($ambassador['code'] ?? '')), ENT_QUOTES, 'UTF-8') ?></small></td><td data-label="Salg"><?= count($ambCommissions) ?></td><td data-label="Provisjon">Tilgjengelig kr <?= number_format($available/100,2,',',' ') ?><br><small>Venter kr <?= number_format($pending/100,2,',',' ') ?> · utbetalt kr <?= number_format($paid/100,2,',',' ') ?></small></td><td data-label="Oppgjør"><form method="post"><input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf, ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="action" value="mark-commissions-paid"><input type="hidden" name="ambassador_id" value="<?= htmlspecialchars((string)$ambassadorId, ENT_QUOTES, 'UTF-8') ?>"><button class="save" type="submit"<?= $available<=0?' disabled':'' ?>>Merk utbetalt</button></form></td></tr><?php endforeach; ?></tbody></table><?php endif; ?>
   </section>
 </main>
 </html>

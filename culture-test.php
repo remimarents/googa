@@ -18,6 +18,7 @@ $assetVersion = googa_app_version();
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('styles.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-test.css'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="stylesheet" href="<?= htmlspecialchars(googa_asset_url('culture-commerce.css'), ENT_QUOTES, 'UTF-8') ?>">
+  <style>.culture-more-offers{grid-template-columns:repeat(2,1fr)}</style>
 </head>
 <body class="culture-test-page">
   <main class="culture-shell">
@@ -68,7 +69,7 @@ $assetVersion = googa_app_version();
       <section class="culture-actions"><p class="culture-kicker">TALLAABOOYINKA XIGA</p><h2>Labadaada buundo ee xiga</h2><div id="cultureActions"></div></section>
       <section class="culture-share" id="cultureShareCard"><div class="share-brand"><img src="<?= htmlspecialchars(googa_asset_url('assets/googa-mascot.png'), ENT_QUOTES, 'UTF-8') ?>" alt=""><span>GOOGA · LABA DAL, HAL SHEEKO</span></div><p>Tilmaamaha dhaqankayga</p><h2 id="cultureShareTitle"></h2><div id="cultureShareAxes"></div><footer><span>🇳🇴</span><b>Aqoonta hal hoy waxay naga caawisaa inaan fahanno kan kale.</b><span>🇸🇴</span></footer></section>
       <div class="culture-share-buttons"><button class="culture-primary" id="cultureShare" type="button">La wadaag natiijada</button><button class="culture-secondary" id="cultureDownload" type="button">Kaydi kaarka</button></div>
-      <section class="culture-commerce"><p class="culture-kicker">QAADO BUUNDADA QOYSKA</p><h2>Googa la tijaabi qoyskaaga</h2><p>Halxiraalo, cod Af-Soomaali ah iyo ciyaar qoyska oo dhan ah.</p><a class="culture-buy" href="./?buy=trial"><span><small>2 maalmood oo tijaabo ah</small><b>Ku bilow kr 5</b><em>Kadib kr 50 bishii · jooji wakhti kasta</em></span><strong>→</strong></a><div class="culture-more-offers"><a href="gift.php">🎁 Hadiyad sii qoys</a><a href="./#annual">★ Kr 499 sanadkii</a><a href="help.php#ambassador">🌍 Noqo safiir</a><a href="help.php">🏫 Ururro</a></div></section>
+      <section class="culture-commerce"><p class="culture-kicker">QAADO BUUNDADA QOYSKA</p><h2>Googa la tijaabi qoyskaaga</h2><p>Halxiraalo, cod Af-Soomaali ah iyo ciyaar qoyska oo dhan ah.</p><a class="culture-buy" href="./?buy=trial"><span><small>2 maalmood oo tijaabo ah</small><b>Ku bilow kr 5</b><em>Kadib kr 50 bishii · jooji wakhti kasta</em></span><strong>→</strong></a><div class="culture-more-offers"><a href="gift.php">🎁 Hadiyad sii qoys</a><a href="./#annual">★ Kr 499 sanadkii</a></div></section>
       <div class="culture-result-buttons"><button class="culture-primary" id="cultureRestart" type="button">Mar kale samee</button><a class="culture-secondary" href="./">Ku noqo Googa</a></div>
       <p class="culture-review">Utkast · Ikke normert eller psykometrisk validert.</p>
     </section>

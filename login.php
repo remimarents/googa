@@ -22,7 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = googa_normalize_email((string)($_POST['email'] ?? ''));
         $data = googa_load_data();
         $user = isset($data['users'][$email]) && is_array($data['users'][$email]) ? $data['users'][$email] : null;
-        if ($action === 'login') {
+        if ($action === 'ambassador') {
+            $ambassador = googa_find_ambassador_by_code($data, (string)($_POST['ambassador_code'] ?? ''));
+            if (is_array($ambassador)) {
+                $_SESSION['googa_ambassador_code'] = (string)$ambassador['code'];
+                header('Location: ./', true, 303);
+                exit;
+            }
+            unset($_SESSION['googa_ambassador_code']);
+            $error = 'Koodhka safiirku ma shaqaynayo hadda.';
+        } elseif ($action === 'login') {
             if (is_array($user) && googa_verify_password($user, (string)($_POST['password'] ?? ''))) {
                 googa_login_user($user);
                 header('Location: ./', true, 303);
@@ -42,6 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $notice = 'Haddii e-mailkaasi ku jiro Googa, waxaan kuu soo dirnay xiriir aad ku samaysato furaha cusub.';
         }
     }
+}
+$referralData = googa_load_data();
+$activeAmbassador = googa_find_ambassador_by_code($referralData, (string)($_SESSION['googa_ambassador_code'] ?? ''));
+if (!is_array($activeAmbassador)) {
+    unset($_SESSION['googa_ambassador_code']);
 }
 ?>
 <!doctype html>
@@ -77,7 +91,8 @@ body{padding:max(10px,env(safe-area-inset-top)) 0 max(10px,env(safe-area-inset-b
   <div class="plans single-offer">
     <form method="post" action="checkout.php"><input type="hidden" name="csrf" value="<?= htmlspecialchars((string)$_SESSION['googa_payment_csrf'], ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="kind" value="trial"><button class="plan offer" type="submit"><span class="offer-kicker" data-so="2 maalmood oo tijaabo ah" data-no="2 dagers prøveperiode">2 maalmood oo tijaabo ah</span><span class="offer-title" data-so="Googa maanta bilow" data-no="Start Googa i dag">Googa maanta bilow</span><b>kr 5</b><small class="offer-renewal" data-so="Kadib kr 50 bishii. Rukhsaddu si toos ah ayay u cusboonaanaysaa ilaa aad joojiso." data-no="Deretter kr 50 per måned. Abonnementet fornyes automatisk til du sier opp.">Kadib kr 50 bishii. Rukhsaddu si toos ah ayay u cusboonaanaysaa ilaa aad joojiso.</small><em data-so="Ku bilow kr 5 →" data-no="Start for kr 5 →">Ku bilow kr 5 →</em><span class="offer-cancel" data-so="✓ Jooji wakhti kasta" data-no="✓ Si opp når som helst">✓ Jooji wakhti kasta</span></button><button class="read-aloud" type="button" data-speak-button data-speak-so="Googa maanta ku bilow shan karoon. Waxaad helaysaa laba maalmood oo tijaabo ah. Kadib rukhsaddu waa konton karoon bishii ilaa aad joojiso." data-speak-audio="audio/ui/plan-trial.mp3" aria-label="Dhegeyso qiimaha">🔊</button></form>
   </div>
-  <div class="commercial-links" id="annual"><form method="post" action="checkout.php"><input type="hidden" name="csrf" value="<?= htmlspecialchars((string)$_SESSION['googa_payment_csrf'], ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="kind" value="annual"><button class="annual-button" type="submit" data-so="★ Kr 499 sanadkii" data-no="★ Årsabonnement kr 499">★ Kr 499 sanadkii</button></form><a class="commercial-link" href="gift.php" data-so="🎁 Hadiyad sii qoys" data-no="🎁 Gi Googa i gave">🎁 Hadiyad sii qoys</a><a class="commercial-link" href="help.php" data-so="Caawimo · safiir · urur" data-no="Hjelp · ambassadør · organisasjon">Caawimo · safiir · urur</a></div>
+  <?php if (is_array($activeAmbassador)): ?><div class="ambassador-applied"><span>✓</span><div><b data-so="Waxaa kugula taliyey <?= htmlspecialchars((string)$activeAmbassador['name'], ENT_QUOTES, 'UTF-8') ?>" data-no="Anbefalt av <?= htmlspecialchars((string)$activeAmbassador['name'], ENT_QUOTES, 'UTF-8') ?>">Waxaa kugula taliyey <?= htmlspecialchars((string)$activeAmbassador['name'], ENT_QUOTES, 'UTF-8') ?></b><small data-so="Waxaad kaydsanaysaa kr 50 labada bilood ee ugu horreeya." data-no="Du sparer totalt kr 50 de to første hele månedene.">Waxaad kaydsanaysaa kr 50 labada bilood ee ugu horreeya.</small></div></div><?php else: ?><form class="ambassador-code-form" method="post"><input type="hidden" name="csrf" value="<?= htmlspecialchars((string)$_SESSION['googa_login_csrf'], ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="action" value="ambassador"><label for="ambassador_code" data-so="Ma haysataa koodh safiir?" data-no="Har du en ambassadørkode?">Ma haysataa koodh safiir?</label><span><input id="ambassador_code" name="ambassador_code" autocomplete="off" minlength="4" required><button type="submit" data-so="Isticmaal" data-no="Bruk kode">Isticmaal</button></span></form><?php endif; ?>
+  <div class="commercial-links" id="annual"><form method="post" action="checkout.php"><input type="hidden" name="csrf" value="<?= htmlspecialchars((string)$_SESSION['googa_payment_csrf'], ENT_QUOTES, 'UTF-8') ?>"><input type="hidden" name="kind" value="annual"><button class="annual-button" type="submit" data-so="★ Kr 499 sanadkii" data-no="★ Årsabonnement kr 499">★ Kr 499 sanadkii</button></form><a class="commercial-link" href="gift.php" data-so="🎁 Hadiyad sii qoys" data-no="🎁 Gi Googa i gave">🎁 Hadiyad sii qoys</a></div>
   <div class="free-test"><a href="culture-test.php"><span><b data-so="Laba dal, hal sheeko" data-no="Gratis kulturkompass">Laba dal, hal sheeko</b><small data-so="Tijaabo bilaash ah · akoon looma baahna" data-no="Gratis test · ingen innlogging">Tijaabo bilaash ah · akoon looma baahna</small></span><strong>→</strong></a></div>
   <p class="purchase-note" data-so="Hal gujin ayaa ku geynaysa lacag-bixinta ammaan ah ee Stripe." data-no="Ett trykk tar deg til sikker betaling hos Stripe." data-speak-so="Hal gujin ayaa ku geynaysa lacag-bixinta ammaan ah ee Stripe.">Hal gujin ayaa ku geynaysa lacag-bixinta ammaan ah ee Stripe.</p>
   <div class="divider" data-so="Hore ayaad xisaab u leedahay?" data-no="Har du allerede en konto?" data-speak-so="Hore ayaad xisaab u leedahay? Geli e-mailkaaga iyo furaha sirta ah." data-speak-audio="audio/ui/login-account.mp3">Hore ayaad xisaab u leedahay?</div>

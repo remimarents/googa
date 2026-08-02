@@ -260,6 +260,47 @@ function googa_has_active_googa_subscription(array $user): bool
     return in_array((string)($stripe['subscription_status'] ?? 'none'), ['active', 'trialing'], true);
 }
 
+function googa_has_paid_subscription(array $user): bool
+{
+    $stripe = is_array($user['stripe'] ?? null) ? $user['stripe'] : [];
+    return (string)($stripe['subscription_status'] ?? '') === 'active';
+}
+
+function googa_ambassador_user_eligible(array $user): bool
+{
+    if (!googa_has_paid_subscription($user)) {
+        return false;
+    }
+    $paidAt = strtotime((string)(($user['stripe']['first_paid_at'] ?? ''))) ?: 0;
+    return $paidAt > 0 && $paidAt <= time() - GOOGA_AMBASSADOR_QUALIFY_DAYS * 86400;
+}
+
+function googa_find_ambassador_by_code(array $data, string $code): ?array
+{
+    $code = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $code) ?? '');
+    foreach ((array)($data['ambassadors'] ?? []) as $id => $ambassador) {
+        if (!is_array($ambassador) || ($ambassador['status'] ?? '') !== 'active' || strtoupper((string)($ambassador['code'] ?? '')) !== $code) {
+            continue;
+        }
+        $email = googa_normalize_email((string)($ambassador['email'] ?? ''));
+        if ($email === '' || !isset($data['users'][$email]) || !googa_ambassador_user_eligible($data['users'][$email])) {
+            return null;
+        }
+        $ambassador['id'] = (string)$id;
+        return $ambassador;
+    }
+    return null;
+}
+
+function googa_require_parent(array $context): void
+{
+    if (empty($context['authenticated']) || !empty($context['family_device']) || ($context['email'] ?? '') === '') {
+        http_response_code(403);
+        echo 'Denne siden er bare tilgjengelig på foreldreenheten.';
+        exit;
+    }
+}
+
 function googa_has_ordreise_full_access(array $user): bool
 {
     if ((string)($user['role'] ?? '') === 'owner') {
